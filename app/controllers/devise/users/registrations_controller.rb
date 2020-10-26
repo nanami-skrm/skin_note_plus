@@ -59,4 +59,17 @@ class Devise::Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :age, :skin_type])
+  end
+
+  def after_sign_in_path_for(resource)
+    user_notes_path
+  end
+
 end
