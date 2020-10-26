@@ -1,0 +1,2 @@
+class TodaysItem < ApplicationRecord
+end

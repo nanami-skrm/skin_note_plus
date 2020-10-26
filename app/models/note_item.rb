@@ -1,0 +1,2 @@
+class NoteItem < ApplicationRecord
+end
