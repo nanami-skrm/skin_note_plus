@@ -1,0 +1,23 @@
+<div class="container">
+	<h1>肌ノート新規作成ページ</h1>
+	<%= render "layouts/main_button" %>
+
+	<h3>肌ノート作成</h3>
+	<%= form_with :model => @note, url:user_notes_path, method: :post, local: true, class:"form-horizontal" do |f| %>
+		<div>
+			<%= f.label "日付" %>
+			<%= f.date_select :date, use_month_numbers: true, date_separator: '/' %>
+		</div>
+		<div>
+			<%= f.label "肌コンディション" %>
+			<%= f.select :condition, Note.conditions.keys, autofocus: true, autocomplete: "condition" %>
+		</div>
+		<h3>使用したスキンケア</h3>
+		<% @my_items.each do |my_item| %>
+		<%#= f.radio_button :payment_method, :銀行振り込み %> <%#= my_item.item_name %>
+		<% end %>
+		<%= f.collection_select(:my_item_id, @my_item, :id, :item_name, prompt: "--選択してください--") %>
+
+		<%= f.submit "登録する" %>
+	<% end %>
+</div>

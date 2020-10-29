@@ -14,9 +14,10 @@ Rails.application.routes.draw do
 
   namespace :user do
   	get  'homes/about'=>"homes#about"
-  	resources :notes, only: [:index]
+  	resources :notes, only: [:index, :new, :create]
   	resources :tweets, only: [:index]
   	resources :items, only: [:index]
+    resources :my_items, only: [:index, :create, :edit, :update, :destroy]
   end
 
   root :to => 'user/homes#top'

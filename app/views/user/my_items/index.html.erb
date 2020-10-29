@@ -1,0 +1,34 @@
+<div class="container">
+	<h1>マイスキンケア一覧・投稿画面</h1>
+		<%= render "layouts/main_button" %>
+
+
+	<h3>マイスキンケア登録</h3>
+	<%= form_with :model => @new_my_item, url:user_my_items_path, method: :post, local: true, class:"form-horizontal" do |f| %>
+		<%= f.label "商品名" %>
+		<%= f.text_field :item_name %>
+		<%= f.label "メーカー" %>
+		<%= f.text_field :maker %>
+		<%= f.submit "登録する" %>
+	<% end %>
+
+	<h3>マイアイテム一覧</h3>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>商品名</th>
+				<th>メーカー</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+		<% @my_items.each do |my_item| %>
+			<tr>
+				<td><%= my_item.item_name %></td>
+				<td><%= my_item.maker %></td>
+				<td><%= link_to "削除する", user_my_item_path(my_item), method: :delete, class: "btn btn-warning" %>
+			</tr>
+		<% end %>
+		</tbody>
+	</table>
+</div>
