@@ -14,5 +14,56 @@
  *= require_self
  */
 
-@import "bootstrap-sprockets";  /*ここを追加*/
-@import "bootstrap";            /*ここを追加*/
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.clearfix::after{
+	content: "";
+	display: block;
+	clear: both;
+}
+
+header {
+	width: 100%;
+
+}
+
+.header-container {
+	width: 1024px;
+	margin: 0 auto;
+	font-size: 16px;
+}
+
+.headline {
+	font-size: 35px;
+	color: #83ccd2;
+	line-height: 90px;
+	padding: 5px 0;
+	text-decoration: none;
+	display: inline;
+}
+
+.nav {
+	height: 50px;
+	background-color: #83ccd2;
+}
+
+.nav-list {
+	font-size: 14px;
+	height: 50px;
+
+}
+
+.nav-list-item {
+	float: left;
+	list-style: none;
+	line-height: 50px;
+	padding: 0 40px;
+	text-decoration: none;
+}

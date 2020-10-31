@@ -8,23 +8,28 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-<div class="container">
   <body>
     <header>
-      <div class="headline">skin note</div>
-      <nav>
-        <% if user_signed_in? %>
-          <%= link_to "マイページ", user_notes_path %>
-          <%= link_to "つぶやき一覧", user_tweets_path %>
-          <%= link_to "アイテム一覧", user_items_path %>
-          <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-        <% else %>
-          <%= link_to "About", user_homes_about_path %>
-          <%= link_to "ログイン", new_user_session_path %>
-        <% end %>
-      </nav>
+      <div class="header-container">
+        <div class="headline">skin note</div>
+      </div>
+        <nav class="nav">
+          <div class="header-container">
+            <ul class="nav-list">
+              <% if user_signed_in? %>
+                <li class="nav-list-item"><%= link_to "マイページ", user_notes_path %></li>
+                <li class="nav-list-item"><%= link_to "アイテム一覧", user_items_path %></li>
+                <li class="nav-list-item"><%= link_to "つぶやき一覧", user_tweets_path %></li>
+                <li class="nav-list-item"><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
+              <% else %>
+                <li class="nav-list-item"><%= link_to "About", user_homes_about_path %></li>
+                <li class="nav-list-item"><%= link_to "ログイン", new_user_session_path %></li>
+              <% end %>
+            </ul>
+          </div>
+        </nav>
+      </div>
     </header>
     <%= yield %>
   </body>
-</div>
 </html>
