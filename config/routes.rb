@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   	registrations: 'devise/users/registrations',
   	sessions: 'devise/users/sessions'
   }
+  namespace :admin do
+    resources :items
+  end
 
   namespace :user do
   	get  'homes/about'=>"homes#about"

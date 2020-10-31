@@ -1,8 +1,10 @@
 <div class="container">
 	<div class="row">
-		<%= link_to "記録する", new_user_note_path, class: "btn btn-warning" %>
-		<%= link_to "マイスキンケア", user_my_items_path, class: "btn btn-warning" %>
-		<%= link_to "口コミを書く", user_items_path, class: "btn btn-warning" %>
-		<%= link_to "つぶやく", user_tweets_path, class: "btn btn-warning" %>
+		<div class="d-flex">
+			<div><%= link_to "記録する", new_user_note_path, class: "btn btn-warning main" %></div>
+			<div><%= link_to "マイスキンケア", user_my_items_path, class: "btn btn-warning main" %></div>
+			<div><%= link_to "口コミを書く", user_items_path, class: "btn btn-warning main" %></div>
+			<div><%= link_to "つぶやく", user_tweets_path, class: "btn btn-warning main" %></div>
+		</div>
 	</div>
 </div>

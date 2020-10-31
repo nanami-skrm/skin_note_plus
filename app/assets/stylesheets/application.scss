@@ -67,3 +67,14 @@ header {
 	padding: 0 40px;
 	text-decoration: none;
 }
+
+.main {
+	width: 200px;
+	margin: 20px 15px;
+}
+
+.d-flex {
+	display: flex;
+	justify-content: center; /* 追加 */
+  	align-items: center; /* 追加 */
+}
