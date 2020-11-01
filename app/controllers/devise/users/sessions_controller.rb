@@ -26,7 +26,7 @@ class Devise::Users::SessionsController < Devise::SessionsController
   # end
 
   def after_sign_in_path_for(resource)
-    user_notes_path
+    user_notes_path(year: Time.now.year, month: Time.now.month)
   end
 
   def after_sign_out_path_for(resource)

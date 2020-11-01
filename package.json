@@ -2,6 +2,5 @@
   "name": "skin_note",
   "private": true,
   "dependencies": {
-  	"chart.js": "^2.7.1"
   }
 }

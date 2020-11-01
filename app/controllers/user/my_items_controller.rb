@@ -1,15 +1,20 @@
 class User::MyItemsController < ApplicationController
 
 	def index
-		@new_my_item = MyItem.new
+		@my_item = MyItem.new
 		@my_items = MyItem.where(user_id: current_user.id)
 	end
 
 	def create
 		my_item = MyItem.new(my_item_params)
 		my_item.user = current_user
-		my_item.save
-		redirect_to request.referer
+		if my_item.save
+			redirect_to request.referer, notice: "You have created address successfully."
+		else
+			@my_item = MyItem.new
+			@my_items = MyItem.where(user_id: current_user.id)
+			render "index"
+		end
 	end
 
 	def edit

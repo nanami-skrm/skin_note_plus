@@ -1,7 +1,8 @@
 <div class="container">
 	<%= render "layouts/main_button" %>
-	<h1>マイページ</h1>
-	<canvas id="circleChart"></canvas>
+	<div style="width:700px; height:400px;">
+		<canvas id="circleChart" ></canvas>
+	</div>
 	<canvas id="myChart"></canvas>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js"></script>
 </div>
@@ -55,21 +56,34 @@ var chart = new Chart(ctx, {
 
 var ctx = document.getElementById('circleChart').getContext('2d');
 var data = {
+	labels: ['良い', '普通', '少し悪い', '悪い'],
     datasets: [{
-        data: [10, 20, 30]
+    	backgroundColor: ["#1DA7BE", "#38C5D1", "#FF9FAD", "#FF7B8F"],
+        data: [
+        		<%= @good_condition_count %>,
+        		<%= @average_condition_count %>,
+        		<%= @fair_condition_count %>,
+        		<%= @poor_condition_count %>
+        ]
+
     }],
 
     // These labels appear in the legend and in the tooltips when hovering different arcs
-    labels: [
-        'Red',
-        'Yellow',
-        'Blue'
-    ]
+
+
+
+
 };
 
 var myPieChart = new Chart(ctx, {
     type: 'doughnut',
     data: data,
-    options: {}
+    options: {
+    	        title: {
+            display: true,
+            text: 'Title',
+            position: 'top'
+        }
+    }
 });
 </script>

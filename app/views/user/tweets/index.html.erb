@@ -1,4 +1,13 @@
 <div class="container">
 	<%= render "layouts/main_button" %>
 	<h1>つぶやき一覧です</h1>
+		<%= form_with :model => @tweet, url:user_tweets_path, method: :post, local: true, class:"form-horizontal" do |f| %>
+		<%= f.label "つぶやき内容" %>
+		<%= f.text_area :tweet_text %>
+		<%= f.submit "投稿する" %>
+	<% end %>
+
+	<% @tweets.each do |tweet| %>
+		<%= tweet.tweet_text %>
+	<% end %>
 </div>

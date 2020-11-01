@@ -19,7 +19,9 @@
 				<td><%= item.item_name %></td>
 				<td><%= item.item_genre %></td>
 				<td><%= item.maker %></td>
-				<td>編集・削除</td>
+				<td><%= link_to "編集", edit_admin_item_path(item) %> |
+					<%= link_to "削除", admin_item_path(item), method: :delete %>
+				</td>
 			</tr>
 		<% end %>
 		</tbody>

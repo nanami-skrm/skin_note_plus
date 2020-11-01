@@ -4,7 +4,10 @@ class User::NotesController < ApplicationController
 		@beginning_of_month = Date.new(params[:year].to_i, params[:month].to_i, 1)
 		@end_of_month = Date.new(params[:year].to_i, params[:month].to_i, -1)
 		@notes = current_user.notes.where(date: @beginning_of_month..@end_of_month)
-		@good_condition_count = current_user.notes.where(condition: 3).count
+		@good_condition_count = current_user.notes.where(date: @beginning_of_month..@end_of_month, condition: 3).count
+		@average_condition_count = current_user.notes.where(date: @beginning_of_month..@end_of_month, condition: 2).count
+		@fair_condition_count = current_user.notes.where(date: @beginning_of_month..@end_of_month, condition: 1).count
+		@poor_condition_count = current_user.notes.where(date: @beginning_of_month..@end_of_month, condition: 0).count
 	end
 
 	def new

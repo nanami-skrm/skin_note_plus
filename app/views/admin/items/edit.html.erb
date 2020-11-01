@@ -1,6 +1,6 @@
-<h1>アイテム編集ページ</h1>
-
-	<%= form_with :model => @item, url:admin_items_path(@item), method: :post, local: true, class:"form-horizontal" do |f| %>
+<div class="container">
+	<h1>アイテム編集ページ</h1>
+	<%= form_with :model => @item, url:admin_item_path, local: true, class:"form-horizontal" do |f| %>
 		<div>
 			<%= f.label "商品名" %>
 			<%= f.text_field :item_name %>
@@ -20,3 +20,4 @@
 		</div>
 		<%= f.submit "登録する" %>
 	<% end %>
+</div>

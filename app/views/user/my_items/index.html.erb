@@ -1,9 +1,23 @@
 <div class="container">
 	<%= render "layouts/main_button" %>
 
+<% if @my_item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @my_item.errors.count %>件のエラーが発生しました。</h2>
+      <ul>
+      <% @my_item.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+<% end %>
+
+	<%#= render "layouts/error_messages", model: @my_item %>
+	<%= notice %>
+
 
 	<h3>マイスキンケア登録</h3>
-	<%= form_with :model => @new_my_item, url:user_my_items_path, method: :post, local: true, class:"form-horizontal" do |f| %>
+	<%= form_with :model => @my_item, url:user_my_items_path, method: :post, local: true, class:"form-horizontal" do |f| %>
 		<%= f.label "商品名" %>
 		<%= f.text_field :item_name %>
 		<%= f.label "メーカー" %>

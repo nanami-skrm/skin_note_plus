@@ -18,8 +18,8 @@ Rails.application.routes.draw do
   namespace :user do
   	get  'homes/about'=>"homes#about"
   	resources :notes, only: [:index, :new, :create]
-  	resources :tweets, only: [:index]
-  	resources :items, only: [:index]
+  	resources :tweets, only: [:index, :create, :destroy, :show]
+  	resources :items, only: [:index, :show]
     resources :my_items, only: [:index, :create, :edit, :update, :destroy]
   end
 
