@@ -1,6 +1,10 @@
 class User::NotesController < ApplicationController
 
 	def index
+		@beginning_of_month = Date.new(params[:year].to_i, params[:month].to_i, 1)
+		@end_of_month = Date.new(params[:year].to_i, params[:month].to_i, -1)
+		@notes = current_user.notes.where(date: @beginning_of_month..@end_of_month)
+		@good_condition_count = current_user.notes.where(condition: 3).count
 	end
 
 	def new
@@ -16,7 +20,7 @@ class User::NotesController < ApplicationController
 			todays_item_params[:my_item_id].each do |my_item_id|
 				TodaysItem.create(note_id: note.id, my_item_id: my_item_id)
 			end
-			redirect_to user_notes_path
+			redirect_to user_notes_path(year: Time.now.year, month: Time.now.month)
 		else
 			@my_items = MyItem.where(user_id: current_user.id)
 			render "new"

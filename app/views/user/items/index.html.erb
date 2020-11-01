@@ -1,4 +1,11 @@
 <div class="container">
 	<%= render "layouts/main_button" %>
 	<h1>アイテム一覧です</h1>
+
+			<% @items.each do |item| %>
+			<%= attachment_image_tag(item, :image, :fill, 50, 50, fallback: "no_image.jpg") %>
+			<%= item.item_name %>
+			<%= item.item_genre %>
+			<%= item.maker %>
+		<% end %>
 </div>

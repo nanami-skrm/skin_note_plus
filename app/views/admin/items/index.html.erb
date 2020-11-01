@@ -2,12 +2,26 @@
 	<h1>アイテム一覧</h1>
 	<%= link_to "アイテム新規作成", new_admin_item_path %>
 	<%= link_to "管理者ログアウト", destroy_admin_session_path, method: :delete %>
-	<div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th></th>
+				<th>商品名</th>
+				<th>商品ジャンル</th>
+				<th>メーカー</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
 		<% @items.each do |item| %>
-			<%= attachment_image_tag(item, :image, :fill, 50, 50, fallback: "no_image.jpg") %>
-			<%= item.item_name %>
-			<%= item.item_genre %>
-			<%= item.maker %>
+			<tr>
+				<td><%= attachment_image_tag(item, :image, :fill, 50, 50, fallback: "no_image.jpg") %></td>
+				<td><%= item.item_name %></td>
+				<td><%= item.item_genre %></td>
+				<td><%= item.maker %></td>
+				<td>編集・削除</td>
+			</tr>
 		<% end %>
-	</div>
+		</tbody>
+	</table>
 </div>
