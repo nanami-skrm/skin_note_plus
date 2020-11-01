@@ -3,6 +3,7 @@ class User::TweetsController < ApplicationController
 	def index
 		@tweet = Tweet.new
 		@tweets = Tweet.all
+		@your_tweets = Tweet.where(user_id: current_user.id)
 	end
 
 	def create
@@ -18,9 +19,13 @@ class User::TweetsController < ApplicationController
 	end
 
 	def destroy
+		tweet = Tweet.find(params[:id])
+		tweet.destroy
+		redirect_to request.referer
 	end
 
 	def show
+		 @tweet = Tweet.find(params[:id])
 	end
 
 	private

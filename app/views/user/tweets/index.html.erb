@@ -1,13 +1,60 @@
 <div class="container">
 	<%= render "layouts/main_button" %>
-	<h1>つぶやき一覧です</h1>
+	<h3>つぶやき投稿</h3>
 		<%= form_with :model => @tweet, url:user_tweets_path, method: :post, local: true, class:"form-horizontal" do |f| %>
 		<%= f.label "つぶやき内容" %>
 		<%= f.text_area :tweet_text %>
 		<%= f.submit "投稿する" %>
 	<% end %>
+	<h3>みんなのつぶやき一覧</h3>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @tweets.each do |tweet| %>
+				<tr>
+					<td><%= link_to user_tweet_path(tweet) do %>
+							<%= tweet.tweet_text %>
+						<% end %>
+					</td>
+					<td><span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span></td>
+					<td><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></td>
+					<td><%= link_to "削除する",user_tweet_path(tweet), method: :delete, class: "btn btn-warning" %></td>
+				</tr>
 
-	<% @tweets.each do |tweet| %>
-		<%= tweet.tweet_text %>
-	<% end %>
+			<% end %>
+		</tbody>
+	</table>
+
+
+	<h3>あなたのつぶやき一覧</h3>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @your_tweets.each do |your_tweet| %>
+				<tr>
+					<td><%= your_tweet.tweet_text %></td>
+					<td><span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span></td>
+					<td><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></td>
+					<td><%= link_to "削除する",user_tweet_path(your_tweet), method: :delete, class: "btn btn-warning" %></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
 </div>
+
+
+
