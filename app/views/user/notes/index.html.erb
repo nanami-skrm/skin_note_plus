@@ -4,32 +4,63 @@
 		<canvas id="circleChart" ></canvas>
 	</div>
 	<canvas id="myChart"></canvas>
+    <canvas id="barChart"></canvas>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js"></script>
 </div>
 
 <script>
-var ctx = document.getElementById('myChart').getContext('2d');
-var chart = new Chart(ctx, {
-    // The type of chart we want to create
-    type: 'line',
 
-    // The data for our dataset
-    data: {
-        datasets: [{
-            label: 'My First dataset',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            fill: false,
-            data: [
-            	<% (@beginning_of_month..@end_of_month).each do |date| %>
-		            {
-		                x: `<%= date %>`,
-		                y: `<%= @notes.find_by(date: date)&.read_attribute_before_type_cast(:condition) %>`
-		            },
-	            <% end %>
-            ]
-        }]
-    },
+//ドーナツグラフ/////////////////////////////////////////////////////////////////////////////////
+
+var ctx = document.getElementById('circleChart').getContext('2d');
+var data = {
+	labels: ['良い', '普通', '少し悪い', '悪い'],
+    datasets: [{
+    	backgroundColor: ["#1DA7BE", "#38C5D1", "#FF9FAD", "#FF7B8F"],
+        data: [
+        		<%= @good_condition_count %>,
+        		<%= @average_condition_count %>,
+        		<%= @poor_condition_count %>,
+        		<%= @bad_condition_count %>
+        ]
+    }],
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+
+};
+
+var myPieChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: data,
+    options: {
+    	        title: {
+            display: true,
+            text: 'Title',
+            position: 'top'
+        }
+    }
+});
+
+
+//折れ線グラフ/////////////////////////////////////////////////////////////////////////////////
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var data = <%= @condition_list.to_json.html_safe %>
+
+var chart = new Chart(ctx, {
+// The type of chart we want to create
+type: 'line',
+
+// The data for our dataset
+data: {
+datasets: [{
+label: 'My First dataset',
+backgroundColor: 'rgb(255, 99, 132)',
+borderColor: 'rgb(255, 99, 132)',
+fill: false,
+data: data
+}]
+},
 
     // Configuration options go here
     options: {
@@ -54,36 +85,77 @@ var chart = new Chart(ctx, {
     }
 });
 
-var ctx = document.getElementById('circleChart').getContext('2d');
-var data = {
-	labels: ['良い', '普通', '少し悪い', '悪い'],
-    datasets: [{
-    	backgroundColor: ["#1DA7BE", "#38C5D1", "#FF9FAD", "#FF7B8F"],
-        data: [
-        		<%= @good_condition_count %>,
-        		<%= @average_condition_count %>,
-        		<%= @fair_condition_count %>,
-        		<%= @poor_condition_count %>
-        ]
+//横棒グラフ/////////////////////////////////////////////////////////////////////////////////
 
-    }],
+var ctx1 = document.getElementById('barChart').getContext('2d');
+var scatterChart = new Chart(ctx1, {
+        type: 'line',
+        data: {
+            datasets: [
+            {
 
-    // These labels appear in the legend and in the tooltips when hovering different arcs
+                label: 'Scatter Dataset',
+                backgroundColor: "rgba(246,156,85,1)",
+                borderColor: "rgba(246,156,85,1)",
+                fill: false,
+                borderWidth : 15,
+                pointRadius : 0,
+                data: [
+                <%# @my_items.each do |my_item| %>
+                    {
+                        x: 10<%#= @todays_items.find_by(my_item_id: my_item)&.@todays_items.note.find_by(data: data)%>,
+                        y: 9<%#= my_item.id %>
+                    }, {
+                        x: 3,
+                        y: 9
+                    }
+                ]
+            },
+            {
 
-
-
-
-};
-
-var myPieChart = new Chart(ctx, {
-    type: 'doughnut',
-    data: data,
-    options: {
-    	        title: {
-            display: true,
-            text: 'Title',
-            position: 'top'
+                backgroundColor: "rgba(208,255,154,1)",
+                borderColor: "rgba(208,255,154,1)",
+                fill: false,
+                borderWidth : 15,
+                pointRadius : 0,
+                data: [
+                    {
+                        x: 10,
+                        y: 3
+                    }, {
+                        x: 13,
+                        y: 3
+                    }
+                ]
+            }
+            ]
+        },
+        options: {
+            legend : {
+                display : false
+            },
+            scales: {
+                xAxes: [{
+                    type: 'linear',
+                    position: 'bottom',
+                    ticks : {
+                        beginAtzero :true,
+                        stepSize : 1
+                    }
+                }],
+                yAxes : [{
+                    scaleLabel : {
+                        display : false
+                    },
+                    ticks : {
+                        beginAtZero :true,
+                        max : 10
+                    }
+                }]
+            }
         }
-    }
-});
+    });
+
+
+
 </script>

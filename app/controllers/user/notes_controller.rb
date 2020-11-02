@@ -6,8 +6,15 @@ class User::NotesController < ApplicationController
 		@notes = current_user.notes.where(date: @beginning_of_month..@end_of_month)
 		@good_condition_count = current_user.notes.where(date: @beginning_of_month..@end_of_month, condition: 3).count
 		@average_condition_count = current_user.notes.where(date: @beginning_of_month..@end_of_month, condition: 2).count
-		@fair_condition_count = current_user.notes.where(date: @beginning_of_month..@end_of_month, condition: 1).count
-		@poor_condition_count = current_user.notes.where(date: @beginning_of_month..@end_of_month, condition: 0).count
+		@poor_condition_count = current_user.notes.where(date: @beginning_of_month..@end_of_month, condition: 1).count
+		@bad_condition_count = current_user.notes.where(date: @beginning_of_month..@end_of_month, condition: 0).count
+
+		@condition_list = (@beginning_of_month..@end_of_month).map do |date|
+            { x: date, y: @notes.find_by(date: date)&.read_attribute_before_type_cast(:condition) || 2 }
+        end
+        @condition_list = (@beginning_of_month..@end_of_month).map do |date|
+            { x: date, y: @notes.find_by(date: date)&.read_attribute_before_type_cast(:condition) }
+        end
 	end
 
 	def new

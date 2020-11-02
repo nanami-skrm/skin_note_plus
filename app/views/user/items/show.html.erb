@@ -4,4 +4,7 @@
 	<%= @item.item_name %>
 	<%= @item.item_genre %>
 	<%= @item.maker %>
+
+	<h1>口コミ投稿</h1>
+	<%= form_with :model => @review, url:user_notes_path, method: :post, local: true, class:"form-horizontal" do |f| %>
 </div>
