@@ -88,6 +88,7 @@ data: data
 //横棒グラフ/////////////////////////////////////////////////////////////////////////////////
 
 var ctx1 = document.getElementById('barChart').getContext('2d');
+var data = <%= @todays_items_list.to_json.html_safe %>
 var scatterChart = new Chart(ctx1, {
         type: 'line',
         data: {
@@ -100,33 +101,7 @@ var scatterChart = new Chart(ctx1, {
                 fill: false,
                 borderWidth : 15,
                 pointRadius : 0,
-                data: [
-                <%# @my_items.each do |my_item| %>
-                    {
-                        x: 10<%#= @todays_items.find_by(my_item_id: my_item)&.@todays_items.note.find_by(data: data)%>,
-                        y: 9<%#= my_item.id %>
-                    }, {
-                        x: 3,
-                        y: 9
-                    }
-                ]
-            },
-            {
-
-                backgroundColor: "rgba(208,255,154,1)",
-                borderColor: "rgba(208,255,154,1)",
-                fill: false,
-                borderWidth : 15,
-                pointRadius : 0,
-                data: [
-                    {
-                        x: 10,
-                        y: 3
-                    }, {
-                        x: 13,
-                        y: 3
-                    }
-                ]
+                data: data
             }
             ]
         },
@@ -136,7 +111,10 @@ var scatterChart = new Chart(ctx1, {
             },
             scales: {
                 xAxes: [{
-                    type: 'linear',
+                    type: 'time',
+                    time: {
+                        unit: 'day'
+                    },
                     position: 'bottom',
                     ticks : {
                         beginAtzero :true,

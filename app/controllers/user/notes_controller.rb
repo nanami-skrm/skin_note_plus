@@ -12,9 +12,12 @@ class User::NotesController < ApplicationController
 		@condition_list = (@beginning_of_month..@end_of_month).map do |date|
             { x: date, y: @notes.find_by(date: date)&.read_attribute_before_type_cast(:condition) || 2 }
         end
-        @condition_list = (@beginning_of_month..@end_of_month).map do |date|
-            { x: date, y: @notes.find_by(date: date)&.read_attribute_before_type_cast(:condition) }
-        end
+        @todays_items_list = []
+		MyItem.pluck(:id).each do |my_item_id|
+				(@beginning_of_month..@end_of_month).each do |date|
+				@todays_items_list.push({ x: date, y: TodaysItem.joins(:note, :my_item).where(my_items: { user_id: current_user.id }, my_item_id: my_item_id).where('notes.date = ?', date).first&.my_item_id })
+			end
+		end
 	end
 
 	def new

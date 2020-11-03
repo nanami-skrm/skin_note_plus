@@ -19,8 +19,10 @@ Rails.application.routes.draw do
   	get  'homes/about'=>"homes#about"
   	resources :notes, only: [:index, :new, :create]
   	resources :tweets, only: [:index, :create, :destroy, :show]
-  	resources :items, only: [:index, :show]
     resources :my_items, only: [:index, :create, :edit, :update, :destroy]
+  	resources :items, only: [:index, :show]  do
+      resources :reviews, only: [:create, :destroy]
+    end
   end
 
   root :to => 'user/homes#top'
