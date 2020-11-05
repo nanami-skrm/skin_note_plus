@@ -27,7 +27,11 @@
 					</td>
 					<td><span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span></td>
 					<td><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></td>
-					<td><%= link_to "削除する",user_tweet_path(tweet), method: :delete, class: "btn btn-warning" %></td>
+					<td>
+						<% if tweet.user.id == current_user.id %>
+							<%= link_to "削除",user_tweet_path(tweet), method: :delete, class: "btn btn-danger btn-sm" %>
+						<% end %>
+					</td>
 				</tr>
 
 			<% end %>
@@ -54,7 +58,7 @@
 					</td>
 					<td><span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span></td>
 					<td><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></td>
-					<td><%= link_to "削除する",user_tweet_path(your_tweet), method: :delete, class: "btn btn-warning" %></td>
+					<td><%= link_to "削除",user_tweet_path(your_tweet), method: :delete, class: "btn btn-danger btn-sm" %></td>
 				</tr>
 			<% end %>
 		</tbody>

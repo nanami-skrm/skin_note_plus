@@ -3,8 +3,12 @@
 	<div style="width:700px; height:400px;">
 		<canvas id="circleChart" ></canvas>
 	</div>
-	<canvas id="myChart"></canvas>
+  <div style="width:900px; height:500px;">
+	  <canvas id="myChart"></canvas>
+  </div>
+  <div style="width:900px; height:500px;">
     <canvas id="barChart"></canvas>
+  </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js"></script>
 </div>
 
@@ -15,30 +19,28 @@
 var ctx = document.getElementById('circleChart').getContext('2d');
 var data = {
 	labels: ['良い', '普通', '少し悪い', '悪い'],
-    datasets: [{
-    	backgroundColor: ["#1DA7BE", "#38C5D1", "#FF9FAD", "#FF7B8F"],
-        data: [
-        		<%= @good_condition_count %>,
-        		<%= @average_condition_count %>,
-        		<%= @poor_condition_count %>,
-        		<%= @bad_condition_count %>
-        ]
-    }],
-
+  datasets: [{
+  	backgroundColor: ["#1DA7BE", "#38C5D1", "#FF9FAD", "#FF7B8F"],
+    data: [
+    		<%= @good_condition_count %>,
+    		<%= @average_condition_count %>,
+    		<%= @poor_condition_count %>,
+    		<%= @bad_condition_count %>
+    ]
+  }],
     // These labels appear in the legend and in the tooltips when hovering different arcs
-
 };
 
 var myPieChart = new Chart(ctx, {
-    type: 'doughnut',
-    data: data,
-    options: {
-    	        title: {
-            display: true,
-            text: 'Title',
-            position: 'top'
-        }
+  type: 'doughnut',
+  data: data,
+  options: {
+  	title: {
+      display: true,
+      text: 'Title',
+      position: 'top'
     }
+  }
 });
 
 
@@ -49,91 +51,91 @@ var data = <%= @condition_list.to_json.html_safe %>
 
 var chart = new Chart(ctx, {
 // The type of chart we want to create
-type: 'line',
+  type: 'line',
+  // scaleLabel: "",良い普通少し悪い悪いにしたい。
 
 // The data for our dataset
-data: {
-datasets: [{
-label: 'My First dataset',
-backgroundColor: 'rgb(255, 99, 132)',
-borderColor: 'rgb(255, 99, 132)',
-fill: false,
-data: data
-}]
-},
+  data: {
+    datasets: [{
+      label: 'My First dataset',
+      backgroundColor: 'rgb(255, 99, 132)',
+      borderColor: 'rgb(255, 99, 132)',
+      fill: false,
+      data: data
+    }]
+  },
 
     // Configuration options go here
-    options: {
-        scales: {
-            xAxes: [{
-                type: 'time',
-                time: {
-                    unit: 'day'
-                }
-            }],
-            yAxes: [{
-            ticks: {
-                min: 0,
-                max: 3
-            },
-            scaleLabel: {
-                display: true,
-                labelString: '肌の調子'
-            }
-        }]
+  options: {
+    scales: {
+      xAxes: [{
+        type: 'time',
+        time: {
+            unit: 'day'
         }
+      }],
+      yAxes: [{
+        ticks: {
+          min: 0,
+          max: 3,
+          stepSize: 1,
+          // ↑y軸のメモリを1刻みにする
+
+        },
+      scaleLabel: {
+        display: true,
+        labelString: '肌の調子',
+      }
+    }]
     }
+  }
 });
 
 //横棒グラフ/////////////////////////////////////////////////////////////////////////////////
 
-var ctx1 = document.getElementById('barChart').getContext('2d');
-var data = <%= @todays_items_list.to_json.html_safe %>
-var scatterChart = new Chart(ctx1, {
-        type: 'line',
-        data: {
-            datasets: [
-            {
-
-                label: 'Scatter Dataset',
-                backgroundColor: "rgba(246,156,85,1)",
-                borderColor: "rgba(246,156,85,1)",
-                fill: false,
-                borderWidth : 15,
-                pointRadius : 0,
-                data: data
-            }
-            ]
-        },
-        options: {
-            legend : {
-                display : false
-            },
-            scales: {
-                xAxes: [{
-                    type: 'time',
-                    time: {
-                        unit: 'day'
-                    },
-                    position: 'bottom',
-                    ticks : {
-                        beginAtzero :true,
-                        stepSize : 1
-                    }
-                }],
-                yAxes : [{
-                    scaleLabel : {
-                        display : false
-                    },
-                    ticks : {
-                        beginAtZero :true,
-                        max : 10
-                    }
-                }]
-            }
-        }
-    });
-
-
-
+<% if @todays_items_list.present? %>
+  var ctx1 = document.getElementById('barChart').getContext('2d');
+  var data = <%= @todays_items_list.to_json.html_safe %>
+  var scatterChart = new Chart(ctx1, {
+    type: 'line',
+    data: {
+      datasets: [{
+        label: 'Scatter Dataset',
+        backgroundColor: "rgba(246,156,85,1)",
+        borderColor: "rgba(246,156,85,1)",
+        fill: false,
+        borderWidth : 15,
+        pointRadius : 0,
+        data: data
+      }]
+    },
+    options: {
+      legend : {
+        display : false
+      },
+      scales: {
+        xAxes: [{
+          type: 'time',
+          time: {
+            unit: 'day'
+          },
+          position: 'bottom',
+          ticks : {
+            beginAtzero :true,
+            stepSize : 1
+          }
+        }],
+        yAxes : [{
+          scaleLabel : {
+            display : false
+          },
+          ticks : {
+            beginAtZero :true,
+            max : 10
+          }
+        }]
+      }
+    }
+  });
+<% end %>
 </script>
