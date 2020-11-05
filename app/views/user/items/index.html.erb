@@ -8,5 +8,32 @@
 			<%= item.item_genre %>
 			<%= item.maker %>
 		<% end %>
+		<div id="averagestar<%= item.id %>"
+			data-star-on="<%= asset_path('star-on.png') %>"
+			data-star-off="<%= asset_path('star-off.png') %>"
+			data-star-half="<%= asset_path('star-half.png') %>"
+			data-score="<%= Review.where(item_id: item.id).average(:score) %>" ><br> <!-- あってる？ -->
+
+			<script>
+			//商品詳細の星/////////////////////////////////////////////////////////////////////////////////
+				var star = document.getElementById(`averagestar<%= item.id %>`)
+				var starOn = star.dataset.starOn
+				var starOff = star.dataset.starOff
+				var starHalf = star.dataset.starHalf
+
+				$(star).raty({
+					starOn: starOn,
+					starOff: starOff,
+					starHalf: starHalf,
+					half: true,
+					readOnly: true // 編集できない星
+				});
+			</script>
+
+		</div>
+		<div><%= Review.where(item_id: item.id).average(:score) %></div>
 	<% end %>
 </div>
+
+
+

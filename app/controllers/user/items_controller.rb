@@ -2,6 +2,7 @@ class User::ItemsController < ApplicationController
 
 	def index
 		@items = Item.all
+		# @average_score = Review.where(item_id: params[:id]).average(:score)
 	end
 
 	def show
