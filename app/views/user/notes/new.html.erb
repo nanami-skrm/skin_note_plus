@@ -13,9 +13,17 @@
 		</div>
 		<h3>使用したスキンケア</h3>
   		<div class="field">
-    		  <% @my_items.each do |my_item| %>
-    			  <%= check_box_tag 'todays_items[my_item_id][]', my_item.id %><%= my_item.item_name %>
-			  <% end %>
+  			<table class="table">
+  				<tbody>
+	    		  <% @my_items.each do |my_item| %>
+		    		  <tr>
+		    		  	<td>
+		    			  	<%= check_box_tag 'todays_items[my_item_id][]', my_item.id %>   <%= my_item.item_name %>
+		    				</td>
+		    			</tr>
+			  		<% end %>
+			  	</tbody>
+			  </table>
 			<%= f.submit "登録する" %>
 		</div>
 	<% end %>

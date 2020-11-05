@@ -18,10 +18,11 @@
 
 var ctx = document.getElementById('circleChart').getContext('2d');
 var data = {
-	labels: ['良い', '普通', '少し悪い', '悪い'],
+	labels: ['とても良い', '良い', '普通', '少し悪い', '悪い'],
   datasets: [{
-  	backgroundColor: ["#1DA7BE", "#38C5D1", "#FF9FAD", "#FF7B8F"],
+  	backgroundColor: ["#1DA7BE", "#38C5D1", "#DBDBDB", "#FF9FAD", "#FF7B8F"],
     data: [
+        <%= @excellent_condition_count %>,
     		<%= @good_condition_count %>,
     		<%= @average_condition_count %>,
     		<%= @poor_condition_count %>,
@@ -35,6 +36,9 @@ var myPieChart = new Chart(ctx, {
   type: 'doughnut',
   data: data,
   options: {
+    // legend: {
+    //   position: 'bottom',
+    // }
   	title: {
       display: true,
       text: 'Title',
@@ -48,7 +52,7 @@ var myPieChart = new Chart(ctx, {
 
 var ctx = document.getElementById('myChart').getContext('2d');
 var data = <%= @condition_list.to_json.html_safe %>
-
+console.log(data)
 var chart = new Chart(ctx, {
 // The type of chart we want to create
   type: 'line',
@@ -57,9 +61,9 @@ var chart = new Chart(ctx, {
 // The data for our dataset
   data: {
     datasets: [{
-      label: 'My First dataset',
-      backgroundColor: 'rgb(255, 99, 132)',
-      borderColor: 'rgb(255, 99, 132)',
+      label: '今月の肌の調子',
+      backgroundColor: 'rgb(56, 197, 209)',
+      borderColor: 'rgb(56, 197, 209)',
       fill: false,
       data: data
     }]
@@ -67,27 +71,30 @@ var chart = new Chart(ctx, {
 
     // Configuration options go here
   options: {
+
     scales: {
       xAxes: [{
         type: 'time',
         time: {
             unit: 'day'
         }
+
       }],
       yAxes: [{
-        ticks: {
-          min: 0,
-          max: 3,
-          stepSize: 1,
-          // ↑y軸のメモリを1刻みにする
-
+        type: 'category',
+        labels: [4,3,2,1,0],
+         ticks: {
+          callback: function(value, index, values) {
+            var jaLabels = {0: "悪い", 1:"少し悪い", 2:"普通", 3:"良い", 4:"とても良い"}
+            return jaLabels[value];
+          }
         },
-      scaleLabel: {
-        display: true,
-        labelString: '肌の調子',
-      }
-    }]
+        scaleLabel: {
+          display: true,
+        }
+      }]
     }
+
   }
 });
 

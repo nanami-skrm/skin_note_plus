@@ -5,5 +5,5 @@ class Item < ApplicationRecord
 
 	attachment :image
 
- 	enum item_genre: { クレンジング: 0, 洗顔料: 1, 化粧水: 2, 乳液: 3, 美容液: 4, パック: 5, ポイントスペシャルケア: 6, その他: 3 }
+ 	enum item_genre: { クレンジング: 0, 洗顔料: 1, 化粧水: 2, 乳液: 3, 美容液: 4, パック: 5, ポイントスペシャルケア: 6, その他: 7 }
 end

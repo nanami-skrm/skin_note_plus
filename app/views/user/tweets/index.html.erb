@@ -3,8 +3,8 @@
 
 	<h3>つぶやき投稿</h3>
 		<%= form_with :model => @tweet, url:user_tweets_path, method: :post, local: true, class:"form-horizontal" do |f| %>
-		<%= f.label "つぶやき内容" %>
-		<%= f.text_area :tweet_text %>
+		<%= f.label "つぶやき内容" %><br>
+		<%= f.text_area :tweet_text, size: "90x2" %>
 		<%= f.submit "投稿する" %>
 	<% end %>
 
@@ -12,6 +12,7 @@
 	<table class="table table-hover">
 		<thead>
 			<tr>
+				<th></th>
 				<th></th>
 				<th></th>
 				<th></th>
@@ -25,8 +26,21 @@
 							<%= tweet.tweet_text %>
 						<% end %>
 					</td>
-					<td><span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span></td>
-					<td><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></td>
+					<td>(<%= tweet.user.age %>歳/<%= tweet.user.skin_type %>)</td>
+					<td>
+						<% if tweet.empathized_by?(current_user) %>
+							<%= link_to user_tweet_empathies_path(tweet), method: :delete do %>
+								<span class="glyphicon glyphicon-hand-left" aria-hidden="true" style="color:red;"></span>
+								<%= tweet.empathies.count %>
+							<% end %>
+						<% else %>
+							<%= link_to user_tweet_empathies_path(tweet), method: :post do %>
+								<span class="glyphicon glyphicon-hand-left" aria-hidden="true" style="color:black;"></span>
+							<% end %>
+							<%= tweet.empathies.count %>
+						<% end %>
+					</td>
+					<td><span class="glyphicon glyphicon-comment" aria-hidden="true"> <%= tweet.comments.count %></span></td>
 					<td>
 						<% if tweet.user.id == current_user.id %>
 							<%= link_to "削除",user_tweet_path(tweet), method: :delete, class: "btn btn-danger btn-sm" %>
@@ -47,6 +61,7 @@
 				<th></th>
 				<th></th>
 				<th></th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -56,8 +71,9 @@
 							<%= your_tweet.tweet_text %>
 						<% end %>
 					</td>
+					<td>(<%= your_tweet.user.age %>歳/<%= your_tweet.user.skin_type %>)</td>
 					<td><span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span></td>
-					<td><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></td>
+					<td><span class="glyphicon glyphicon-comment" aria-hidden="true"> <%= your_tweet.comments.count %></span></td>
 					<td><%= link_to "削除",user_tweet_path(your_tweet), method: :delete, class: "btn btn-danger btn-sm" %></td>
 				</tr>
 			<% end %>

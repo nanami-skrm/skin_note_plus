@@ -1,6 +1,16 @@
 <div class="container">
 	<%= render "layouts/main_button" %>
-	<h1>アイテム一覧です</h1>
+
+	<h1>カテゴリ一覧</h1>
+	<%# @item_genre.each do |g| %>
+		<%#= link_to customer_products_path(:product_genre_id => g.id) do %>
+	<%#= g.name %>
+	<%# end %>
+<!-- 	<%# end %> -->
+	<%#= render 'users/profile', user: @user %>
+
+
+	<h1>アイテム一覧</h1>
 	<% @items.each do |item| %>
 		<%= link_to user_item_path(item) do %>
 			<%= attachment_image_tag(item, :image, :fill, 50, 50, fallback: "no_image.jpg") %>
