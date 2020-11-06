@@ -1,84 +1,109 @@
 <div class="container">
-	<%= render "layouts/main_button" %>
+	<div class="row">
+		<%= render "layouts/main_button" %>
+	</div>
 
-	<h3>つぶやき投稿</h3>
-		<%= form_with :model => @tweet, url:user_tweets_path, method: :post, local: true, class:"form-horizontal" do |f| %>
-		<%= f.label "つぶやき内容" %><br>
-		<%= f.text_area :tweet_text, size: "90x2" %>
-		<%= f.submit "投稿する" %>
-	<% end %>
+	<div class="row">
+		<div class="col-xs-4">
+			<h3>あなたのつぶやきデータ</h3>
+			つぶやきの数：<%= @your_tweets.count %>
+			共感数：<%#= @your_tweets.empathies.count %>
+			コメント数：<%#= @your_tweets.comments.count %>
 
-	<h3>みんなのつぶやき一覧</h3>
-	<table class="table table-hover">
-		<thead>
-			<tr>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			<% @tweets.each do |tweet| %>
-				<tr>
-					<td><%= link_to user_tweet_path(tweet) do %>
-							<%= tweet.tweet_text %>
-						<% end %>
-					</td>
-					<td>(<%= tweet.user.age %>歳/<%= tweet.user.skin_type %>)</td>
-					<td>
-						<% if tweet.empathized_by?(current_user) %>
-							<%= link_to user_tweet_empathies_path(tweet), method: :delete do %>
-								<span class="glyphicon glyphicon-hand-left" aria-hidden="true" style="color:red;"></span>
-								<%= tweet.empathies.count %>
-							<% end %>
-						<% else %>
-							<%= link_to user_tweet_empathies_path(tweet), method: :post do %>
-								<span class="glyphicon glyphicon-hand-left" aria-hidden="true" style="color:black;"></span>
-							<% end %>
-							<%= tweet.empathies.count %>
-						<% end %>
-					</td>
-					<td><span class="glyphicon glyphicon-comment" aria-hidden="true"> <%= tweet.comments.count %></span></td>
-					<td>
-						<% if tweet.user.id == current_user.id %>
-							<%= link_to "削除",user_tweet_path(tweet), method: :delete, class: "btn btn-danger btn-sm" %>
-						<% end %>
-					</td>
-				</tr>
-
+			<h3>つぶやき投稿</h3>
+				<%= form_with :model => @tweet, url:user_tweets_path, method: :post, local: true, class:"form-horizontal" do |f| %>
+				<%= f.label "つぶやき内容" %><br>
+				<%= f.text_area :tweet_text, size: "30x5" %>
+				<%= f.submit "投稿する" %>
 			<% end %>
-		</tbody>
-	</table>
+		</div>
+		<div class="col-xs-8">
+			<h3>みんなのつぶやき一覧</h3>
+			<table class="table table-hover" style="table-layout:fixed;width:100%;">
+			    <colgroup>
+			        <col style="width:60%;">
+			        <col style="width:15%;">
+			        <col style="width:8%;">
+			        <col style="width:8%;">
+			        <col style="width:9%;">
+			    </colgroup>
+				<thead>
+					<tr>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @tweets.each do |tweet| %>
+						<tr>
+							<td style="word-wrap:break-word;"><%= link_to user_tweet_path(tweet) do %>
+									<%= tweet.tweet_text %>
+								<% end %>
+							</td>
+							<td>(<%= tweet.user.age %>歳/<%= tweet.user.skin_type %>)</td>
+							<td>
+								<% if tweet.empathized_by?(current_user) %>
+									<%= link_to user_tweet_empathies_path(tweet), method: :delete do %>
+										<span class="glyphicon glyphicon-hand-left" aria-hidden="true" style="color:red;"></span>
+										<%= tweet.empathies.count %>
+									<% end %>
+								<% else %>
+									<%= link_to user_tweet_empathies_path(tweet), method: :post do %>
+										<span class="glyphicon glyphicon-hand-left" aria-hidden="true" style="color:black;"></span>
+									<% end %>
+									<%= tweet.empathies.count %>
+								<% end %>
+							</td>
+							<td><span class="glyphicon glyphicon-comment" aria-hidden="true"> <%= tweet.comments.count %></span></td>
+							<td>
+								<% if tweet.user.id == current_user.id %>
+									<%= link_to "削除",user_tweet_path(tweet), method: :delete, class: "btn btn-danger btn-sm" %>
+								<% end %>
+							</td>
+						</tr>
 
-
-	<h3>あなたのつぶやき一覧</h3>
-	<table class="table table-hover">
-		<thead>
-			<tr>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			<% @your_tweets.each do |your_tweet| %>
-				<tr>
-					<td><%= link_to user_tweet_path(your_tweet) do %>
-							<%= your_tweet.tweet_text %>
-						<% end %>
-					</td>
-					<td>(<%= your_tweet.user.age %>歳/<%= your_tweet.user.skin_type %>)</td>
-					<td><span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span></td>
-					<td><span class="glyphicon glyphicon-comment" aria-hidden="true"> <%= your_tweet.comments.count %></span></td>
-					<td><%= link_to "削除",user_tweet_path(your_tweet), method: :delete, class: "btn btn-danger btn-sm" %></td>
-				</tr>
-			<% end %>
-		</tbody>
-	</table>
+					<% end %>
+				</tbody>
+			</table>
+			<h3>あなたのつぶやき一覧</h3>
+				<table class="table table-hover" style="table-layout:fixed;width:100%;">
+				    <colgroup>
+				        <col style="width:60%;">
+				        <col style="width:15%;">
+				        <col style="width:8%;">
+				        <col style="width:8%;">
+				        <col style="width:9%;">
+				    </colgroup>
+				    <thead>
+						<tr>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+						</tr>
+				</thead>
+				</thead>
+				<tbody>
+					<% @your_tweets.each do |your_tweet| %>
+						<tr>
+							<td style="word-wrap:break-word;"><%= link_to user_tweet_path(your_tweet) do %>
+									<%= your_tweet.tweet_text %>
+								<% end %>
+							</td>
+							<td>(<%= your_tweet.user.age %>歳/<%= your_tweet.user.skin_type %>)</td>
+							<td><span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span></td>
+							<td><span class="glyphicon glyphicon-comment" aria-hidden="true"> <%= your_tweet.comments.count %></span></td>
+							<td><%= link_to "削除",user_tweet_path(your_tweet), method: :delete, class: "btn btn-danger btn-sm" %></td>
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>
 
 

@@ -1,17 +1,29 @@
 <div class="container">
 	<%= render "layouts/main_button" %>
-	<div style="width:700px; height:400px;">
-		<canvas id="circleChart" ></canvas>
-	</div>
-  <div style="width:900px; height:500px;">
-	  <canvas id="myChart"></canvas>
+  <div class="row">
+    <div class="col-xs-5">
+      <div class="hello">
+        <p>こんにちは、<%= current_user.name %>さん！<br>
+        今日の肌の調子はいかがですか？</p>
+      </div>
+    </div>
+    <div class="col-xs-7">
+    		<canvas id="circleChart" ></canvas>
+    </div>
   </div>
-  <div style="width:900px; height:500px;">
-    <canvas id="barChart"></canvas>
+  <div class="row">
+    <div style="width: 100%; height: 50%;">
+  	  <canvas id="myChart"></canvas>
+    </div>
+  </div>
+  <div class="row">
+    <div style="width:900px; height:500px;">
+      <canvas id="barChart"></canvas>
+    </div>
   </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js"></script>
 </div>
-
+<%= @todays_items_list %>
 <script>
 
 //ドーナツグラフ/////////////////////////////////////////////////////////////////////////////////
@@ -41,8 +53,8 @@ var myPieChart = new Chart(ctx, {
     // }
   	title: {
       display: true,
-      text: 'Title',
-      position: 'top'
+      // text: 'Title',
+      // position: 'top'
     }
   }
 });
@@ -51,6 +63,7 @@ var myPieChart = new Chart(ctx, {
 //折れ線グラフ/////////////////////////////////////////////////////////////////////////////////
 
 var ctx = document.getElementById('myChart').getContext('2d');
+ctx.canvas.height = 80; //高さ調整
 var data = <%= @condition_list.to_json.html_safe %>
 console.log(data)
 var chart = new Chart(ctx, {
@@ -61,7 +74,7 @@ var chart = new Chart(ctx, {
 // The data for our dataset
   data: {
     datasets: [{
-      label: '今月の肌の調子',
+      label: `<%= params[:month].to_i %>月の肌の調子`,
       backgroundColor: 'rgb(56, 197, 209)',
       borderColor: 'rgb(56, 197, 209)',
       fill: false,
@@ -85,7 +98,7 @@ var chart = new Chart(ctx, {
         labels: [4,3,2,1,0],
          ticks: {
           callback: function(value, index, values) {
-            var jaLabels = {0: "悪い", 1:"少し悪い", 2:"普通", 3:"良い", 4:"とても良い"}
+            var jaLabels = {0: "悪い  ", 1:"少し悪い  ", 2:"普通  ", 3:"良い  ", 4:"とても良い  "}
             return jaLabels[value];
           }
         },

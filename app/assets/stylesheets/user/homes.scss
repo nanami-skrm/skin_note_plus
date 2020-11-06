@@ -3,5 +3,10 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .main-visual {
-	background-image: image-url('/assets/images/top.jpg');
+	whidth: 100%;
+	height: 650px;
+	background-image: image-url("top.jpg");
+	background-size: cover;
+	background-position: bottom;
+
 }

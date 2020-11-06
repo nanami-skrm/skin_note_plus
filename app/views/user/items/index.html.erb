@@ -1,48 +1,92 @@
 <div class="container">
 	<%= render "layouts/main_button" %>
 
-	<h1>カテゴリ一覧</h1>
+<!-- 	<h1>カテゴリ一覧</h1> -->
 	<%# @item_genre.each do |g| %>
 		<%#= link_to customer_products_path(:product_genre_id => g.id) do %>
 	<%#= g.name %>
 	<%# end %>
 <!-- 	<%# end %> -->
 	<%#= render 'users/profile', user: @user %>
+	<div>
+		<% @toners.each do |toner| %>
+			<div class="item-box">
+				<%= link_to user_item_path(toner) do %>
+					<%= attachment_image_tag(toner, :image, :fill, 150, 150, fallback: "no_image.jpg") %><br>
+					<%= toner.item_name %><br>
+					<%= toner.item_genre %><br>
+					<%= toner.maker %><br>
+				<% end %>
+				<div id="averagestartoner<%= toner.id %>"
+					data-star-on="<%= asset_path('star-on.png') %>"
+					data-star-off="<%= asset_path('star-off.png') %>"
+					data-star-half="<%= asset_path('star-half.png') %>"
+					data-score="<%= Review.where(item_id: toner.id).average(:score) %>" ><br> <!-- あってる？ -->
 
+					<script>
+					//商品詳細の星/////////////////////////////////////////////////////////////////////////////////
+						var star = document.getElementById(`averagestartoner<%= toner.id %>`)
+						var starOn = star.dataset.starOn
+						var starOff = star.dataset.starOff
+						var starHalf = star.dataset.starHalf
 
-	<h1>アイテム一覧</h1>
-	<% @items.each do |item| %>
-		<%= link_to user_item_path(item) do %>
-			<%= attachment_image_tag(item, :image, :fill, 50, 50, fallback: "no_image.jpg") %>
-			<%= item.item_name %>
-			<%= item.item_genre %>
-			<%= item.maker %>
+						$(star).raty({
+							starOn: starOn,
+							starOff: starOff,
+							starHalf: starHalf,
+							half: true,
+							readOnly: true // 編集できない星
+						});
+					</script>
+				</div>
+				<div><%= Review.where(item_id: toner.id).average(:score) %></div>
+			</div>
 		<% end %>
-		<div id="averagestar<%= item.id %>"
-			data-star-on="<%= asset_path('star-on.png') %>"
-			data-star-off="<%= asset_path('star-off.png') %>"
-			data-star-half="<%= asset_path('star-half.png') %>"
-			data-score="<%= Review.where(item_id: item.id).average(:score) %>" ><br> <!-- あってる？ -->
+	</div>
 
-			<script>
-			//商品詳細の星/////////////////////////////////////////////////////////////////////////////////
-				var star = document.getElementById(`averagestar<%= item.id %>`)
-				var starOn = star.dataset.starOn
-				var starOff = star.dataset.starOff
-				var starHalf = star.dataset.starHalf
 
-				$(star).raty({
-					starOn: starOn,
-					starOff: starOff,
-					starHalf: starHalf,
-					half: true,
-					readOnly: true // 編集できない星
-				});
-			</script>
 
-		</div>
-		<div><%= Review.where(item_id: item.id).average(:score) %></div>
-	<% end %>
+
+
+	<div>
+		<h1>アイテム一覧</h1>
+
+
+		<% @items.each do |item| %>
+			<div class="item-box">
+				<%= link_to user_item_path(item) do %>
+					<%= attachment_image_tag(item, :image, :fill, 150, 150, fallback: "no_image.jpg") %><br>
+					<%= item.item_name %><br>
+					<%= item.item_genre %><br>
+					<%= item.maker %><br>
+				<% end %>
+				<div id="averagestar<%= item.id %>"
+					data-star-on="<%= asset_path('star-on.png') %>"
+					data-star-off="<%= asset_path('star-off.png') %>"
+					data-star-half="<%= asset_path('star-half.png') %>"
+					data-score="<%= Review.where(item_id: item.id).average(:score) %>" ><br> <!-- あってる？ -->
+
+					<script>
+					//商品詳細の星/////////////////////////////////////////////////////////////////////////////////
+						var star = document.getElementById(`averagestar<%= item.id %>`)
+						var starOn = star.dataset.starOn
+						var starOff = star.dataset.starOff
+						var starHalf = star.dataset.starHalf
+
+						$(star).raty({
+							starOn: starOn,
+							starOff: starOff,
+							starHalf: starHalf,
+							half: true,
+							readOnly: true // 編集できない星
+						});
+					</script>
+				</div>
+				<div><%= Review.where(item_id: item.id).average(:score) %></div>
+			</div>
+		<% end %>
+	</div>
+
 </div>
 
 

@@ -1,55 +1,78 @@
 <div class="container">
-	<h1>アイテム詳細ページ</h1>
-	<%= attachment_image_tag(@item, :image, :fill, 50, 50, fallback: "no_image.jpg") %>
-	<%= @item.item_name %>
-	<%= @item.item_genre %>
-	<%= @item.maker %>
-	<div id="averagestar"
-		data-star-on="<%= asset_path('star-on.png') %>"
-		data-star-off="<%= asset_path('star-off.png') %>"
-		data-star-half="<%= asset_path('star-half.png') %>"
-		data-score="<%= @average_score %>" ><br>
-	</div><%= @average_score %>
+	<div class="row">
 
-	<h1>口コミ一覧</h1>
-	<% @reviews.each do |review| %>
-		<%= review.review_text %>
-		<div id="star<%= review.id %>"
-		data-star-on="<%= asset_path('star-on.png') %>"
-		data-star-off="<%= asset_path('star-off.png') %>"
-		data-score="<%= review.score %>" ><br>
 
-			<script>//口コミ一覧の星/////////////////////////////////////////////////////////////////////////////////
+		<div class="col-xs-4">
+			<h1>アイテム詳細ページ</h1>
+			<%= attachment_image_tag(@item, :image, :fill, 150, 150, fallback: "no_image.jpg") %>
+			<%= @item.item_name %>
+			<%= @item.item_genre %>
+			<%= @item.maker %>
+			<div id="averagestar"
+				data-star-on="<%= asset_path('star-on.png') %>"
+				data-star-off="<%= asset_path('star-off.png') %>"
+				data-star-half="<%= asset_path('star-half.png') %>"
+				data-score="<%= @average_score %>" ><br>
+			</div><%= @average_score %>
 
-				var star = document.getElementById(`star<%= review.id %>`);
-				var starOn = star.dataset.starOn
-				var starOff = star.dataset.starOff
-				$(star).raty({
-					starOn: starOn,
-					starOff: starOff,
-					score: <%= review.score %>,
-					readOnly: true // 編集できない星
-				});
-
-			</script>
-		</div>
-	<% end %>
-
-	<h1>口コミ投稿</h1>
-
-	<%= form_with model: @review, url:user_item_reviews_path(@item.id), method: :post, local: true, class:"form-horizontal" do |f| %>
-		<div id="star"
-			data-star-on="<%= asset_path('star-on.png') %>"
-			data-star-off="<%= asset_path('star-off.png') %>" >
-			<!-- ↑ consoleに画像のURLを出力させる(検証ツールから見られる) -->
+			<h1>口コミ投稿</h1>
+			<%= form_with model: @review, url:user_item_reviews_path(@item.id), method: :post, local: true, class:"form-horizontal" do |f| %>
+				<div id="star"
+				data-star-on="<%= asset_path('star-on.png') %>"
+				data-star-off="<%= asset_path('star-off.png') %>" >
+				<!-- ↑ consoleに画像のURLを出力させる(検証ツールから見られる) -->
+				</div>
+				<%= f.hidden_field :user_id, value: current_user.id %>
+				<%= f.text_area :review_text %>
+				<%= f.submit "投稿する" %>
+			<% end %>
 		</div>
 
-			<%= f.hidden_field :user_id, value: current_user.id %>
-			<%= f.text_area :review_text %>
-			<%= f.submit "投稿する" %>
 
-	<% end %>
+		<div class="col-xs-8">
+			<h1>この商品の口コミ</h1>
+			<table class="table" style="table-layout:fixed;width:100%;">
+    <colgroup>
+        <col style="width:50%;">
+        <col style="width:20%;">
+        <col style="width:30%;">
+    </colgroup>
+				<tbody>
+					<% @reviews.each do |review| %>
+						<tr>
+							<td style="word-wrap:break-word;"><%= review.review_text %></td>
+							<td>(<%= review.user.age %>歳/<%= review.user.skin_type %>)</td>
+
+							<td>
+								<div id="star<%= review.id %>"
+									data-star-on="<%= asset_path('star-on.png') %>"
+									data-star-off="<%= asset_path('star-off.png') %>"
+									data-score="<%= review.score %>" ><br>
+
+										<script>//口コミ一覧の星/////////////////////////////////////////////////////////////////////////////////
+
+											var star = document.getElementById(`star<%= review.id %>`);
+											var starOn = star.dataset.starOn
+											var starOff = star.dataset.starOff
+											$(star).raty({
+												starOn: starOn,
+												starOff: starOff,
+												score: <%= review.score %>,
+												readOnly: true // 編集できない星
+											});
+
+										</script>
+										<%= review.score %>
+								</div>
+							</td>
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>
+
 
 <script>
 
