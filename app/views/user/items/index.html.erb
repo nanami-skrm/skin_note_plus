@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" data-turbolinks="false"><!-- ←ターボリンクを無効にしている -->
 	<%= render "layouts/main_button" %>
 
 <!-- 	<h1>カテゴリ一覧</h1> -->
@@ -8,24 +8,25 @@
 	<%# end %>
 <!-- 	<%# end %> -->
 	<%#= render 'users/profile', user: @user %>
-	<div>
-		<% @toners.each do |toner| %>
+
+<!-- 	<div>
+		<%# @toners.each do |toner| %>
 			<div class="item-box">
-				<%= link_to user_item_path(toner) do %>
-					<%= attachment_image_tag(toner, :image, :fill, 150, 150, fallback: "no_image.jpg") %><br>
-					<%= toner.item_name %><br>
-					<%= toner.item_genre %><br>
-					<%= toner.maker %><br>
-				<% end %>
-				<div id="averagestartoner<%= toner.id %>"
-					data-star-on="<%= asset_path('star-on.png') %>"
-					data-star-off="<%= asset_path('star-off.png') %>"
-					data-star-half="<%= asset_path('star-half.png') %>"
-					data-score="<%= Review.where(item_id: toner.id).average(:score) %>" ><br> <!-- あってる？ -->
+				<%#= link_to user_item_path(toner) do %>
+					<%#= attachment_image_tag(toner, :image, :fill, 150, 150, fallback: "no_image.jpg") %><br>
+					<%#= toner.item_name %><br>
+					<%#= toner.item_genre %><br>
+					<%#= toner.maker %><br>
+				<%# end %>
+				<div id="averagestartoner<%#= toner.id %>"
+					data-star-on="<%#= asset_path('star-on.png') %>"
+					data-star-off="<%#= asset_path('star-off.png') %>"
+					data-star-half="<%#= asset_path('star-half.png') %>"
+					data-score="<%#= Review.where(item_id: toner.id).average(:score) %>" ><br> あってる？
 
 					<script>
 					//商品詳細の星/////////////////////////////////////////////////////////////////////////////////
-						var star = document.getElementById(`averagestartoner<%= toner.id %>`)
+						var star = document.getElementById(`averagestartoner<%#= toner.id %>`)
 						var starOn = star.dataset.starOn
 						var starOff = star.dataset.starOff
 						var starHalf = star.dataset.starHalf
@@ -39,11 +40,11 @@
 						});
 					</script>
 				</div>
-				<div><%= Review.where(item_id: toner.id).average(:score) %></div>
+				<div><%#= Review.where(item_id: toner.id).average(:score) %></div>
 			</div>
-		<% end %>
+		<%# end %>
 	</div>
-
+ -->
 
 
 
