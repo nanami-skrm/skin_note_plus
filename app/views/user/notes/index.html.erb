@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container"  data-turbolinks="false">
 	<%= render "layouts/main_button" %>
   <div class="row">
     <div class="col-xs-5">
@@ -11,7 +11,8 @@
     		<canvas id="circleChart" ></canvas>
     </div>
   </div>
-  <div class="row">
+
+<!--   <div class="row">
     <div style="width: 100%; height: 50%;">
   	  <canvas id="myChart"></canvas>
     </div>
@@ -21,24 +22,23 @@
       <canvas id="barChart"></canvas>
     </div>
   </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js"></script>
-</div>
-<%= @todays_items_list %>
+ -->
 <script>
 
-//ドーナツグラフ/////////////////////////////////////////////////////////////////////////////////
 
+//ドーナツグラフ/////////////////////////////////////////////////////////////////////////////////
 var ctx = document.getElementById('circleChart').getContext('2d');
+
 var data = {
-	labels: ['とても良い', '良い', '普通', '少し悪い', '悪い'],
+  labels: ['とても良い', '良い', '普通', '少し悪い', '悪い'],
   datasets: [{
-  	backgroundColor: ["#1DA7BE", "#38C5D1", "#DBDBDB", "#FF9FAD", "#FF7B8F"],
+    backgroundColor: ["#1DA7BE", "#38C5D1", "#DBDBDB", "#FF9FAD", "#FF7B8F"],
     data: [
         <%= @excellent_condition_count %>,
-    		<%= @good_condition_count %>,
-    		<%= @average_condition_count %>,
-    		<%= @poor_condition_count %>,
-    		<%= @bad_condition_count %>
+        <%= @good_condition_count %>,
+        <%= @average_condition_count %>,
+        <%= @poor_condition_count %>,
+        <%= @bad_condition_count %>
     ]
   }],
     // These labels appear in the legend and in the tooltips when hovering different arcs
@@ -48,114 +48,124 @@ var myPieChart = new Chart(ctx, {
   type: 'doughnut',
   data: data,
   options: {
-    // legend: {
-    //   position: 'bottom',
-    // }
-  	title: {
+    legend: {
       display: true,
-      // text: 'Title',
-      // position: 'top'
-    }
+      position: 'right',
+      labels: {
+        padding: 30,
+      }
+    },
+    // title: {
+   //    display: true,
+   //    text: 'Title',
+   //    position: 'top'
+   //  }
   }
 });
 
 
 //折れ線グラフ/////////////////////////////////////////////////////////////////////////////////
 
-var ctx = document.getElementById('myChart').getContext('2d');
-ctx.canvas.height = 80; //高さ調整
-var data = <%= @condition_list.to_json.html_safe %>
-console.log(data)
-var chart = new Chart(ctx, {
-// The type of chart we want to create
-  type: 'line',
-  // scaleLabel: "",良い普通少し悪い悪いにしたい。
+// var ctx = document.getElementById('myChart').getContext('2d');
+// ctx.canvas.height = 80; //高さ調整
+// var data = <%= @condition_list.to_json.html_safe %>
+// console.log(data)
+// var chart = new Chart(ctx, {
+// // The type of chart we want to create
+//   type: 'line',
+//   // scaleLabel: "",良い普通少し悪い悪いにしたい。
 
-// The data for our dataset
-  data: {
-    datasets: [{
-      label: `<%= params[:month].to_i %>月の肌の調子`,
-      backgroundColor: 'rgb(56, 197, 209)',
-      borderColor: 'rgb(56, 197, 209)',
-      fill: false,
-      data: data
-    }]
-  },
+// // The data for our dataset
+//   data: {
+//     datasets: [{
+//       label: `<%#= params[:month].to_i %>月の肌の調子`,
+//       backgroundColor: 'rgb(56, 197, 209)',
+//       borderColor: 'rgb(56, 197, 209)',
+//       fill: false,
+//       data: data
+//     }]
+//   },
 
-    // Configuration options go here
-  options: {
+//     // Configuration options go here
+//   options: {
 
-    scales: {
-      xAxes: [{
-        type: 'time',
-        time: {
-            unit: 'day'
-        }
+//     scales: {
+//       xAxes: [{
+//         type: 'time',
+//         time: {
+//             unit: 'day'
+//         }
 
-      }],
-      yAxes: [{
-        type: 'category',
-        labels: [4,3,2,1,0],
-         ticks: {
-          callback: function(value, index, values) {
-            var jaLabels = {0: "悪い  ", 1:"少し悪い  ", 2:"普通  ", 3:"良い  ", 4:"とても良い  "}
-            return jaLabels[value];
-          }
-        },
-        scaleLabel: {
-          display: true,
-        }
-      }]
-    }
+//       }],
+//       yAxes: [{
+//         type: 'category',
+//         labels: [4,3,2,1,0],
+//          ticks: {
+//           callback: function(value, index, values) {
+//             var jaLabels = {0: "悪い  ", 1:"少し悪い  ", 2:"普通  ", 3:"良い  ", 4:"とても良い  "}
+//             return jaLabels[value];
+//           }
+//         },
+//         scaleLabel: {
+//           display: true,
+//         }
+//       }]
+//     }
 
-  }
-});
+//   }
+// });
 
-//横棒グラフ/////////////////////////////////////////////////////////////////////////////////
+// //横棒グラフ/////////////////////////////////////////////////////////////////////////////////
 
-<% if @todays_items_list.present? %>
-  var ctx1 = document.getElementById('barChart').getContext('2d');
-  var data = <%= @todays_items_list.to_json.html_safe %>
-  var scatterChart = new Chart(ctx1, {
-    type: 'line',
-    data: {
-      datasets: [{
-        label: 'Scatter Dataset',
-        backgroundColor: "rgba(246,156,85,1)",
-        borderColor: "rgba(246,156,85,1)",
-        fill: false,
-        borderWidth : 15,
-        pointRadius : 0,
-        data: data
-      }]
-    },
-    options: {
-      legend : {
-        display : false
-      },
-      scales: {
-        xAxes: [{
-          type: 'time',
-          time: {
-            unit: 'day'
-          },
-          position: 'bottom',
-          ticks : {
-            beginAtzero :true,
-            stepSize : 1
-          }
-        }],
-        yAxes : [{
-          scaleLabel : {
-            display : false
-          },
-          ticks : {
-            beginAtZero :true,
-            max : 10
-          }
-        }]
-      }
-    }
-  });
-<% end %>
+// <%# if @todays_items_list.present? %>
+//   var ctx1 = document.getElementById('barChart').getContext('2d');
+//   var data = <%= @todays_items_list.to_json.html_safe %>
+//   var scatterChart = new Chart(ctx1, {
+//     type: 'line',
+//     data: {
+//       datasets: [{
+//         label: 'Scatter Dataset',
+//         backgroundColor: "rgba(246,156,85,1)",
+//         borderColor: "rgba(246,156,85,1)",
+//         fill: false,
+//         borderWidth : 15,
+//         pointRadius : 0,
+//         data: data
+//       }]
+//     },
+//     options: {
+//       legend : {
+//         display : false
+//       },
+//       scales: {
+//         xAxes: [{
+//           type: 'time',
+//           time: {
+//             unit: 'day'
+//           },
+//           position: 'bottom',
+//           ticks : {
+//             beginAtzero :true,
+//             stepSize : 1
+//           }
+//         }],
+//         yAxes : [{
+//           scaleLabel : {
+//             display : false
+//           },
+//           ticks : {
+//             beginAtZero :true,
+//             max : 10
+//           }
+//         }]
+//       }
+//     }
+//   });
+// <%# end %>
+
+
 </script>
+
+</div>
+<%= @todays_items_list %>
+
