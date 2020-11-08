@@ -4,6 +4,17 @@ class User::TweetsController < ApplicationController
 		@tweet = Tweet.new
 		@tweets = Tweet.all
 		@your_tweets = Tweet.where(user_id: current_user.id)
+		@empathies_count = 0
+		@your_tweets.each do |tweet|
+			@empathies_count += tweet.empathies.count
+		end
+		@comments_count = 0
+		@your_tweets.each do |tweet|
+			@comments_count += tweet.comments.count
+		end
+
+		# @your_tweets_empathies_count = Empathy.where
+		# @your_tweets_comments_count = Comment.where(user_id: current_user.id).count
 	end
 
 	def create

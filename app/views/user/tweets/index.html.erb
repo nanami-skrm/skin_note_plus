@@ -7,8 +7,8 @@
 		<div class="col-xs-4">
 			<h3>あなたのつぶやきデータ</h3>
 			つぶやきの数：<%= @your_tweets.count %>
-			共感数：<%#= @your_tweets.empathies.count %>
-			コメント数：<%#= @your_tweets.comments.count %>
+			共感数：<%= @empathies_count %><%#= @your_tweets.empathies.count %>
+			コメント数：<%= @comments_count %><%#= @your_tweets_comments_count %>
 
 			<h3>つぶやき投稿</h3>
 				<%= form_with :model => @tweet, url:user_tweets_path, method: :post, local: true, class:"form-horizontal" do |f| %>
