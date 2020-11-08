@@ -1,6 +1,7 @@
 class Note < ApplicationRecord
 
 	has_many :todays_items, dependent: :destroy
+	has_many :my_items, through: :todays_items
 	belongs_to :user
 
 	validates :date, uniqueness: true

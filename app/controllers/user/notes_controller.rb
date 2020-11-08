@@ -15,18 +15,41 @@ class User::NotesController < ApplicationController
 
 		@condition_list = (@beginning_of_month..@end_of_month).map do |date| #mapは処理の結果が返ってくる(eachは繰り返したものの中身を返す)
   		{ x: date, y: @notes.find_by(date: date)&.read_attribute_before_type_cast(:condition) || 2 }
-    	end
+    end
 	    # ↑投稿がなかった日の肌のコンディションを「2:普通」にする
-
-	    @my_item_lists_label = current_user.my_items.pluck(:id, :item_name).to_h.to_json
+			my_item_lists_label = {}
+      current_user.my_items.pluck(:item_name).each_with_index{|item, index| my_item_lists_label.store(index + 1, item)}#.each_with_indexは回した順番の数字
+      @my_item_lists_label = my_item_lists_label.to_json
 	    # as_jsonはJSONに近いハッシュに変換してくれ、to_jsonはその更に先で完全に文字列化してくれる
 
-	    @todays_items_list = []
-		current_user.my_items.pluck(:id).each do |my_item_id|
-		 	(@beginning_of_month..@end_of_month).each do |date|
-		 		@todays_items_list.push({ x: date, y: TodaysItem.joins(:note, :my_item).where(my_items: { user_id: current_user.id }, my_item_id: my_item_id).where('notes.date = ?', date).first&.my_item_id })
-		 	end #.pushは()内の要素を配列の末尾に追加する .joinsは複数のテーブルにまたがるレコードを条件の一致するものだけくっつける
-		end
+	  @todays_items_list = []
+		# current_user.my_items.pluck(:id).each do |my_item_id|
+		#  	(@beginning_of_month..@end_of_month).each do |date|
+		#  		@todays_items_list.push({ x: date, y: TodaysItem.joins(:note, :my_item).where(my_items: { user_id: current_user.id }, my_item_id: my_item_id).where('notes.date = ?', date).first&.my_item_id })
+		#  	end #.pushは()内の要素を配列の末尾に追加する .joinsは複数のテーブルにまたがるレコードを条件の一致するものだけくっつける
+		# end
+		# my_notes = current_user.notes.where(created_at: @beginning_of_month.in_time_zone.all_month).includes(:my_items)
+		# (@beginning_of_month..@end_of_month).each do |date|
+ 		# 	@todays_items_list.push({x: date, y: nil})
+		# end
+		# my_notes.each do |note|
+  	# 		note.my_items.each do |item|
+  	#   		@todays_items_list.push({x: note.date, y: item.id})
+  	# 		end
+		# end
+		# @todays_items_list.sort_by! { |a| a[:x] }
+
+		my_notes = current_user.notes.where(created_at: @beginning_of_month.in_time_zone.all_month).includes(:my_items)
+    current_user.my_items.each_with_index do |item, index|
+      (@beginning_of_month..@end_of_month).each do |date|
+        note = my_notes.find {|a| a[:date] == date}
+        if note && note.my_items.find {|a| a[:id] == item.id}
+          @todays_items_list.push({x: date, y: index + 1})
+        else
+          @todays_items_list.push({x: date, y: nil})
+        end
+      end
+    end
 	end
 
 	def new

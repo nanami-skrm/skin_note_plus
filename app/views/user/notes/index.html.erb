@@ -55,11 +55,11 @@ var myPieChart = new Chart(ctx, {
         padding: 30,
       }
     },
-    // title: {
-   //    display: true,
-   //    text: 'Title',
-   //    position: 'top'
-   //  }
+    title: {
+      display: true,
+      text: `<%= params[:month].to_i %>月の肌の調子`,
+      position: 'top'
+    }
   }
 });
 
@@ -120,13 +120,14 @@ var chart = new Chart(ctx, {
 <% if @todays_items_list.present? %>
   var ctx1 = document.getElementById('barChart').getContext('2d');
   var data = <%= @todays_items_list.to_json.html_safe %>
+  console.log(data)
   var scatterChart = new Chart(ctx1, {
     type: 'line',
     data: {
       datasets: [{
         label: 'Scatter Dataset',
-        backgroundColor: "rgba(246,156,85,1)",
-        borderColor: "rgba(246,156,85,1)",
+        backgroundColor: "#FF9FAD",
+        borderColor: "#FF9FAD",
         fill: false,
         borderWidth : 15,
         pointRadius : 0,
@@ -156,7 +157,7 @@ var chart = new Chart(ctx, {
           },
           ticks : {
             beginAtZero :true,
-            min : 2,
+            // min : 2,
             callback: function(value, index, values) {
               var jaLabels = <%= @my_item_lists_label.html_safe %>
               // .html_safeは、&gt;&quot;などに変換せずhtmlの形式のまま返してほしい時に使う
