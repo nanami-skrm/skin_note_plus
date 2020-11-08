@@ -83,6 +83,50 @@ header {
 }
 
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+.btn-default {
+    background: #FF9FAD; //ボタンの背景色
+    color: white; //ボタンのテキストの色
+}
+
+.btn-default:hover, .btn-default:focus,
+.btn-default:active, .btn-default:active:focus, .btn-default:active:hover, .btn-default:active.focus,
+.btn-default.active, .btn-default.active:focus, .btn-default.active:hover, .btn-default.active.focus,
+.open > .dropdown-toggle.btn-default,
+.open > .dropdown-toggle.btn-default:hover,
+.open > .dropdown-toggle.btn-default:focus,
+.open > .dropdown-toggle.btn-default.focus,
+.btn-default.disabled:hover, .btn-default[disabled]:hover, fieldset[disabled] .btn-default:hover,
+.btn-default.disabled:focus, .btn-default[disabled]:focus, fieldset[disabled] .btn-default:focus,
+.btn-default.disabled.focus, .btn-default[disabled].focus, fieldset[disabled] .btn-default.focus {
+    background: #FF7B8F; //ボタンの上にポインタを持ってきたり、クリックしたりした時の背景色
+    color: white; //ボタンの上にポインタを持ってきたり、クリックしたりした時のテキストの色
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+.btn-primary {
+	background: #38C5D1; //ボタンの背景色
+    color: white; //ボタンのテキストの色
+    border: 0px;
+    margin: 20px 0;
+    height: 40px;
+}
+
+.btn-primary:hover, .btn-primary:focus,
+.btn-primary:active, .btn-primary:active:focus, .btn-primary:active:hover, .btn-primary:active.focus,
+.btn-primary.active, .btn-primary.active:focus, .btn-primary.active:hover, .btn-primary.active.focus,
+.open > .dropdown-toggle.btn-primary,
+.open > .dropdown-toggle.btn-primary:hover,
+.open > .dropdown-toggle.btn-primary:focus,
+.open > .dropdown-toggle.btn-primary.focus,
+.btn-primary.disabled:hover, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus, .btn-primary[disabled]:focus, fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled.focus, .btn-primary[disabled].focus, fieldset[disabled] .btn-primary.focus {
+    background: #1DA7BE; //ボタンの上にポインタを持ってきたり、クリックしたりした時の背景色
+    color: white; //ボタンの上にポインタを持ってきたり、クリックしたりした時のテキストの色
+}
+
+
 .footer {
 	height: 100px;
 	background-color: #38C5D1;
