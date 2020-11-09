@@ -12,7 +12,7 @@ class User::EmpathiesController < ApplicationController
 	def destroy
 		tweet = Tweet.find(params[:tweet_id])
 		empathy = current_user.empathies.find_by(tweet_id: tweet.id)
-		empathy.save
+		empathy.destroy
 		redirect_to request.referer
 	end
 

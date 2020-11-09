@@ -59,12 +59,12 @@
 							<td>
 								<% if tweet.empathized_by?(current_user) %>
 									<%= link_to user_tweet_empathies_path(tweet), method: :delete do %>
-										<span class="glyphicon glyphicon-hand-left" aria-hidden="true" style="color:red;"></span>
-										<%= tweet.empathies.count %>
+										<span class="glyphicon glyphicon-hand-left" aria-hidden="true" style="color:#FF7B8F;"></span>
 									<% end %>
+									<%= tweet.empathies.count %>
 								<% else %>
 									<%= link_to user_tweet_empathies_path(tweet), method: :post do %>
-										<span class="glyphicon glyphicon-hand-left" aria-hidden="true" style="color:black;"></span>
+										<span class="glyphicon glyphicon-hand-left" aria-hidden="true" style="color:#DBDBDB;"></span>
 									<% end %>
 									<%= tweet.empathies.count %>
 								<% end %>
@@ -107,9 +107,24 @@
 								<% end %>
 							</td>
 							<td>(<%= your_tweet.user.age %>歳/<%= your_tweet.user.skin_type %>)</td>
-							<td><span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span></td>
+							<td>
+								<% if your_tweet.empathized_by?(current_user) %>
+									<%= link_to user_tweet_empathies_path(your_tweet), method: :delete do %>
+										<span class="glyphicon glyphicon-hand-left" aria-hidden="true" style="color:#FF7B8F;"></span>
+									<% end %>
+									<%= your_tweet.empathies.count %>
+								<% else %>
+									<%= link_to user_tweet_empathies_path(your_tweet), method: :post do %>
+										<span class="glyphicon glyphicon-hand-left" aria-hidden="true" style="color:#DBDBDB;"></span>
+									<% end %>
+									<%= your_tweet.empathies.count %>
+								<% end %>
+							</td>
 							<td><span class="glyphicon glyphicon-comment" aria-hidden="true"> <%= your_tweet.comments.count %></span></td>
-							<td><%= link_to "削除",user_tweet_path(your_tweet), method: :delete, class: "btn btn-danger btn-sm" %></td>
+							<td>
+								<% if your_tweet.user.id == current_user.id %>
+									<%= link_to "削除",user_tweet_path(your_tweet), method: :delete, class: "btn btn-danger btn-sm" %>
+								<% end %>
 						</tr>
 					<% end %>
 				</tbody>

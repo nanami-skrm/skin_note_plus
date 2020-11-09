@@ -7,7 +7,7 @@ class User < ApplicationRecord
     has_many :notes, dependent: :destroy
   	has_many :my_items, dependent: :destroy
   	has_many :tweets, dependent: :destroy
-  	has_many :empathys, dependent: :destroy
+  	has_many :empathies, dependent: :destroy
   	has_many :comments, dependent: :destroy
   	has_many :interests, dependent: :destroy
   	has_many :reviews
