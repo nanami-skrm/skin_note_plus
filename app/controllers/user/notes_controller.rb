@@ -17,9 +17,9 @@ class User::NotesController < ApplicationController
   		{ x: date, y: @notes.find_by(date: date)&.read_attribute_before_type_cast(:condition) || 2 }
     end
 	    # ↑投稿がなかった日の肌のコンディションを「2:普通」にする
-			my_item_lists_label = {}
-      current_user.my_items.pluck(:item_name).each_with_index{|item, index| my_item_lists_label.store(index + 1, item)}#.each_with_indexは回した順番の数字
-      @my_item_lists_label = my_item_lists_label.to_json
+		my_item_lists_label = {}
+    current_user.my_items.pluck(:item_name).each_with_index{|item, index| my_item_lists_label.store(index + 1, item)}#.each_with_indexは回した順番の数字
+    @my_item_lists_label = my_item_lists_label.to_json
 	    # as_jsonはJSONに近いハッシュに変換してくれ、to_jsonはその更に先で完全に文字列化してくれる
 
 	  @todays_items_list = []
@@ -109,6 +109,8 @@ class User::NotesController < ApplicationController
 	   end
 	end
 
+	private
+
 	def note_params
 		params.require(:note).permit(:user_id, :date, :condition)
 	end
@@ -116,4 +118,5 @@ class User::NotesController < ApplicationController
 	def todays_item_params
     params.require(:todays_items).permit(my_item_id: [])
 	end
+
 end

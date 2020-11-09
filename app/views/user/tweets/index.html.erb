@@ -5,20 +5,32 @@
 
 	<div class="row">
 		<div class="col-xs-4">
-			<h3>あなたのつぶやきデータ</h3>
-			つぶやきの数：<%= @your_tweets.count %>
-			共感数：<%= @empathies_count %>
-			コメント数：<%= @comments_count %>
-
-			<h3>つぶやき投稿</h3>
+			<h4>あなたのつぶやきデータ</h4>
+				<div class="count-set col-xs-4">
+					<p class="count"><%= @your_tweets.count %></p>
+					<p class="count-label">つぶやいた数</p>
+				</div>
+				<div class="count-set col-xs-4">
+					<p class="count"><%= @empathies_count %></p>
+					<p class="count-label">得た共感数</p>
+				</div>
+				<div class="count-set col-xs-4">
+					<p class="count"><%= @comments_count %></p>
+					<p class="count-label">得たコメント数</p>
+				</div>
+				<h4>つぶやき投稿</h4>
 				<%= form_with :model => @tweet, url:user_tweets_path, method: :post, local: true, class:"form-horizontal" do |f| %>
-				<%= f.label "つぶやき内容" %><br>
-				<%= f.text_area :tweet_text, size: "30x5" %>
-				<%= f.submit "投稿する" %>
-			<% end %>
-		</div>
+					<div>
+						<p>つぶやき内容</p>
+						<%= f.text_area :tweet_text, class: "col-xs-12" %>
+					</div>
+					<div>
+						<%= f.submit "投稿する", class: "col-xs-12 btn btn-primary" %>
+					</div>
+				<% end %>
+			</div>
 		<div class="col-xs-8">
-			<h3>みんなのつぶやき一覧</h3>
+			<h4>みんなのつぶやき一覧</h4>
 			<table class="table table-hover" style="table-layout:fixed;width:100%;">
 			    <colgroup>
 			        <col style="width:60%;">
@@ -68,7 +80,7 @@
 					<% end %>
 				</tbody>
 			</table>
-			<h3>あなたのつぶやき一覧</h3>
+			<h4>あなたのつぶやき一覧</h4>
 				<table class="table table-hover" style="table-layout:fixed;width:100%;">
 				    <colgroup>
 				        <col style="width:60%;">

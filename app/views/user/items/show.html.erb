@@ -3,7 +3,7 @@
 
 
 		<div class="col-xs-4">
-			<h1>アイテム詳細ページ</h1>
+			<h4>アイテム詳細ページ</h4>
 			<%= attachment_image_tag(@item, :image, :fill, 150, 150, fallback: "no_image.jpg") %>
 			<%= @item.item_name %>
 			<%= @item.item_genre %>
@@ -15,7 +15,8 @@
 				data-score="<%= @average_score %>" ><br>
 			</div><%= @average_score %>
 
-			<h1>口コミ投稿</h1>
+			<h4>口コミ投稿</h4>
+			<p>口コミ内容<p>
 			<%= form_with model: @review, url:user_item_reviews_path(@item.id), method: :post, local: true, class:"form-horizontal" do |f| %>
 				<div id="star"
 				data-star-on="<%= asset_path('star-on.png') %>"
@@ -23,14 +24,18 @@
 				<!-- ↑ consoleに画像のURLを出力させる(検証ツールから見られる) -->
 				</div>
 				<%= f.hidden_field :user_id, value: current_user.id %>
-				<%= f.text_area :review_text %>
-				<%= f.submit "投稿する" %>
+				<div>
+					<%= f.text_area :review_text, class: "col-xs-12" %>
+				</div>
+				<div>
+					<%= f.submit "投稿する", class: "col-xs-12 btn btn-primary" %>
+				</div>
 			<% end %>
 		</div>
 
 
 		<div class="col-xs-8">
-			<h1>この商品の口コミ</h1>
+			<h4>この商品の口コミ</h4>
 			<table class="table" style="table-layout:fixed;width:100%;">
     <colgroup>
         <col style="width:50%;">
