@@ -1,5 +1,7 @@
 class User::ReviewsController < ApplicationController
 
+	before_action :authenticate_user!
+
 	def create
 		reviews = Review.new(review_params)
 		reviews.save

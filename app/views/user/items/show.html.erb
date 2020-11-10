@@ -1,7 +1,8 @@
 <div class="container">
 	<div class="row">
-
-
+		<%= render "layouts/main_button" %>
+	</div>
+	<div class="row">
 		<div class="col-xs-4">
 			<h4>アイテム詳細ページ</h4>
 			<%= attachment_image_tag(@item, :image, :fill, 150, 150, fallback: "no_image.jpg") %>
@@ -12,8 +13,8 @@
 				data-star-on="<%= asset_path('star-on.png') %>"
 				data-star-off="<%= asset_path('star-off.png') %>"
 				data-star-half="<%= asset_path('star-half.png') %>"
-				data-score="<%= @average_score %>" ><br>
-			</div><%= @average_score %>
+				data-score="<%= @average_score %>.to_f.round(1)" ><br>
+			</div><%= @average_score.to_f.round(1) %>
 
 			<h4>口コミ投稿</h4>
 			<p>口コミ内容<p>
@@ -42,6 +43,13 @@
         <col style="width:20%;">
         <col style="width:30%;">
     </colgroup>
+	    <thead>
+				<tr>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
 				<tbody>
 					<% @reviews.each do |review| %>
 						<tr>
@@ -62,8 +70,10 @@
 											$(star).raty({
 												starOn: starOn,
 												starOff: starOff,
+
 												score: <%= review.score %>,
-												readOnly: true // 編集できない星
+												readOnly: true, // 編集できない星
+												size: 10,
 											});
 
 										</script>

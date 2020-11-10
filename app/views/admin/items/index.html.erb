@@ -15,7 +15,7 @@
 		<tbody>
 		<% @items.each do |item| %>
 			<tr>
-				<td><%= attachment_image_tag(item, :image, :fill, 50, 50, fallback: "no_image.jpg") %></td>
+				<td><%= attachment_image_tag asset_path(item, :image, :fill, 50, 50, fallback: "no_image.jpg") %></td>
 				<td><%= item.item_name %></td>
 				<td><%= item.item_genre %></td>
 				<td><%= item.maker %></td>

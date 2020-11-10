@@ -1,5 +1,7 @@
 class User::MyItemsController < ApplicationController
 
+	before_action :authenticate_user!
+
 	def index
 		@my_item = MyItem.new
 		@my_items = MyItem.where(user_id: current_user.id)

@@ -1,5 +1,7 @@
 class User::EmpathiesController < ApplicationController
 
+	before_action :authenticate_user!
+
 	def create
 		tweet = Tweet.find(params[:tweet_id])
 		empathy = Empathy.new

@@ -1,12 +1,14 @@
 class User::NotesController < ApplicationController
 
+	before_action :authenticate_user!
+
 	def index
 		@beginning_of_month = Date.new(params[:year].to_i, params[:month].to_i, 1)
 		@end_of_month = Date.new(params[:year].to_i, params[:month].to_i, -1)
 		@notes = current_user.notes.where(date: @beginning_of_month..@end_of_month)
 
 		# ↓{"悪い"=>13, "少し悪い"=>3, "普通"=>4, "良い"=>4, "とても良い"=>2}見たいなデータ
-		grouping_conditions_count = @notes.group(:condition).count #←何度も取りに行かなくていいようにgroupで取得する
+		grouping_conditions_count = @notes.group(:condition).count#←何度も取りに行かなくていいようにgroupで取得する
 		@excellent_condition_count = grouping_conditions_count["とても良い"]
 		@good_condition_count = grouping_conditions_count["良い"]
 		@average_condition_count = grouping_conditions_count["普通"]
@@ -23,22 +25,6 @@ class User::NotesController < ApplicationController
 	    # as_jsonはJSONに近いハッシュに変換してくれ、to_jsonはその更に先で完全に文字列化してくれる
 
 	  @todays_items_list = []
-		# current_user.my_items.pluck(:id).each do |my_item_id|
-		#  	(@beginning_of_month..@end_of_month).each do |date|
-		#  		@todays_items_list.push({ x: date, y: TodaysItem.joins(:note, :my_item).where(my_items: { user_id: current_user.id }, my_item_id: my_item_id).where('notes.date = ?', date).first&.my_item_id })
-		#  	end #.pushは()内の要素を配列の末尾に追加する .joinsは複数のテーブルにまたがるレコードを条件の一致するものだけくっつける
-		# end
-		# my_notes = current_user.notes.where(created_at: @beginning_of_month.in_time_zone.all_month).includes(:my_items)
-		# (@beginning_of_month..@end_of_month).each do |date|
- 		# 	@todays_items_list.push({x: date, y: nil})
-		# end
-		# my_notes.each do |note|
-  	# 		note.my_items.each do |item|
-  	#   		@todays_items_list.push({x: note.date, y: item.id})
-  	# 		end
-		# end
-		# @todays_items_list.sort_by! { |a| a[:x] }
-
 		my_notes = current_user.notes.where(created_at: @beginning_of_month.in_time_zone.all_month).includes(:my_items)
     current_user.my_items.each_with_index do |item, index|
       (@beginning_of_month..@end_of_month).each do |date|
