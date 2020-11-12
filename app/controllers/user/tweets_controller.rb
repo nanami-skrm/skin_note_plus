@@ -20,12 +20,22 @@ class User::TweetsController < ApplicationController
 	end
 
 	def create
-		tweet = Tweet.new(tweet_params)
-		tweet.user = current_user
-		if tweet.save
+		@tweet = Tweet.new(tweet_params)
+		@tweet.user = current_user
+		if @tweet.save
 			redirect_to request.referer
 		else
-			@tweet = Tweet.new
+			@tweets = Tweet.all
+			@your_tweets = Tweet.where(user_id: current_user.id)
+			@empathies_count = 0
+			@your_tweets.each do |tweet|
+				@empathies_count += tweet.empathies.count
+			end
+			@comments_count = 0
+			@your_tweets.each do |tweet|
+				@comments_count += tweet.comments.count
+			end
+			# byebug
 			render "index"
 		end
 

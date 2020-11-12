@@ -3,13 +3,13 @@
     <div class="main-text">あなただけの肌の記録ノート</div>
     <div class="top-buttons">
       <div class="top-button">
-    	 <%= link_to "ユーザ新規登録", new_user_registration_path %>
+    	 <%= link_to "新規登録", new_user_registration_path, class:"btn btn-info" %>
       </div>
       <div class="top-button">
-    	<%= link_to "ログイン", new_user_session_path %>
+    	<%= link_to "ログイン", new_user_session_path, class:"btn btn-info" %>
       </div>
       <div class="top-button">
-      <%= link_to 'ゲストログイン（閲覧用）', user_homes_guest_sign_in_path, method: :post %>
+      <%= link_to 'ゲストログイン（閲覧用）', user_homes_guest_sign_in_path, method: :post, class:"btn btn-info" %>
       </div>
     </div>
   </div>
