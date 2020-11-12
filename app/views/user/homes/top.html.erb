@@ -1,10 +1,27 @@
+<div class="main-visual">
+  <div class="container">
+    <div class="main-text">あなただけの肌の記録ノート</div>
+    <div class="top-buttons">
+      <div class="top-button">
+    	 <%= link_to "ユーザ新規登録", new_user_registration_path %>
+      </div>
+      <div class="top-button">
+    	<%= link_to "ログイン", new_user_session_path %>
+      </div>
+      <div class="top-button">
+      <%= link_to 'ゲストログイン（閲覧用）', user_homes_guest_sign_in_path, method: :post %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="contents">
+    skin noteでできること
 
 
-	<div class="main-visual">
-	</div>
-
-	<%= link_to "ユーザ新規登録", new_user_registration_path %>
-	<%= link_to "ログイン", new_user_session_path %>
-
-	<%= link_to "管理者ログイン", new_admin_session_path %>
-<%= link_to 'ゲストログイン（閲覧用）', user_homes_guest_sign_in_path, method: :post %>
+    肌の状態をグラフで確認する
+    商品の口コミを書く
+    肌の悩みをつぶやく
+  </div>
+</div>
