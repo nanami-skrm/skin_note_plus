@@ -65,7 +65,7 @@
 					data-star-on="<%= asset_path('star-on.png') %>"
 					data-star-off="<%= asset_path('star-off.png') %>"
 					data-star-half="<%= asset_path('star-half.png') %>"
-					data-score="<%= Review.where(item_id: item.id).average(:score).to_f.round(1) %>" ><br> <!-- あってる？ -->
+					data-score="<%= Review.where(item_id: item.id).average(:score).to_f.round(1) %>" > <!-- あってる？ -->
 
 					<script>
 					//商品詳細の星/////////////////////////////////////////////////////////////////////////////////

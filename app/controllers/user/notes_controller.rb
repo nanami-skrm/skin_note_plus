@@ -20,12 +20,13 @@ class User::NotesController < ApplicationController
     end
 	    # ↑投稿がなかった日の肌のコンディションを「2:普通」にする
 		my_item_lists_label = {}
-    current_user.my_items.pluck(:item_name).each_with_index{|item, index| my_item_lists_label.store(index + 1, item)}#.each_with_indexは回した順番の数字
+    current_user.my_items.pluck(:item_name).each_with_index{|item, index| my_item_lists_label.store(index + 1, item)}#.each_with_indexは回した順番の数字を振る
     @my_item_lists_label = my_item_lists_label.to_json
 	    # as_jsonはJSONに近いハッシュに変換してくれ、to_jsonはその更に先で完全に文字列化してくれる
 
 	  @todays_items_list = []
 		my_notes = current_user.notes.where(created_at: @beginning_of_month.in_time_zone.all_month).includes(:my_items)
+		# ↑includesを使うことでSQL文が何度も発行されるのを防ぐ
     current_user.my_items.each_with_index do |item, index|
       (@beginning_of_month..@end_of_month).each do |date|
         note = my_notes.find {|a| a[:date] == date}
