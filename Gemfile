@@ -82,3 +82,5 @@ end
 
 gem 'ed25519'
 gem 'bcrypt_pbkdf'
+
+gem 'kaminari', '~> 0.17.0'
