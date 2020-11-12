@@ -1,0 +1,110 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-xs-4">
+      <h4>アイテム詳細ページ</h4>
+      <%= attachment_image_tag(@item, :image, :fill, 150, 150, fallback: "no_image.jpg") %>
+      <%= @item.item_name %>
+      <%= @item.item_genre %>
+      <%= @item.maker %>
+      <div id="averagestar"
+        data-star-on="<%= asset_path('star-on.png') %>"
+        data-star-off="<%= asset_path('star-off.png') %>"
+        data-star-half="<%= asset_path('star-half.png') %>"
+        data-score="<%= @average_score %>.to_f.round(1)" ><br>
+      </div><%= @average_score.to_f.round(1) %>
+    </div>
+
+
+    <div class="col-xs-8">
+      <h4>この商品の口コミ</h4>
+      <table class="table" style="table-layout:fixed;width:100%;">
+    <colgroup>
+        <col style="width:50%;">
+        <col style="width:15%;">
+        <col style="width:25%;">
+        <col style="width:10%;">
+    </colgroup>
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+        <tbody>
+          <% @reviews.each do |review| %>
+            <tr>
+              <td style="word-wrap:break-word;"><%= review.review_text %></td>
+              <td>(<%= review.user.age %>歳/<%= review.user.skin_type %>)</td>
+
+              <td>
+                <div id="star<%= review.id %>"
+                  data-star-on="<%= asset_path('star-on.png') %>"
+                  data-star-off="<%= asset_path('star-off.png') %>"
+                  data-score="<%= review.score %>" ><br>
+
+                    <script>//口コミ一覧の星/////////////////////////////////////////////////////////////////////////////////
+
+                      var star = document.getElementById(`star<%= review.id %>`);
+                      var starOn = star.dataset.starOn
+                      var starOff = star.dataset.starOff
+                      $(star).raty({
+                        starOn: starOn,
+                        starOff: starOff,
+
+                        score: <%= review.score %>,
+                        readOnly: true, // 編集できない星
+                        size: 10,
+                      });
+
+                    </script>
+                    <%= review.score %>
+                </div>
+              </td>
+              <td>
+                  <%#= link_to "削除", user_item_review_path(@item, review), method: :delete, item_id: review.item.id, class: "btn btn-danger btn-sm" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<script>
+
+//商品詳細の星/////////////////////////////////////////////////////////////////////////////////
+  var star = document.getElementById('averagestar')
+  var starOn = star.dataset.starOn
+  var starOff = star.dataset.starOff
+  var starHalf = star.dataset.starHalf
+
+  $(star).raty({
+    starOn: starOn,
+    starOff: starOff,
+    starHalf: starHalf,
+    half: true,
+    readOnly: true // 編集できない星
+  });
+
+//口コミ投稿の星/////////////////////////////////////////////////////////////////////////////////
+
+  var star = document.getElementById('star')
+  var starOn = star.dataset.starOn
+  var starOff = star.dataset.starOff
+  $(star).raty({
+    starOn: starOn,
+    starOff: starOff,
+  });
+  // ↑ raty();だけだと画像のURLが正しく受け取れないので｛｝をつける
+
+</script>
+
+
+
+
+</div>

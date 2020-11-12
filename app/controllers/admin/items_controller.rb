@@ -6,6 +6,12 @@ class Admin::ItemsController < ApplicationController
 		@items = Item.all
 	end
 
+	def show
+		@item = Item.find(params[:id])
+		@reviews = Review.where(item_id: params[:id])
+		@average_score = Review.where(item_id: params[:id]).average(:score)
+	end
+
 	def new
 		@item = Item.new
 	end

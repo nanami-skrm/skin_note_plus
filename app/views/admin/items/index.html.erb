@@ -1,7 +1,6 @@
 <div class="container">
 	<h1>アイテム一覧</h1>
 	<%= link_to "アイテム新規作成", new_admin_item_path %>
-	<%= link_to "管理者ログアウト", destroy_admin_session_path, method: :delete %>
 	<table class="table">
 		<thead>
 			<tr>
@@ -15,7 +14,11 @@
 		<tbody>
 		<% @items.each do |item| %>
 			<tr>
-				<td><%= attachment_image_tag(item, :image, :fill, 50, 50, fallback: "no_image.jpg") %></td>
+				<td>
+					<%= link_to admin_item_path(item) do %>
+						<%= attachment_image_tag(item, :image, :fill, 50, 50, fallback: "no_image.jpg") %>
+					<% end %>
+				</td>
 				<td><%= item.item_name %></td>
 				<td><%= item.item_genre %></td>
 				<td><%= item.maker %></td>
