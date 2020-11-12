@@ -3,9 +3,16 @@ class User::ReviewsController < ApplicationController
 	before_action :authenticate_user!
 
 	def create
-		reviews = Review.new(review_params)
-		reviews.save
-		redirect_to request.referer
+		@review = Review.new(review_params)
+		if @review.save
+			redirect_to request.referer
+		else
+			@item = @review.item
+			# @item = Item.find(params[:id])
+			@reviews = Review.where(item_id: @item.id)
+			@average_score = Review.where(item_id: @item.id).average(:score)
+			render 'user/items/show'
+		end
 	end
 
 	def destroy
