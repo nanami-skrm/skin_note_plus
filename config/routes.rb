@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   namespace :user do
   	get  'homes/about'=>"homes#about"
     post 'homes/guest_sign_in', to: 'homes#new_guest'
+    get 'tweets/current_index'=>"tweets#current_index"
   	resources :notes, only: [:index, :new, :create]
   	resources :tweets, only: [:index, :create, :destroy, :show] do
       resources :comments, only: [:create, :destroy]

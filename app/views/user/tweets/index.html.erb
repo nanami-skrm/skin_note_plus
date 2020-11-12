@@ -20,11 +20,11 @@
 					<p class="count"><%= @comments_count %></p>
 					<p class="count-label">得たコメント数</p>
 				</div>
+
+				<%= link_to "あなたのつぶやき一覧", user_tweets_current_index_path, class: "col-xs-12 btn btn-primary" %>
+
 				<h4>つぶやき投稿</h4>
 				<%= form_with :model => @tweet, url:user_tweets_path, method: :post, local: true, class:"form-horizontal" do |f| %>
-
-
-
 					<div>
 						<p>つぶやき内容</p>
 						<%= f.text_area :tweet_text, class: "col-xs-12" %>
@@ -34,53 +34,6 @@
 					</div>
 				<% end %>
 
-				<h4>あなたのつぶやき一覧</h4>
-				<table class="table table-hover" style="table-layout:fixed;width:100%;">
-			    <colgroup>
-			        <col style="width:60%;">
-			        <col style="width:15%;">
-			        <col style="width:15%;">
-			        <col style="width:10%;">
-			    </colgroup>
-			    <thead>
-						<tr>
-							<th></th>
-							<th></th>
-							<th></th>
-							<th></th>
-							<th></th>
-						</tr>
-					</thead>
-				<tbody>
-					<% @your_tweets.each do |your_tweet| %>
-						<tr>
-							<td style="word-wrap:break-word;"><%= link_to user_tweet_path(your_tweet) do %>
-									<%= your_tweet.tweet_text %>
-								<% end %>
-							</td>
-							<td>
-								<% if your_tweet.empathized_by?(current_user) %>
-									<%= link_to user_tweet_empathies_path(your_tweet), method: :delete do %>
-										<span class="glyphicon glyphicon-hand-left" aria-hidden="true" style="color:#FF7B8F;"></span>
-									<% end %>
-									<%= your_tweet.empathies.count %>
-								<% else %>
-									<%= link_to user_tweet_empathies_path(your_tweet), method: :post do %>
-										<span class="glyphicon glyphicon-hand-left" aria-hidden="true" style="color:#DBDBDB;"></span>
-									<% end %>
-									<%= your_tweet.empathies.count %>
-								<% end %>
-							</td>
-							<td><span class="glyphicon glyphicon-comment" aria-hidden="true"> <%= your_tweet.comments.count %></span></td>
-							<td>
-								<% if your_tweet.user.id == current_user.id %>
-									<%= link_to "削除",user_tweet_path(your_tweet), method: :delete, class: "btn btn-danger btn-sm" %>
-								<% end %>
-							</td>
-						</tr>
-					<% end %>
-				</tbody>
-			</table>
 			</div>
 		<div class="col-xs-8">
 			<h4>みんなのつぶやき一覧</h4>

@@ -15,9 +15,12 @@ class User::TweetsController < ApplicationController
 			@comments_count += tweet.comments.count
 		end
 
-		# @your_tweets_empathies_count = Empathy.where
-		# @your_tweets_comments_count = Comment.where(user_id: current_user.id).count
 	end
+
+	def current_index
+		@your_tweets = Tweet.where(user_id: current_user.id)
+	end
+
 
 	def create
 		@tweet = Tweet.new(tweet_params)
@@ -50,6 +53,8 @@ class User::TweetsController < ApplicationController
 	def show
 		 @tweet = Tweet.find(params[:id])
 		 @comment = Comment.new
+
+
 	end
 
 	private

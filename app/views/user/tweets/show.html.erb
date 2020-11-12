@@ -1,14 +1,15 @@
 <div class="container">
-	<h1>つぶやきの詳細ページです</h1>
-
+<%= render "layouts/main_button" %>
 	<%= @tweet.tweet_text %>
 	(<%= @tweet.user.age %>歳/<%= @tweet.user.skin_type %>)
 
-
 	<table class="table">
 		<tbody>
-			<% @tweet.comments.each do |comment| %>
+			<% @tweet.comments.each_with_index do |comment, index| %>
 				<tr>
+					<td>
+						<%= index += 1 %>
+					</td>
 					<td>
 						<%= comment.comment_text %>
 					<td>
