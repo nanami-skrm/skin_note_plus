@@ -8,7 +8,6 @@ class User::ReviewsController < ApplicationController
 			redirect_to request.referer
 		else
 			@item = @review.item
-			# @item = Item.find(params[:id])
 			@reviews = Review.where(item_id: @item.id)
 			@average_score = Review.where(item_id: @item.id).average(:score)
 			render 'user/items/show'
@@ -16,6 +15,12 @@ class User::ReviewsController < ApplicationController
 	end
 
 	def destroy
+		item = Item.find(params[:item_id])
+		review = current_user.reviews.find_by(item_id: item.id)
+		# review = Review.find_by(item_id: params[:item_id], user_id: current_user.id)
+		# byebug
+		review.destroy
+		redirect_to request.referer
 	end
 
 	private

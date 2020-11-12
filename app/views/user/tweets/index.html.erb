@@ -76,6 +76,7 @@
 								<% if your_tweet.user.id == current_user.id %>
 									<%= link_to "削除",user_tweet_path(your_tweet), method: :delete, class: "btn btn-danger btn-sm" %>
 								<% end %>
+							</td>
 						</tr>
 					<% end %>
 				</tbody>
