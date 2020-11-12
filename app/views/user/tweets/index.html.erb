@@ -1,16 +1,8 @@
 <div class="container">
 	<div class="row">
 		<%= render "layouts/main_button" %>
-						<% if @tweet.errors.any? %>
-    			<div id="error_explanation">
-      			<h2><%= @tweet.errors.count %>件のエラーが発生しました。</h2>
-      			<ul>
-	      			<% @tweet.errors.full_messages.each do |message| %>
-	        			<li><%= message %></li>
-	      			<% end %>
-      			</ul>
-    			</div>
-  			<% end %>
+		<%= render "layouts/error_messages", model: @tweet %>
+
 	</div>
 
 	<div class="row">

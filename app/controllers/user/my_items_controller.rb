@@ -8,12 +8,11 @@ class User::MyItemsController < ApplicationController
 	end
 
 	def create
-		my_item = MyItem.new(my_item_params)
-		my_item.user = current_user
-		if my_item.save
+		@my_item = MyItem.new(my_item_params)
+		@my_item.user = current_user
+		if @my_item.save
 			redirect_to request.referer, notice: "You have created address successfully."
 		else
-			@my_item = MyItem.new
 			@my_items = MyItem.where(user_id: current_user.id)
 			render "index"
 		end
