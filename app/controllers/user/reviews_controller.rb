@@ -10,13 +10,14 @@ class User::ReviewsController < ApplicationController
 			@item = @review.item
 			@reviews = Review.where(item_id: @item.id)
 			@average_score = Review.where(item_id: @item.id).average(:score)
+			@reviews = Review.where(item_id: @item.id).page(params[:page]).per(15)
 			render 'user/items/show'
 		end
 	end
 
 	def destroy
 		item = Item.find(params[:item_id])
-		review = current_user.reviews.find_by(item_id: item.id)
+		review = current_user.reviews.find(params[:id])
 		# review = Review.find_by(item_id: params[:item_id], user_id: current_user.id)
 		# byebug
 		review.destroy

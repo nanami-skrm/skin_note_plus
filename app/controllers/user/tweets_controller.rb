@@ -4,7 +4,7 @@ class User::TweetsController < ApplicationController
 
 	def index
 		@tweet = Tweet.new
-		@tweets = Tweet.all.page(params[:page]).per(20)
+		@tweets = Tweet.all.page(params[:page]).per(15)
 		@your_tweets = Tweet.where(user_id: current_user.id)
 		@empathies_count = 0
 		@your_tweets.each do |tweet|
@@ -39,6 +39,7 @@ class User::TweetsController < ApplicationController
 				@comments_count += tweet.comments.count
 			end
 			# byebug
+			@tweets = Tweet.all.page(params[:page]).per(15)
 			render "index"
 		end
 
