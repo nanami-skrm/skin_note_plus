@@ -49,6 +49,7 @@ class User::NotesController < ApplicationController
 		params[:note][:user_id] = current_user.id
 		# ↑note_paramsで値が決定されるの前に書く
 		# note = Note.new(note_params)
+
 		date = Date.new(params[:note]["date(1i)"].to_i, params[:note]["date(2i)"].to_i, params[:note]["date(3i)"].to_i)
 
 		if Note.find_by(date: date, user_id: current_user.id)#新規だった場合はここを無視するようにifにする

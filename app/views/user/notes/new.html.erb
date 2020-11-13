@@ -1,19 +1,26 @@
 <div class="container">
-	<%= render "layouts/main_button" %>
+	<div class="row">
+		<%= render "layouts/main_button" %>
+		<%= flash[:alert] %>
+	</div>
 
 	<h3>肌ノート作成</h3>
 	<%= form_with :model => @note, url:user_notes_path, method: :post, local: true, class:"form-horizontal" do |f| %>
+
 		<div>
-			<%= f.label "日付" %>
+			<h4>■日付</h4>
 			<%= f.date_select :date, use_month_numbers: true %>
 		</div>
+
 		<div>
-			<%= f.label "肌コンディション" %>
+			<h4>■肌コンディション</h4>
 			<%= f.select :condition, Note.conditions.keys, autofocus: true, autocomplete: "condition" %>
 		</div>
-		<h3>使用したスキンケア</h3>
+
+		<div>
+			<h4>■使用したスキンケア</h4>
   		<div class="field">
-  			<table class="table">
+  			<table class="table" style="width: 50%;">
   				<tbody>
 	    		  <% @my_items.each do |my_item| %>
 		    		  <tr>
@@ -24,7 +31,11 @@
 			  		<% end %>
 			  	</tbody>
 			  </table>
-			<%= f.submit "登録する" %>
+			  <div>
+					<%= f.submit "登録する", class: "col-xs-3 btn btn-primary" %>
+				</div>
+			</div>
 		</div>
+
 	<% end %>
 </div>
