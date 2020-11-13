@@ -12,6 +12,9 @@ class User < ApplicationRecord
   	has_many :interests, dependent: :destroy
   	has_many :reviews
 
+    validates :name, presence: true
+    validates :age, presence: true
+
     enum skin_type: { 乾燥肌: 0, 脂性肌: 1, 混合肌: 2, 普通肌: 3 }
 
 end
