@@ -3,12 +3,15 @@ class User::CommentsController < ApplicationController
 	before_action :authenticate_user!
 
 	def create
-		tweet = Tweet.find(params[:tweet_id])
-		comment = Comment.new(comment_params)
-		comment.user_id = current_user.id
-		comment.tweet_id = tweet.id
-		comment.save
-		redirect_to request.referer
+		@tweet = Tweet.find(params[:tweet_id])
+		@comment = Comment.new(comment_params)
+		@comment.user_id = current_user.id
+		@comment.tweet_id = @tweet.id
+		if @comment.save
+			redirect_to request.referer
+		else
+			render 'user/tweets/show'
+		end
 	end
 
 	def destroy

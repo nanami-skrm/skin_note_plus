@@ -58,7 +58,7 @@
 					<% @tweets.each do |tweet| %>
 						<tr>
 							<td style="word-wrap:break-word;"><%= link_to user_tweet_path(tweet) do %>
-									<%= tweet.tweet_text %>
+									<%= tweet.tweet_text %><%= tweet.id %>
 								<% end %>
 							</td>
 							<td>(<%= tweet.user.age %>歳/<%= tweet.user.skin_type %>)</td>

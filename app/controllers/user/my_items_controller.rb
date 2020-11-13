@@ -11,7 +11,7 @@ class User::MyItemsController < ApplicationController
 		@my_item = MyItem.new(my_item_params)
 		@my_item.user = current_user
 		if @my_item.save
-			redirect_to request.referer, notice: "You have created address successfully."
+			redirect_to request.referer
 		else
 			@my_items = MyItem.where(user_id: current_user.id)
 			render "index"

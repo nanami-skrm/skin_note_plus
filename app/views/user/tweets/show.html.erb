@@ -1,5 +1,6 @@
 <div class="container">
 <%= render "layouts/main_button" %>
+<%= render "layouts/error_messages", model: @comment %>
 	<%= @tweet.tweet_text %>
 	(<%= @tweet.user.age %>歳/<%= @tweet.user.skin_type %>)
 
