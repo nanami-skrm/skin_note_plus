@@ -109,7 +109,6 @@ header {
     color: white; //ボタンのテキストの色
     border: 0px;
     margin: 20px 0;
-    height: 40px;
 }
 
 .btn-primary:hover, .btn-primary:focus,
@@ -131,3 +130,26 @@ header {
 	height: 100px;
 	background-color: #38C5D1;
 }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+.btn-success {
+  background: #C2C2C2; //ボタンの背景色
+    color: white; //ボタンのテキストの色
+    border: 0px;
+    margin: 20px 0 0 40px;
+}
+
+.btn-success:hover, .btn-success:focus,
+.btn-success:active, .btn-success:active:focus, .btn-success:active:hover, .btn-success:active.focus,
+.btn-success.active, .btn-success.active:focus, .btn-success.active:hover, .btn-success.active.focus,
+.open > .dropdown-toggle.btn-success,
+.open > .dropdown-toggle.btn-success:hover,
+.open > .dropdown-toggle.btn-success:focus,
+.open > .dropdown-toggle.btn-success.focus,
+.btn-success.disabled:hover, .btn-success[disabled]:hover, fieldset[disabled] .btn-success:hover,
+.btn-success.disabled:focus, .btn-success[disabled]:focus, fieldset[disabled] .btn-success:focus,
+.btn-success.disabled.focus, .btn-success[disabled].focus, fieldset[disabled] .btn-success.focus {
+    background: #A5A5A5; //ボタンの上にポインタを持ってきたり、クリックしたりした時の背景色
+    color: white; //ボタンの上にポインタを持ってきたり、クリックしたりした時のテキストの色
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////

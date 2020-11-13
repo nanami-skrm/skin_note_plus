@@ -11,7 +11,7 @@ class User::UsersController < ApplicationController
   def update
     user = User.find(params[:id])
     user.update(user_params)
-      redirect_to user_notes_path(year: Time.now.year, month: Time.now.month)
+    redirect_to user_notes_path(year: Time.now.year, month: Time.now.month)
   end
 
   private

@@ -1,8 +1,10 @@
 <div class="container" data-turbolinks="false">
+
 	<div class="row">
 		<%= render "layouts/main_button" %>
 		<%= render "layouts/error_messages", model: @review %>
 	</div>
+
 	<div class="row">
 		<div class="col-xs-4">
 			<h4>アイテム詳細ページ</h4>
@@ -16,7 +18,6 @@
 				data-star-half="<%= asset_path('star-half.png') %>"
 				data-score="<%= @average_score %>.to_f.round(1)" ><br>
 			</div><%= @average_score.to_f.round(1) %>
-
 			<h4>口コミ投稿</h4>
 			<p>口コミ内容<p>
 			<%= form_with model: @review, url:user_item_reviews_path(@item.id), method: :post, local: true, class:"form-horizontal" do |f| %>
@@ -34,7 +35,6 @@
 				</div>
 			<% end %>
 		</div>
-
 
 		<div class="col-xs-8">
 			<h4>この商品の口コミ</h4>
@@ -58,7 +58,6 @@
 						<tr>
 							<td style="word-wrap:break-word;"><%= review.review_text %></td>
 							<td>(<%= review.user.age %>歳/<%= review.user.skin_type %>)</td>
-
 							<td>
 								<div id="star<%= review.id %>"
 									data-star-on="<%= asset_path('star-on.png') %>"
@@ -73,7 +72,6 @@
 											$(star).raty({
 												starOn: starOn,
 												starOff: starOff,
-
 												score: <%= review.score %>,
 												readOnly: true, // 編集できない星
 												size: 10,
@@ -119,6 +117,7 @@
 	var star = document.getElementById('star')
 	var starOn = star.dataset.starOn
 	var starOff = star.dataset.starOff
+
 	$(star).raty({
 		starOn: starOn,
 		starOff: starOff,

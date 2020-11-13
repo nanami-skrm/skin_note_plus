@@ -1,27 +1,42 @@
 <div class="container" data-turbolinks="false"><!-- ←ターボリンクを無効にしている -->
-  <%= render "layouts/main_button" %>
+
   <div class="row">
-    <div class="col-xs-5">
-      <div class="hello">
-        <p>こんにちは、<%= current_user.name %>さん！<br>
-        今日の肌の調子はいかがですか？</p>
-        <div><%= link_to "登録情報変更", edit_user_user_path(current_user), class: "btn btn-default" %></div>
+  <%= render "layouts/main_button" %>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-offset-1 col-xs-4">
+      <div class="information">
+        <p class="hello-user">こんにちは、<%= current_user.name %>さん！<br>
+                              今日の肌の調子はいかがですか？
+        </p>
+        <div class="information-contents">
+          <p>登録情報</p>
+          <p>年齢：<%= current_user.age %>歳</p>
+          <p>肌質：<%= current_user.skin_type %></p>
+        </div>
+        <div>
+          <%= link_to "登録情報変更", edit_user_user_path(current_user), class: "btn btn-success" %>
+        </div>
       </div>
     </div>
     <div class="col-xs-7">
         <canvas id="circleChart" ></canvas>
+      </div>
     </div>
   </div>
 
-  <div class="row">
-    <div style="width: 100%; height: 50%;">
-      <canvas id="myChart"></canvas>
+    <div class="row">
+      <div class="chart" style="width: 70%; height: 50%;">
+        <canvas id="myChart"></canvas>
+      </div>
     </div>
-  </div>
-  <div class="row">
-<!--     <div style="width:900px; height:500px;"> -->
-      <canvas id="barChart"></canvas>
-<!--     </div> -->
+
+    <div class="row">
+      <div class="chart" style="width: 70%; height: 50%;">
+        <canvas id="barChart"></canvas>
+      </div>
+    </div>
   </div>
 
 <script>
@@ -29,7 +44,7 @@
 
 //ドーナツグラフ/////////////////////////////////////////////////////////////////////////////////
 var ctx = document.getElementById('circleChart').getContext('2d');
-
+ctx.canvas.height = 120; //高さ調整
 var data = {
   labels: ['とても良い', '良い', '普通', '少し悪い', '悪い'],
   datasets: [{
@@ -67,11 +82,11 @@ var myPieChart = new Chart(ctx, {
 
 //折れ線グラフ/////////////////////////////////////////////////////////////////////////////////
 
-var ctx = document.getElementById('myChart').getContext('2d');
-ctx.canvas.height = 80; //高さ調整
+var ctx1 = document.getElementById('myChart').getContext('2d');
+ctx1.canvas.height = 80; //高さ調整
 var data = <%= @condition_list.to_json.html_safe %>
 console.log(data)
-var chart = new Chart(ctx, {
+var chart = new Chart(ctx1, {
 // The type of chart we want to create
   type: 'line',
 
@@ -118,10 +133,11 @@ var chart = new Chart(ctx, {
 // //横棒グラフ/////////////////////////////////////////////////////////////////////////////////
 
 <% if @todays_items_list.present? %>
-  var ctx1 = document.getElementById('barChart').getContext('2d');
+  var ctx2 = document.getElementById('barChart').getContext('2d');
+  ctx2.canvas.height = 100; //高さ調整
   var data = <%= @todays_items_list.to_json.html_safe %>
   console.log(data)
-  var scatterChart = new Chart(ctx1, {
+  var scatterChart = new Chart(ctx2, {
     type: 'line',
     data: {
       datasets: [{
@@ -148,7 +164,6 @@ var chart = new Chart(ctx, {
           ticks : {
             beginAtzero :true,
             stepSize : 1
-
           }
         }],
         yAxes : [{
@@ -169,7 +184,6 @@ var chart = new Chart(ctx, {
     }
   });
 <% end %>
-
 
 </script>
 
