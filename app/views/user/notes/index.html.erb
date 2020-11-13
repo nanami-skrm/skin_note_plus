@@ -5,6 +5,7 @@
       <div class="hello">
         <p>こんにちは、<%= current_user.name %>さん！<br>
         今日の肌の調子はいかがですか？</p>
+        <div><%= link_to "登録情報変更", edit_user_user_path(current_user), class: "btn btn-default" %></div>
       </div>
     </div>
     <div class="col-xs-7">

@@ -1,0 +1,27 @@
+<div class="container">
+会員情報編集ページです
+
+  <%= form_with :model => @user, url:user_user_path, method: :patch, local: true, class:"form-horizontal" do |f| %>
+
+    <div class="row">
+      <p>つぶやき内容</p>
+      <%= f.text_field :name, class: "col-xs-4" %>
+    </div>
+
+    <div class="row">
+      <p>年齢</p>
+      <%= f.text_field :age, class: "col-xs-4" %>
+    </div>
+
+    <div class="row">
+      <p>肌質</p>
+      <%= f.select :skin_type, User.skin_types.keys, autofocus: true, autocomplete: "skin_type", class: "col-xs-4" %>
+    </div>
+
+    <div class="row">
+      <%= f.submit "変更する", class: "col-xs-4 btn btn-primary" %>
+    </div>
+
+  <% end %>
+
+</div>
