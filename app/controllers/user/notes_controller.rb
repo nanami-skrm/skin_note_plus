@@ -7,26 +7,26 @@ class User::NotesController < ApplicationController
 		@end_of_month = Date.new(params[:year].to_i, params[:month].to_i, -1)
 		@notes = current_user.notes.where(date: @beginning_of_month..@end_of_month)
 
-		# ↓{"悪い"=>13, "少し悪い"=>3, "普通"=>4, "良い"=>4, "とても良い"=>2}見たいなデータ
-		grouping_conditions_count = @notes.group(:condition).count#←何度も取りに行かなくていいようにgroupで取得する
+		#ここからドーナツグラフ関連
+		grouping_conditions_count = @notes.group(:condition).count #←何度も取りに行かなくていいようにgroupで取得する　{"悪い"=>13, "少し悪い"=>3, "普通"=>4, "良い"=>4, "とても良い"=>2}のようなデータ
 		@excellent_condition_count = grouping_conditions_count["とても良い"]
 		@good_condition_count = grouping_conditions_count["良い"]
 		@average_condition_count = grouping_conditions_count["普通"]
 		@poor_condition_count = grouping_conditions_count["少し悪い"]
 		@bad_condition_count = grouping_conditions_count["悪い"]
 
-		@condition_list = (@beginning_of_month..@end_of_month).map do |date| #mapは処理の結果が返ってくる(eachは繰り返したものの中身を返す)
+		#ここから折れ線グラフ関連
+		@condition_list = (@beginning_of_month..@end_of_month).map do |date| #←mapは処理の結果が返ってくる(eachは繰り返したものの中身を返す)
   		{ x: date, y: @notes.find_by(date: date)&.read_attribute_before_type_cast(:condition) || 2 }
-    end
-	    # ↑投稿がなかった日の肌のコンディションを「2:普通」にする
+    end # ↑投稿がなかった日の肌のコンディションを「2:普通」にする
+
+    #ここから横棒グラフ関連
 		my_item_lists_label = {}
-    current_user.my_items.pluck(:item_name).each_with_index{|item, index| my_item_lists_label.store(index + 1, item)}#.each_with_indexは回した順番の数字を振る
-    @my_item_lists_label = my_item_lists_label.to_json
-	    # as_jsonはJSONに近いハッシュに変換してくれ、to_jsonはその更に先で完全に文字列化してくれる
+    current_user.my_items.pluck(:item_name).each_with_index{|item, index| my_item_lists_label.store(index + 1, item)} # ←.each_with_indexは回した順番の数字を振る
+    @my_item_lists_label = my_item_lists_label.to_json # ←as_jsonはJSONに近いハッシュに変換してくれ、to_jsonはその更に先で完全に文字列化してくれる
 
 	  @todays_items_list = []
-		my_notes = current_user.notes.where(created_at: @beginning_of_month.in_time_zone.all_month).includes(:my_items)
-		# ↑includesを使うことでSQL文が何度も発行されるのを防ぐ
+		my_notes = current_user.notes.where(created_at: @beginning_of_month.in_time_zone.all_month).includes(:my_items) # ←includesを使うことでSQL文が何度も発行されるのを防ぐ
     current_user.my_items.each_with_index do |item, index|
       (@beginning_of_month..@end_of_month).each do |date|
         note = my_notes.find {|a| a[:date] == date}
@@ -46,33 +46,29 @@ class User::NotesController < ApplicationController
 	end
 
 	def create
-		params[:note][:user_id] = current_user.id
-		# ↑note_paramsで値が決定されるの前に書く
-		# note = Note.new(note_params)
+		params[:note][:user_id] = current_user.id # ←note_paramsで値が決定されるの前に書く
 
-		date = Date.new(params[:note]["date(1i)"].to_i, params[:note]["date(2i)"].to_i, params[:note]["date(3i)"].to_i)
+		date = params[:note][:date]
 
-		if Note.find_by(date: date, user_id: current_user.id)#新規だった場合はここを無視するようにifにする
+		if Note.find_by(date: date, user_id: current_user.id) # ←新規だった場合はここを無視するようにifにする
 			old_note = Note.find_by(date: date, user_id: current_user.id)
 			old_note_ids = old_note.id
 		end
 
-		if old_note.present? #もし以前に登録したことがある日付だったら
+		if old_note.present? # ←もし以前に登録したことがある日付だったら
 			if old_note.update(note_params)
 			# ここからTodaysItemのupdate--------------------------------------------------------------------------------
-				my_item_old_ids = TodaysItem.where(note_id: old_note_ids).pluck('my_item_id')
-				# ↑以前同じ日付に登録したTodaysItemのmy_item_idを取得
-				my_item_new_ids = todays_item_params[:my_item_id]
-				# 今登録されたTodaysItemのidを取得
+				my_item_old_ids = TodaysItem.where(note_id: old_note_ids).pluck('my_item_id') # ←以前同じ日付に登録したTodaysItemのmy_item_idを取得
+				my_item_new_ids = todays_item_params[:my_item_id] # ←今登録されたTodaysItemのidを取得
 				if my_item_old_ids.blank? #　←もし前の投稿ではTodayItemを選択していなかったら
 					my_item_new_ids.each do | id |
 						TodaysItem.create(note_id: old_note.id, my_item_id: id)
 					end
-				elsif (my_item_old_ids - my_item_new_ids).size != 0 #もし前の投稿のTodayItemと違いがあったら([1,2,3]-[2,3]=[1])
-			    (my_item_old_ids - my_item_new_ids).each do | id | #今登録したTodaysItemになかったものを削除する
+				elsif (my_item_old_ids - my_item_new_ids).size != 0 # ←もし前の投稿のTodayItemと違いがあったら([1,2,3]-[2,3]=[1])
+			    (my_item_old_ids - my_item_new_ids).each do | id | # ←今登録したTodaysItemになかったものを削除する
 			    	TodaysItem.find_by(note_id: old_note.id, my_item_id: id).delete
 			    end
-			    (my_item_new_ids - my_item_old_ids).each do | id |#以前登録したTodaysItemになかったものを登録する
+			    (my_item_new_ids - my_item_old_ids).each do | id | # ←以前登録したTodaysItemになかったものを登録する
 						TodaysItem.create(note_id: old_note.id, my_item_id: id)
 					end
 			# ここまでTodaysItemのupdate---------------------------------------------------------------------------------
