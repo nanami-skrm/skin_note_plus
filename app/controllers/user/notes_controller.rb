@@ -100,7 +100,11 @@ class User::NotesController < ApplicationController
 	end
 
 	def todays_item_params
-    params.require(:todays_items).permit(my_item_id: [])
+		if params[:todays_items].present?
+			params.require(:todays_items).permit(my_item_id: [])
+		else
+			{:my_item_id => []}
+		end
 	end
 
 end
