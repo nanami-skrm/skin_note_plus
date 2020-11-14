@@ -103,8 +103,9 @@ class User::NotesController < ApplicationController
 		if params[:todays_items].present?
 			params.require(:todays_items).permit(my_item_id: [])
 		else
-			{:my_item_id => []}
+			{:my_item_id => []}	# ←使用したアイテムを選択していなくても保存できるように空の配列渡す
 		end
 	end
+
 
 end

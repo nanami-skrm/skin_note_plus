@@ -3,16 +3,16 @@ class User::TweetsController < ApplicationController
 	before_action :authenticate_user!
 
 	def index
+
 		@tweet = Tweet.new
-		@tweets = Tweet.all.page(params[:page]).per(15)
-		@your_tweets = Tweet.where(user_id: current_user.id)
+		@tweets = Tweet.includes(:empathies, :comments, :user).all.page(params[:page]).per(15)
+		@your_tweets = Tweet.includes(:comments, :empathies).where(user_id: current_user.id)
 		@empathies_count = 0
-		@your_tweets.each do |tweet|
-			@empathies_count += tweet.empathies.count
-		end
 		@comments_count = 0
+		# binding.pry
 		@your_tweets.each do |tweet|
-			@comments_count += tweet.comments.count
+			@empathies_count += tweet.empathies.size
+			@comments_count += tweet.comments.size
 		end
 
 	end

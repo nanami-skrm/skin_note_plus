@@ -82,17 +82,17 @@
 									<%= link_to user_tweet_empathies_path(tweet), method: :delete do %>
 										<span class="glyphicon glyphicon-hand-left" aria-hidden="true" style="color:#FF7B8F;"></span>
 									<% end %>
-									<%= tweet.empathies.count %>
+									<%= tweet.empathies.size %>
 								<% else %>
 									<%= link_to user_tweet_empathies_path(tweet), method: :post do %>
 										<span class="glyphicon glyphicon-hand-left" aria-hidden="true" style="color:#DBDBDB;"></span>
 									<% end %>
-									<%= tweet.empathies.count %>
+									<%= tweet.empathies.size %>
 								<% end %>
 							</td>
 
 							<td>
-								<span class="glyphicon glyphicon-comment" aria-hidden="true"> <%= tweet.comments.count %></span>
+								<span class="glyphicon glyphicon-comment" aria-hidden="true"> <%= tweet.comments.size %></span>
 							</td>
 
 							<td>
