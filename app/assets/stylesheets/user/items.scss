@@ -17,9 +17,11 @@
   margin-top: 5px;
 }
 
+
 .item-genre{
   margin-top: 5px;
 }
+
 
 .item-maker{
   margin-top: 5px;
@@ -36,4 +38,42 @@
   float: right;
   padding-right: 10px;
   margin-top: 5px;
+}
+
+
+.show-item-name {
+  font-weight: bold;
+  font-size: 15px;
+  margin-top: 30px;
+  padding-left: 160px;
+}
+
+.show-item-image {
+  margin-top: 10px;
+  float: left;
+}
+
+.show-item-genre{
+  margin-top: 10px;
+  padding-left: 160px;
+}
+
+
+.show-item-maker{
+  margin-top: 10px;
+  padding-left: 160px;
+}
+
+.show-star {
+  margin-top: 20px;
+  float: left;
+  padding-left: 10px;
+}
+
+.show-average-score {
+  font-weight: bold;
+  font-size: 20px;
+  float: right;
+  padding-right: 60px;
+  margin-top: 20px;
 }

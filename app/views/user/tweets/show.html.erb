@@ -1,6 +1,16 @@
 <div class="container">
-<%= render "layouts/main_button" %>
-<%= render "layouts/error_messages", model: @comment %>
+	<%= render "layouts/main_button" %>
+	<%= render "layouts/error_messages", model: @comment %>
+	<%#= render "layouts/error_messages", model: @review %>
+  <% if flash[:error].present? %>
+	  <div class="alert alert-danger">
+	    <ul class="errors">
+	      <% flash[:error].each do |e| %>
+	        <li><%= e %></li>
+	      <% end %>
+	    </ul>
+	  </div>
+  <% end %>
 	<%= @tweet.tweet_text %>
 	(<%= @tweet.user.age %>歳/<%= @tweet.user.skin_type %>)
 
@@ -18,13 +28,13 @@
 					</td>
 				</tr>
 			<% end %>
-	</tbody>
-</table>
-
+		</tbody>
+	</table>
 
 	<%= form_with model: [@tweet, @comment], url:user_tweet_comments_path(@tweet), method: :post, local: true, class:"form-horizontal" do |f| %>
 		<%#= f.hidden_field :tweet_id, value: params[:tweet_id] %>
 		<%= f.text_area :comment_text, size: "90x2" %>
 		<%= f.submit "送信" %>
 	<% end %>
+
 </div>

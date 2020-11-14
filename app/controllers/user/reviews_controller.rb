@@ -11,7 +11,7 @@ class User::ReviewsController < ApplicationController
 			@reviews = Review.where(item_id: @item.id)
 			@average_score = Review.where(item_id: @item.id).average(:score)
 			@reviews = Review.where(item_id: @item.id).page(params[:page]).per(15)
-			render 'user/items/show'
+			redirect_to request.referer, flash: { error: @review.errors.full_messages }
 		end
 	end
 

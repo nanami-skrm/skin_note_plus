@@ -10,7 +10,7 @@ class User::CommentsController < ApplicationController
 		if @comment.save
 			redirect_to request.referer
 		else
-			render 'user/tweets/show'
+			redirect_to request.referer, flash: { error: @comment.errors.full_messages }
 		end
 	end
 
