@@ -33,10 +33,10 @@ skin noteでできること
 https://docs.google.com/spreadsheets/d/1tJy35gak4GvcZL81x8pH8F9z10YMaWqw0YK1LUwqDUQ/edit?usp=sharing
 
 ## 開発環境
-
 OS：Windows 10
 言語：HTML,CSS,JavaScript,Ruby,SQL
 フレームワーク：Ruby on Rails
 仮想環境：Vagrant,VirtualBox
 
 ## 使用素材
+画像:https://o-dan.net/ja/
