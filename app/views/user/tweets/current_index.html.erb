@@ -27,19 +27,19 @@
             <% end %>
           </td>
           <td>
-            <% if your_tweet.empathized_by?(current_user) %>
+            <% if @your_empathied_tweet_ids.include?(your_tweet.id) %>
               <%= link_to user_tweet_empathies_path(your_tweet), method: :delete do %>
                 <span class="glyphicon glyphicon-hand-left" aria-hidden="true" style="color:#FF7B8F;"></span>
               <% end %>
-              <%= your_tweet.empathies.count %>
+              <%= your_tweet.empathies.size %>
             <% else %>
               <%= link_to user_tweet_empathies_path(your_tweet), method: :post do %>
                 <span class="glyphicon glyphicon-hand-left" aria-hidden="true" style="color:#DBDBDB;"></span>
               <% end %>
-              <%= your_tweet.empathies.count %>
+              <%= your_tweet.empathies.size %>
             <% end %>
           </td>
-          <td><span class="glyphicon glyphicon-comment" aria-hidden="true"> <%= your_tweet.comments.count %></span></td>
+          <td><span class="glyphicon glyphicon-comment" aria-hidden="true"> <%= your_tweet.comments.size %></span></td>
           <td>
             <% if your_tweet.user.id == current_user.id %>
               <%= link_to "削除",user_tweet_path(your_tweet), method: :delete, class: "btn btn-danger btn-sm" %>

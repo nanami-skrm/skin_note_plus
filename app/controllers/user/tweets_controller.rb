@@ -16,7 +16,8 @@ class User::TweetsController < ApplicationController
 	end
 
 	def current_index
-		@your_tweets = Tweet.where(user_id: current_user.id)
+		@your_tweets = Tweet.includes(:empathies, :comments, :user).where(user_id: current_user.id)
+		@your_empathied_tweet_ids = Tweet.joins(:empathies).where(empathies: {user_id: current_user.id}).pluck(:id)
 	end
 
 	def create
