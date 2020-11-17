@@ -7,7 +7,7 @@ class User::NotesController < ApplicationController
 		@end_of_month = Date.new(params[:year].to_i, params[:month].to_i, -1)
 		@notes = current_user.notes.where(date: @beginning_of_month..@end_of_month)
 
-		#ここからドーナツグラフ関連
+		#ここからドーナツグラフ関連--------------------------------------------------------------------------------
 		grouping_conditions_count = @notes.group(:condition).count #←何度も取りに行かなくていいようにgroupで取得する　{"悪い"=>13, "少し悪い"=>3, "普通"=>4, "良い"=>4, "とても良い"=>2}のようなデータ
 		@excellent_condition_count = grouping_conditions_count["とても良い"]
 		@good_condition_count = grouping_conditions_count["良い"]
@@ -15,12 +15,12 @@ class User::NotesController < ApplicationController
 		@poor_condition_count = grouping_conditions_count["少し悪い"]
 		@bad_condition_count = grouping_conditions_count["悪い"]
 
-		#ここから折れ線グラフ関連
+		#ここから折れ線グラフ関連--------------------------------------------------------------------------------
 		@condition_list = (@beginning_of_month..@end_of_month).map do |date| #←mapは処理の結果が返ってくる(eachは繰り返したものの中身を返す)
   		{ x: date, y: @notes.find_by(date: date)&.read_attribute_before_type_cast(:condition) || 2 }
     end # ↑投稿がなかった日の肌のコンディションを「2:普通」にする
 
-    #ここから横棒グラフ関連
+    #ここから横棒グラフ関連--------------------------------------------------------------------------------
 		my_item_lists_label = {}
     current_user.my_items.pluck(:item_name).each_with_index{|item, index| my_item_lists_label.store(index + 1, item)} # ←.each_with_indexは回した順番の数字を振る
     @my_item_lists_label = my_item_lists_label.to_json # ←as_jsonはJSONに近いハッシュに変換してくれ、to_jsonはその更に先で完全に文字列化してくれる
@@ -37,6 +37,7 @@ class User::NotesController < ApplicationController
         end
       end
     end
+    #-------------------------------------------------------------------------------------------------
 	end
 
 	def new
@@ -47,7 +48,6 @@ class User::NotesController < ApplicationController
 
 	def create
 		params[:note][:user_id] = current_user.id # ←note_paramsで値が決定されるの前に書く
-
 		date = params[:note][:date]
 
 		if Note.find_by(date: date, user_id: current_user.id) # ←新規だった場合はここを無視するようにifにする
@@ -78,9 +78,9 @@ class User::NotesController < ApplicationController
 				@my_items = MyItem.where(user_id: current_user.id)
 				render "new"
 			end
-		else
-			note = Note.new(note_params)
 
+		else # ←はじめて登録する日付だったら
+			note = Note.new(note_params)
 			if note.save
 				todays_item_params[:my_item_id].each do |my_item_id|
 					TodaysItem.create(note_id: note.id, my_item_id: my_item_id)

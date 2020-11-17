@@ -6,6 +6,7 @@ class User::TweetsController < ApplicationController
 		@tweet = Tweet.new
 		@tweets = Tweet.includes(:empathies, :comments, :user).all.page(params[:page]).per(15)
 		@your_tweets = Tweet.includes(:comments, :empathies).where(user_id: current_user.id)
+		@your_empathied_tweet_ids = Tweet.joins(:empathies).where(empathies: {user_id: current_user.id}).pluck(:id)
 		@empathies_count = 0
 		@comments_count = 0
 		@your_tweets.each do |tweet|
@@ -26,6 +27,7 @@ class User::TweetsController < ApplicationController
 		else
 			@tweets = Tweet.includes(:empathies, :comments, :user).all.page(params[:page]).per(15)
 			@your_tweets = Tweet.includes(:comments, :empathies).where(user_id: current_user.id)
+			@your_empathied_tweet_ids = Tweet.joins(:empathies).where(empathies: {user_id: current_user.id}).pluck(:id)
 			@empathies_count = 0
 			@comments_count = 0
 			@your_tweets.each do |tweet|

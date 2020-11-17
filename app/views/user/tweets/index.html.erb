@@ -78,7 +78,7 @@
 							</td>
 
 							<td>
-								<% if tweet.empathized_by?(current_user) %>
+								<% if @your_empathied_tweet_ids.include?(tweet.id) %>
 									<%= link_to user_tweet_empathies_path(tweet), method: :delete do %>
 										<span class="glyphicon glyphicon-hand-left" aria-hidden="true" style="color:#FF7B8F;"></span>
 									<% end %>
