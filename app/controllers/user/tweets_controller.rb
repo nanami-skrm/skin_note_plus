@@ -52,7 +52,9 @@ class User::TweetsController < ApplicationController
 	end
 
 	private
+
 	def tweet_params
     params.require(:tweet).permit(:user_id, :tweet_text)
 	end
+
 end

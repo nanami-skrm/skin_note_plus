@@ -26,6 +26,11 @@
 					<td>
 						(<%= comment.user.age %>歳/<%= comment.user.skin_type %>)
 					</td>
+					<td>
+						<% if comment.user.id == current_user.id %>
+							<%= link_to "削除", user_tweet_comment_path(@tweet, comment), method: :delete, class: "btn btn-danger btn-sm" %>
+						<% end %>
+					</td>
 				</tr>
 			<% end %>
 		</tbody>
