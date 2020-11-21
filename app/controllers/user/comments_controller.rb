@@ -16,9 +16,6 @@ class User::CommentsController < ApplicationController
 
 	def destroy
 		Comment.find_by(id: params[:id], tweet_id: params[:tweet_id]).destroy
-		# tweet = Tweet.find(params[:tweet_id])
-		# comment = current_user.comments.find_by(tweet_id: tweet.id)
-		# comment.destroy
 		redirect_to request.referer
 	end
 

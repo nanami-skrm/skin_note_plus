@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   	registrations: 'devise/users/registrations',
   	sessions: 'devise/users/sessions'
   }
+
   namespace :admin do
     resources :items
   end
@@ -32,9 +33,6 @@ Rails.application.routes.draw do
   end
 
   root :to => 'user/homes#top'
-
-
-
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

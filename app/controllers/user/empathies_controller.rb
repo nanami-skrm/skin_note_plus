@@ -18,8 +18,4 @@ class User::EmpathiesController < ApplicationController
 		redirect_to request.referer
 	end
 
-	# def empathy_params
-	# 	params.require(:empathy).permit(:user_id, :tweet_id)
-	# end
-
 end
