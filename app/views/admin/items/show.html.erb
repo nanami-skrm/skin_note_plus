@@ -2,19 +2,36 @@
 
   <div class="row">
     <div class="col-xs-4">
-      <h4>アイテム詳細ページ</h4>
-      <%= attachment_image_tag(@item, :image, :fill, 150, 150, fallback: "no_image.jpg") %>
-      <%= @item.item_name %>
-      <%= @item.item_genre %>
-      <%= @item.maker %>
-      <div id="averagestar"
-        data-star-on="<%= asset_path('star-on.png') %>"
-        data-star-off="<%= asset_path('star-off.png') %>"
-        data-star-half="<%= asset_path('star-half.png') %>"
-        data-score="<%= @average_score %>.to_f.round(1)" ><br>
-      </div><%= @average_score.to_f.round(1) %>
-    </div>
+      <div class="row">
+        <h4>アイテム詳細</h4>
+        <div class="show-item-image">
+          <%= attachment_image_tag(@item, :image, :fill, 150, 150, fallback: "no_image.jpg") %>
+        </div>
 
+        <div class="show-item-name">
+          <%= @item.item_name %>
+        </div>
+
+        <div class="show-item-genre">
+          <%= @item.item_genre %>
+        </div>
+
+        <div class="show-item-maker">
+          <%= @item.maker %>
+        </div>
+
+        <div class="show-star"id="averagestar"
+          data-star-on="<%= asset_path('star-on.png') %>"
+          data-star-off="<%= asset_path('star-off.png') %>"
+          data-star-half="<%= asset_path('star-half.png') %>"
+          data-score="<%= @average_score %>.to_f.round(1)" >
+        </div>
+
+        <div class="show-average-score">
+          <%= @average_score.to_f.round(1) %>
+        </div>
+      </div>
+    </div>
 
     <div class="col-xs-8">
       <h4>この商品の口コミ</h4>
@@ -38,12 +55,11 @@
             <tr>
               <td style="word-wrap:break-word;"><%= review.review_text %></td>
               <td>(<%= review.user.age %>歳/<%= review.user.skin_type %>)</td>
-
               <td>
                 <div id="star<%= review.id %>"
                   data-star-on="<%= asset_path('star-on.png') %>"
                   data-star-off="<%= asset_path('star-off.png') %>"
-                  data-score="<%= review.score %>" ><br>
+                  data-score="<%= review.score %>" >
 
                     <script>//口コミ一覧の星/////////////////////////////////////////////////////////////////////////////////
 
@@ -64,12 +80,13 @@
                 </div>
               </td>
               <td>
-                  <%#= link_to "削除", user_item_review_path(@item, review), method: :delete, item_id: review.item.id, class: "btn btn-danger btn-sm" %>
+                  <%= link_to "削除", user_item_review_path(@item, review), method: :delete, item_id: review.item.id, class: "btn btn-danger btn-sm" %>
               </td>
             </tr>
           <% end %>
         </tbody>
       </table>
+      <%#= paginate @reviews %>
     </div>
   </div>
 </div>
