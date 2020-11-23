@@ -7,8 +7,8 @@ class Admin::ItemsController < ApplicationController
 	end
 
 	def show
+		@reviews = Review.includes(:user, :item).where(item_id: params[:id]).page(params[:page]).per(15)
 		@item = Item.find(params[:id])
-		@reviews = Review.where(item_id: params[:id])
 		@average_score = Review.where(item_id: params[:id]).average(:score)
 	end
 
