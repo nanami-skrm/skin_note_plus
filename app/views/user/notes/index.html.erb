@@ -18,26 +18,40 @@
         <div>
           <%= link_to "登録情報変更", edit_user_user_path(current_user), class: "btn btn-success" %>
         </div>
+
+        </div>
       </div>
-    </div>
+
     <div class="col-xs-7">
         <canvas id="circleChart" ></canvas>
       </div>
     </div>
-  </div>
 
-    <div class="row">
-      <div class="chart" style="width: 70%; height: 50%;">
-        <canvas id="myChart"></canvas>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="chart" style="width: 70%; height: 50%;">
-        <canvas id="barChart"></canvas>
-      </div>
+  <div class="row">
+    <div class="text-right">
+      <%= form_with url:user_notes_path, method: :get, local: true, class:"form-horizontal" do |f| %>
+        <!-- <input type="month" name="example"> -->
+        <%#= f.date_select :date, :discard_day => true, use_month_numbers: true %>
+        <%= f.date_select(:date, { use_month_numbers: true, :discard_day => true, date_separator: '/'}) %>
+        <%#= f.date_select :date, start_year: 1930, end_year: (Time.now.year - 18), default: Date.new(1989, 1, 1)) %>
+        <%= f.submit "選択した月を表示する", class: "btn btn-primary" %>
+      <% end %>
     </div>
   </div>
+
+
+  <div class="row">
+    <div class="chart" style="width: 100%; height: 50%;">
+      <canvas id="myChart"></canvas>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="chart" style="width: 100%; height: 50%;">
+      <canvas id="barChart"></canvas>
+    </div>
+  </div>
+</div>
 
 <script>
 

@@ -3,9 +3,18 @@ class User::NotesController < ApplicationController
 	before_action :authenticate_user!
 
 	def index
-		@beginning_of_month = Date.new(params[:year].to_i, params[:month].to_i, 1)
-		@end_of_month = Date.new(params[:year].to_i, params[:month].to_i, -1)
-		@notes = current_user.notes.where(date: @beginning_of_month..@end_of_month)
+		if  params[:year].present?
+			@beginning_of_month = Date.new(params[:year].to_i, params[:month].to_i, 1)
+			@end_of_month = Date.new(params[:year].to_i, params[:month].to_i, -1)
+			@notes = current_user.notes.where(date: @beginning_of_month..@end_of_month)
+		else
+			params[:year] = params["date(1i)"]
+			params[:month] = params["date(2i)"]
+			@beginning_of_month = Date.new(params[:year].to_i, params[:month].to_i, 1)
+			@end_of_month = Date.new(params[:year].to_i, params[:month].to_i, -1)
+			@notes = current_user.notes.where(date: @beginning_of_month..@end_of_month)
+		end
+
 
 		#ここからドーナツグラフ関連--------------------------------------------------------------------------------
 		grouping_conditions_count = @notes.group(:condition).count #←何度も取りに行かなくていいようにgroupで取得する　{"悪い"=>13, "少し悪い"=>3, "普通"=>4, "良い"=>4, "とても良い"=>2}のようなデータ
