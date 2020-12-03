@@ -37,7 +37,6 @@ class User::TweetsController < ApplicationController
 			end
 			render "index"
 		end
-
 	end
 
 	def destroy

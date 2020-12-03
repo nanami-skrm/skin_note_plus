@@ -5,7 +5,6 @@ class User::UsersController < ApplicationController
     if current_user != @user
       redirect_to edit_user_user_path(current_user)
     end
-
   end
 
   def update
@@ -16,7 +15,7 @@ class User::UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:name, :age, :skin_type)
+    params.require(:user).permit(:name, :image, :age, :skin_type)
   end
 
 end

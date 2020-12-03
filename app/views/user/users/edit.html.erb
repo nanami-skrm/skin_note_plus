@@ -3,11 +3,19 @@
     <%= render "layouts/main_button" %>
   </div>
 
+  <h3>情報登録変更</h3>
+
   <%= form_with :model => @user, url:user_user_path, method: :patch, local: true, class:"form-horizontal" do |f| %>
 
     <div class="row">
       <p>名前</p>
       <%= f.text_field :name, class: "col-xs-4" %>
+    </div>
+
+    <div class="row">
+      <P>アイコン画像</P>
+      <%= attachment_image_tag(@user, :image, :fill, 50, 50, fallback: "no_image.jpg") %>
+      <%= f.attachment_field :image, class: "col-xs-4" %>
     </div>
 
     <div class="row">

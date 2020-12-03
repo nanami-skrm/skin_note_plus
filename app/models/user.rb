@@ -15,6 +15,8 @@ class User < ApplicationRecord
     validates :name, presence: true
     validates :age, presence: true
 
+    attachment :image
+
     enum skin_type: { 乾燥肌: 0, 脂性肌: 1, 混合肌: 2, 普通肌: 3 }
 
 end
