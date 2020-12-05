@@ -2,9 +2,9 @@
 <html>
   <head>
     <title>SkinNote</title>
+    <script src="https://kit.fontawesome.com/f21409b83c.js" crossorigin="anonymous"></script>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js"></script>
@@ -21,6 +21,7 @@
           <div class="header-container">
             <ul class="nav-list">
               <% if user_signed_in? %>
+              　<li class="nav-list-item"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>    <%= current_user.name %>さん</li>
                 <li class="nav-list-item"><%= link_to "トップページ", root_path %></li>
                 <li class="nav-list-item"><%= link_to "マイページ", user_notes_path(year: Time.now.year, month: Time.now.month) %></li>
                 <li class="nav-list-item"><%= link_to "アイテム一覧", user_items_path %></li>

@@ -71,8 +71,15 @@ header {
 	float: left;
 	list-style: none;
 	line-height: 50px;
-	padding: 0 40px;
+	padding: 0 30px;
 	text-decoration: none;
+  color: white;
+}
+
+.nav-list-item i{
+  font-size: 25px;
+  line-height: 50px;
+  color: white;
 }
 
 .main {
