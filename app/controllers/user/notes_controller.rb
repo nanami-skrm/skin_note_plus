@@ -3,39 +3,30 @@ class User::NotesController < ApplicationController
 	before_action :authenticate_user!
 
 	def index
-		if  params[:year].present?
-			@beginning_of_month = Date.new(params[:year].to_i, params[:month].to_i, 1)
-			@end_of_month = Date.new(params[:year].to_i, params[:month].to_i, -1)
-			@notes = current_user.notes.where(date: @beginning_of_month..@end_of_month)
-		else
-			params[:year] = params["date(1i)"]
-			params[:month] = params["date(2i)"]
-			@beginning_of_month = Date.new(params[:year].to_i, params[:month].to_i, 1)
-			@end_of_month = Date.new(params[:year].to_i, params[:month].to_i, -1)
-			@notes = current_user.notes.where(date: @beginning_of_month..@end_of_month)
+		unless params[:year].present? or params[:month].present?
+		  params[:year] = params["date(1i)"]
+		  params[:month] = params["date(2i)"]
 		end
-		@selected = Date.parse("#{params[:year]}/#{params[:month]}") #←parseは文字列から日付型を生成できる
+		@beginning_of_month = Date.new(params[:year].to_i, params[:month].to_i, 1)
+		@end_of_month = Date.new(params[:year].to_i, params[:month].to_i, -1)
+		@notes = current_user.notes.where(date: @beginning_of_month..@end_of_month)
+		@selected = Date.parse("#{params[:year]}/#{params[:month]}")
 
-		#ここからドーナツグラフ関連--------------------------------------------------------------------------------
-		grouping_conditions_count = @notes.group(:condition).count #←何度も取りに行かなくていいようにgroupで取得する　{"悪い"=>13, "少し悪い"=>3, "普通"=>4, "良い"=>4, "とても良い"=>2}のようなデータ
-		@excellent_condition_count = grouping_conditions_count["とても良い"]
-		@good_condition_count = grouping_conditions_count["良い"]
-		@average_condition_count = grouping_conditions_count["普通"]
-		@poor_condition_count = grouping_conditions_count["少し悪い"]
-		@bad_condition_count = grouping_conditions_count["悪い"]
+		#ドーナツグラフ-----------------------------------------------------------------------------------------
+		@grouping_conditions_count = @notes.group(:condition).count
 
-		#ここから折れ線グラフ関連--------------------------------------------------------------------------------
-		@condition_list = (@beginning_of_month..@end_of_month).map do |date| #←mapは処理の結果が返ってくる(eachは繰り返したものの中身を返す)
+		#折れ線グラフ----------------------------------------------------------------------------------------
+		@condition_list = (@beginning_of_month..@end_of_month).map do |date|
   		{ x: date, y: @notes.find_by(date: date)&.read_attribute_before_type_cast(:condition) || 2 }
     end # ↑投稿がなかった日の肌のコンディションを「2:普通」にする
 
-    #ここから横棒グラフ関連--------------------------------------------------------------------------------
+    #横棒グラフ------------------------------------------------------------------------------------------
 		my_item_lists_label = {}
-    current_user.my_items.pluck(:item_name).each_with_index{|item, index| my_item_lists_label.store(index + 1, item)} # ←.each_with_indexは回した順番の数字を振る
-    @my_item_lists_label = my_item_lists_label.to_json # ←as_jsonはJSONに近いハッシュに変換してくれ、to_jsonはその更に先で完全に文字列化してくれる
+    current_user.my_items.pluck(:item_name).each_with_index{|item, index| my_item_lists_label.store(index + 1, item)}
+    @my_item_lists_label = my_item_lists_label.to_json
 
 	  @todays_items_list = []
-		my_notes = current_user.notes.where(created_at: @beginning_of_month.in_time_zone.all_month).includes(:my_items) # ←includesを使うことでSQL文が何度も発行されるのを防ぐ
+		my_notes = current_user.notes.where(created_at: @beginning_of_month.in_time_zone.all_month).includes(:my_items)
     current_user.my_items.each_with_index do |item, index|
       (@beginning_of_month..@end_of_month).each do |date|
         note = my_notes.find {|a| a[:date] == date}
@@ -59,7 +50,7 @@ class User::NotesController < ApplicationController
 		params[:note][:user_id] = current_user.id # ←note_paramsで値が決定されるの前に書く
 		date = params[:note][:date]
 
-		if Note.find_by(date: date, user_id: current_user.id) # ←新規だった場合はここを無視するようにifにする
+		if Note.find_by(date: date, user_id: current_user.id) # ←新規だった場合はここを無視する
 			old_note = Note.find_by(date: date, user_id: current_user.id)
 			old_note_ids = old_note.id
 		end

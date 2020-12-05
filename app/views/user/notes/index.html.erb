@@ -36,7 +36,6 @@
     </div>
   </div>
 
-
   <div class="row">
     <div class="chart" style="width: 100%; height: 50%;">
       <canvas id="myChart"></canvas>
@@ -64,11 +63,11 @@ var data = {
   datasets: [{
     backgroundColor: ["#1DA7BE", "#38C5D1", "#DBDBDB", "#FF9FAD", "#FF7B8F"],
     data: [
-        <%= @excellent_condition_count %>,
-        <%= @good_condition_count %>,
-        <%= @average_condition_count %>,
-        <%= @poor_condition_count %>,
-        <%= @bad_condition_count %>
+        <%= @grouping_conditions_count["とても良い"] %>,
+        <%= @grouping_conditions_count["良い"] %>,
+        <%= @grouping_conditions_count["普通"] %>,
+        <%= @grouping_conditions_count["少し悪い"] %>,
+        <%= @grouping_conditions_count["悪い"] %>
     ]
   }],
     // These labels appear in the legend and in the tooltips when hovering different arcs
