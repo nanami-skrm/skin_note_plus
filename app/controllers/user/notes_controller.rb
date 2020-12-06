@@ -12,21 +12,21 @@ class User::NotesController < ApplicationController
 		@notes = current_user.notes.where(date: @beginning_of_month..@end_of_month)
 		@selected = Date.parse("#{params[:year]}/#{params[:month]}")
 
-		#ドーナツグラフ-----------------------------------------------------------------------------------------
+		#ドーナツグラフ-------------------------------------------------------------------------------------------
 		@grouping_conditions_count = @notes.group(:condition).count
 
-		#折れ線グラフ----------------------------------------------------------------------------------------
+		#折れ線グラフ-------------------------------------------------------------------------------------------
 		@condition_list = (@beginning_of_month..@end_of_month).map do |date|
   		{ x: date, y: @notes.find_by(date: date)&.read_attribute_before_type_cast(:condition) || 2 }
     end # ↑投稿がなかった日の肌のコンディションを「2:普通」にする
 
-    #横棒グラフ------------------------------------------------------------------------------------------
+    #横棒グラフ--------------------------------------------------------------------------------------------
 		my_item_lists_label = {}
     current_user.my_items.pluck(:item_name).each_with_index{|item, index| my_item_lists_label.store(index + 1, item)}
     @my_item_lists_label = my_item_lists_label.to_json
 
-	  @todays_items_list = []
-		my_notes = current_user.notes.where(created_at: @beginning_of_month.in_time_zone.all_month).includes(:my_items)
+    @todays_items_list = []
+    my_notes = current_user.notes.where(date: @beginning_of_month.in_time_zone.all_month).includes(:my_items)
     current_user.my_items.each_with_index do |item, index|
       (@beginning_of_month..@end_of_month).each do |date|
         note = my_notes.find {|a| a[:date] == date}
@@ -37,7 +37,10 @@ class User::NotesController < ApplicationController
         end
       end
     end
-    #-------------------------------------------------------------------------------------------------
+
+    # @todays_item_list = current_user.todays_items_list(@beginning_of_month, @end_of_month)
+
+    #---------------------------------------------------------------------------------------------------
 	end
 
 	def new
