@@ -4,6 +4,7 @@ class User::ItemsController < ApplicationController
 
 	def index
 		@items = Item.all
+		@all_ranking_items = Item.find(Review.group(:item_id).order('avg(score) desc').limit(5).pluck(:item_id))
 		# @cleansings = Item.where(item_genre: 0)
 		# @washes = Item.where(item_genre: 1)
 		# @toners = Item.where(item_genre: 2)

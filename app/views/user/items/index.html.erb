@@ -4,6 +4,66 @@
 	</div>
 
 	<div>
+		<h4>口コミランキング(総合)</h4>
+
+		<% @all_ranking_items.each do |item| %>
+
+			<div class="item-box">
+
+				<%= link_to user_item_path(item) do %>
+
+					<div class="item-image">
+						<%= attachment_image_tag(item, :image, :fill, 185, 185, fallback: "no_image.jpg") %><br>
+					</div>
+
+					<div class="item-name">
+						<%= item.item_name %>
+					</div>
+
+					<div class="item-genre">
+						<%= item.item_genre %>
+					</div>
+
+					<div class="item-maker">
+						<%= item.maker %>
+					</div>
+
+				<% end %>
+
+				<div class="index-star" id="all-ranking-star<%= item.id %>"
+					data-star-on="<%= asset_path('star-on.png') %>"
+					data-star-off="<%= asset_path('star-off.png') %>"
+					data-star-half="<%= asset_path('star-half.png') %>"
+					data-score="<%= Review.where(item_id: item.id).average(:score).to_f.round(1) %>" >
+
+					<script>
+					//商品ごとの星/////////////////////////////////////////////////////////////////////////////////
+						var star = document.getElementById(`all-ranking-star<%= item.id %>`)
+						var starOn = star.dataset.starOn
+						var starOff = star.dataset.starOff
+						var starHalf = star.dataset.starHalf
+
+						$(star).raty({
+							starOn: starOn,
+							starOff: starOff,
+							starHalf: starHalf,
+							half: true,
+							readOnly: true // 編集できない星
+						});
+					</script>
+
+				</div>
+
+				<div class="average-score">
+					<%= Review.where(item_id: item.id).average(:score).to_f.round(1) %>
+				</div>
+
+			</div>
+		<% end %>
+
+
+
+
 		<h4>アイテム一覧</h4>
 
 		<% @items.each do |item| %>
