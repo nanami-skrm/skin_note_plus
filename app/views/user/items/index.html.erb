@@ -2,71 +2,92 @@
 	<div class="row">
 		<%= render "layouts/main_button" %>
 	</div>
-	<% @item_genres.each do |genre| %>
-		<%= button_to genre, {controller: 'items', action: 'index'}, {method: :get, params: {item_genre: genre}, class: "-"} %>
-	<% end %>
 
-
-
-	<div>
-		<h4>口コミランキング</h4>
-
-		<% @ranking_items.each_with_index do |item, index| %>
-			<% if index < 5 %>
-			<div class="item-box">
-
-				<%= link_to user_item_path(item) do %>
-
-					<div class="item-image">
-						<%= attachment_image_tag(item, :image, :fill, 185, 185, fallback: "no_image.jpg") %><br>
-					</div>
-
-					<div class="item-name">
-						<%= item.item_name %>
-					</div>
-
-					<div class="item-genre">
-						<%= item.item_genre %>
-					</div>
-
-					<div class="item-maker">
-						<%= item.maker %>
-					</div>
-
-				<% end %>
-
-				<div class="index-star" id="all-ranking-star<%= item.id %>"
-					data-star-on="<%= asset_path('star-on.png') %>"
-					data-star-off="<%= asset_path('star-off.png') %>"
-					data-star-half="<%= asset_path('star-half.png') %>"
-					data-score="<%= Review.where(item_id: item.id).average(:score).to_f.round(1) %>" >
-
-					<script>
-					//商品ごとの星/////////////////////////////////////////////////////////////////////////////////
-						var star = document.getElementById(`all-ranking-star<%= item.id %>`)
-						var starOn = star.dataset.starOn
-						var starOff = star.dataset.starOff
-						var starHalf = star.dataset.starHalf
-
-						$(star).raty({
-							starOn: starOn,
-							starOff: starOff,
-							starHalf: starHalf,
-							half: true,
-							readOnly: true // 編集できない星
-						});
-					</script>
-
-				</div>
-
-				<div class="average-score">
-					<%= Review.where(item_id: item.id).average(:score).to_f.round(1) %>
-				</div>
-
-			</div>
+	<div class="row">
+		<div class="col-xs-3">
+			<h4>ランキング検索</h4>
+			<%= button_to "総合", {controller: 'items', action: 'index'}, {method: :get, class: "genre-btn"} %>
+			<% @item_genres.each do |genre| %>
+				<%= button_to genre, {controller: 'items', action: 'index'}, {method: :get, params: {item_genre: genre}, class: "genre-btn"} %>
 			<% end %>
-		<% end %>
+		</div>
+		<div class="col-xs-9">
+		<h4>口コミランキング(<%= @title %>部門)</h4>
+		<table class="table table-hover" style="table-layout:fixed;width:100%;">
+			<colgroup>
+			        <col style="width:5%;">
+			        <col style="width:10%;">
+			        <col style="width:25%;">
+			        <col style="width:20%;">
+			        <col style="width:15%;">
+			        <col style="width:25%;">
+			</colgroup>
 
+			<thead>
+				<tr>
+					<th></th>
+					<th></th>
+					<th>商品名</th>
+					<th>ジャンル</th>
+					<th>メーカー</th>
+					<th>評価</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<% @ranking_items.each_with_index do |item, index| %>
+					<% if index < 5 %>
+						<tr>
+
+							<td><%= index + 1 %>位	</td>
+
+							<td>
+								<%= link_to user_item_path(item) do %>
+									<%= attachment_image_tag(item, :image, :fill, 60, 60, fallback: "no_image.jpg") %><br>
+								<% end %>
+							</td>
+
+							<td><%= item.item_name %></td>
+
+							<td><%= item.item_genre %></td>
+
+							<td><%= item.maker %></td>
+							<td>
+								<div class="index-star" id="all-ranking-star<%= item.id %>"
+									data-star-on="<%= asset_path('star-on.png') %>"
+									data-star-off="<%= asset_path('star-off.png') %>"
+									data-star-half="<%= asset_path('star-half.png') %>"
+									data-score="<%= Review.where(item_id: item.id).average(:score).to_f.round(1) %>" >
+
+									<script>
+									//商品ごとの星/////////////////////////////////////////////////////////////////////////////////
+										var star = document.getElementById(`all-ranking-star<%= item.id %>`)
+										var starOn = star.dataset.starOn
+										var starOff = star.dataset.starOff
+										var starHalf = star.dataset.starHalf
+
+										$(star).raty({
+											starOn: starOn,
+											starOff: starOff,
+											starHalf: starHalf,
+											half: true,
+											readOnly: true // 編集できない星
+										});
+									</script>
+
+								</div>
+
+								<div class="average-score">
+									<%= Review.where(item_id: item.id).average(:score).to_f.round(1) %>
+								</div>
+							</td>
+						</tr>
+					<% end %>
+				<% end %>
+			</tbody>
+		</table>
+		</div>
+	</div>
 
 
 

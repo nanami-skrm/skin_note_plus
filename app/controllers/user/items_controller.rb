@@ -8,8 +8,10 @@ class User::ItemsController < ApplicationController
 		if params[:item_genre].present?
 			items = Item.find(Review.group(:item_id).order('avg(score) desc').pluck(:item_id))
 			@ranking_items = items.select{ |item| item.item_genre == params[:item_genre] }
+			@title = (params[:item_genre])
 		else
 			@ranking_items = Item.find(Review.group(:item_id).order('avg(score) desc').limit(5).pluck(:item_id))
+			@title = "総合"
 		end
 	end
 
