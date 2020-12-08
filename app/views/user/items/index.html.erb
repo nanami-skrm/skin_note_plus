@@ -2,12 +2,17 @@
 	<div class="row">
 		<%= render "layouts/main_button" %>
 	</div>
+	<% @item_genres.each do |genre| %>
+		<%= button_to genre, {controller: 'items', action: 'index'}, {method: :get, params: {item_genre: genre}, class: "-"} %>
+	<% end %>
+
+
 
 	<div>
-		<h4>口コミランキング(総合)</h4>
+		<h4>口コミランキング</h4>
 
-		<% @all_ranking_items.each do |item| %>
-
+		<% @ranking_items.each_with_index do |item, index| %>
+			<% if index < 5 %>
 			<div class="item-box">
 
 				<%= link_to user_item_path(item) do %>
@@ -59,6 +64,7 @@
 				</div>
 
 			</div>
+			<% end %>
 		<% end %>
 
 

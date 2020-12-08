@@ -4,15 +4,13 @@ class User::ItemsController < ApplicationController
 
 	def index
 		@items = Item.all
-		@all_ranking_items = Item.find(Review.group(:item_id).order('avg(score) desc').limit(5).pluck(:item_id))
-		# @cleansings = Item.where(item_genre: 0)
-		# @washes = Item.where(item_genre: 1)
-		# @toners = Item.where(item_genre: 2)
-		# @milky_lotions = Item.where(item_genre: 3)
-		# @serums = Item.where(item_genre: 4)
-		# @masks =  Item.where(item_genre: 5)
-		# @pointcares = Item.where(item_genre: 6)
-		# @others = Item.where(item_genre: 7)
+		@item_genres = Item.item_genres.keys
+		if params[:item_genre].present?
+			items = Item.find(Review.group(:item_id).order('avg(score) desc').pluck(:item_id))
+			@ranking_items = items.select{ |item| item.item_genre == params[:item_genre] }
+		else
+			@ranking_items = Item.find(Review.group(:item_id).order('avg(score) desc').limit(5).pluck(:item_id))
+		end
 	end
 
 	def show
