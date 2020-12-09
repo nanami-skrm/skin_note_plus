@@ -12,8 +12,9 @@ class User < ApplicationRecord
   	has_many :interests, dependent: :destroy
   	has_many :reviews
 
-    validates :name, presence: true
+    validates :name, presence: true, length: { minimum: 2, maximum: 10 }
     validates :age, presence: true
+    validates :skin_type, presence: true
 
     attachment :image
 

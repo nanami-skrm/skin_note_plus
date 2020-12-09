@@ -30,7 +30,6 @@ skin noteでできること
 ## 設計書
 
 ### 機能一覧
-
 https://docs.google.com/spreadsheets/d/1tJy35gak4GvcZL81x8pH8F9z10YMaWqw0YK1LUwqDUQ/edit?usp=sharing
 
 ## 開発環境
