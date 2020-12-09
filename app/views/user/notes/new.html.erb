@@ -1,7 +1,8 @@
 <div class="container">
 	<div class="row">
 		<%= render "layouts/main_button" %>
-		<%#= flash[:alert] %>
+		<%= render "layouts/error_messages", model: @note %>
+
 	</div>
 
 	<h3>肌ノート作成</h3>
@@ -9,7 +10,6 @@
 
 		<div>
 			<h4>■日付</h4>
-			<%#= f.date_select :date, use_month_numbers: true %>
 			<%= f.date_field :date %>
 		</div>
 

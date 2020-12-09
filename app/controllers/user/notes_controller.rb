@@ -83,8 +83,8 @@ class User::NotesController < ApplicationController
 			end
 
 		else # ←はじめて登録する日付だったら
-			note = Note.new(note_params)
-			if note.save
+			@note = Note.new(note_params)
+			if @note.save
 				todays_item_params[:my_item_id].each do |my_item_id|
 					TodaysItem.create(note_id: note.id, my_item_id: my_item_id)
 				end
