@@ -43,6 +43,12 @@ RSpec.configure do |config|
   # config.use_active_record = false
 
   # RSpec Rails can automatically mix in different behaviours to your tests
+  config.before(:each) do |example|
+    if example.metadata[:type] == :system
+      driven_by :rack_test
+    end
+  end
+
   # based on their file location, for example enabling you to call `get` and
   # `post` in specs under `spec/controllers`.
   #
