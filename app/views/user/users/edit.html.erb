@@ -8,23 +8,23 @@
   <%= form_with :model => @user, url:user_user_path, method: :patch, local: true, class:"form-horizontal" do |f| %>
 
     <div class="row">
-      <p>名前</p>
+      <p class="form-label">名前</p>
       <%= f.text_field :name, class: "col-xs-4" %>
     </div>
 
     <div class="row">
-      <P>アイコン画像</P>
-      <%= attachment_image_tag(@user, :image, :fill, 50, 50, fallback: "no_image.jpg") %>
+      <P class="form-label">アイコン画像</P>
+      <%= attachment_image_tag(@user, :image, size:'100x100', format: 'jpeg', fallback: 'no_image.jpg', size:'100x100') %><br>
       <%= f.attachment_field :image, class: "col-xs-4" %>
     </div>
 
     <div class="row">
-      <p>年齢</p>
+      <p class="form-label">年齢</p>
       <%= f.text_field :age, class: "col-xs-4" %>
     </div>
 
     <div class="row">
-      <p>肌質</p>
+      <p class="form-label">肌質</p>
       <%= f.select :skin_type, User.skin_types.keys, autofocus: true, autocomplete: "skin_type", class: "col-xs-4" %>
     </div>
 
