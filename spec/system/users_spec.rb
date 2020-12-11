@@ -108,7 +108,7 @@ describe 'ユーザーのテスト' do
         visit edit_user_user_path(user)
       end
       it '登録情報変更と表示される' do
-        expect(page).to have_content('登録情報変更')
+        expect(page).to have_content '登録情報変更'
       end
       it '名前編集フォームに自分の名前が表示される' do
         expect(page).to have_field 'user[name]', with: user.name
