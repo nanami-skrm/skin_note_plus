@@ -1,5 +1,6 @@
 <% if model.errors.any? %>
   <div id="error_explanation" class="alert alert-danger">
+    <h4><%= pluralize(model.errors.count, "error") %> prohibited this product from being saved:</h4>
     <ul>
       <% model.errors.full_messages.each do |message| %>
         <li><%= message %></li>
