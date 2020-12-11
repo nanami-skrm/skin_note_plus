@@ -7,11 +7,16 @@
   <div class="row">
     <div class="col-xs-offset-1 col-xs-4">
       <div class="information">
-        <p class="hello-user">こんにちは、<%= current_user.name %>さん！<br>
+        <div class="hello-user clearfix">
+          <div class="user-image">
+            <%= attachment_image_tag(@user, :image, :fill, 70, 70, fallback: "no_image.jpg") %>
+          </div>
+          <p class="hello-text">こんにちは、<%= current_user.name %>さん！<br>
                               今日の肌の調子はいかがですか？
-        </p>
+          </p>
+        </div>
         <div class="information-contents">
-          <p>登録情報</p>
+          <p>< 登録情報 ></p>
           <p>年齢：<%= current_user.age %>歳</p>
           <p>肌質：<%= current_user.skin_type %></p>
         </div>

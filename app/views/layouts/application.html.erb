@@ -23,7 +23,7 @@
               　<li class="nav-list-item"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>    <%= current_user.name %>さん</li>
                 <li class="nav-list-item"><%= link_to "トップページ", root_path %></li>
                 <li class="nav-list-item"><%= link_to "マイページ", user_notes_path(year: Time.now.year, month: Time.now.month) %></li>
-                <li class="nav-list-item"><%= link_to "アイテム一覧", user_items_path %></li>
+                <li class="nav-list-item"><%= link_to "口コミランキング", user_items_path %></li>
                 <li class="nav-list-item"><%= link_to "つぶやき一覧", user_tweets_path %></li>
                 <li class="nav-list-item"><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
 

@@ -3,6 +3,7 @@ class User::NotesController < ApplicationController
 	before_action :authenticate_user!
 
 	def index
+    @user = current_user
 		unless params[:year].present? or params[:month].present?
 		  params[:year] = params["date(1i)"]
 		  params[:month] = params["date(2i)"]

@@ -148,7 +148,8 @@ header {
   background: #C2C2C2; //ボタンの背景色
     color: white; //ボタンのテキストの色
     border: 0px;
-    margin: 20px 0 0 40px;
+    float: right;
+    margin: 65px 20px 0 0;
 }
 
 .btn-success:hover, .btn-success:focus,

@@ -5,17 +5,28 @@
 .information {
 	height: 270px;
 	margin-top: 10px;
-	background-color: #FBFBFB;
+  border-top: 4px solid #1DA7BE;
+  border-bottom: 4px solid #1DA7BE;
 }
 
 .hello-user {
-  padding: 40px 0px 0px 40px;
-  font-size: 15px;
+  padding: 40px 0px 0px 20px;
+  font-size: 14px;
+}
+
+.hello-text {
+  line-height: 35px;
+}
+
+.user-image {
+  float: left;
+  margin-right: 20px;
 }
 
 .information-contents{
-  padding: 0px 0px 0px 40px;
-  font-size: 15px;
+  padding: 20px 0px 0px 20px;
+  font-size: 14px;
+  float: left;
 }
 
 .chart {
