@@ -54,3 +54,81 @@ describe 'ユーザー認証のテスト' do
     end
   end
 end
+
+describe 'ユーザーのテスト' do
+  let(:user) { create(:user) }
+  let!(:test_user2) { create(:user) }
+  before do
+    visit new_user_session_path
+    fill_in 'user[email]', with: user.email
+    fill_in 'user[password]', with: user.password
+    click_button 'ログインする'
+  end
+  describe 'マイページのテスト' do
+    context '表示の確認' do
+      it 'こんにちはと表示される' do
+        expect(page).to have_content('こんにちは')
+      end
+      it '画像が表示される' do
+        expect(page).to have_css('img.image')
+      end
+      it '名前が表示される' do
+        expect(page).to have_content(user.name)
+      end
+      it '年齢が表示される' do
+        expect(page).to have_content(user.age)
+      end
+      it '肌質が表示される' do
+        expect(page).to have_content(user.skin_type)
+      end
+      # it '当月のデータが表示される' do
+      #   expect(page).to have_content('#{Date.today.month.to_i}月')
+      # end
+      it '編集リンクが表示される' do
+        expect(page).to have_link '', href: edit_user_user_path(user)
+      end
+    end
+  end
+
+  describe '編集のテスト' do
+    context '自分の編集画面への遷移' do
+      it '遷移できる' do
+        visit edit_user_user_path(user)
+        expect(current_path).to eq('/user/users/' + user.id.to_s + '/edit')
+      end
+    end
+    context '他人の編集画面への遷移' do
+      it '遷移できない' do
+        visit edit_user_user_path(test_user2)
+        expect(current_path).to eq('/user/users/' + user.id.to_s + '/edit')
+      end
+    end
+    context '表示の確認' do
+      before do
+        visit edit_user_user_path(user)
+      end
+      it '登録情報変更と表示される' do
+        expect(page).to have_content('登録情報変更')
+      end
+      it '名前編集フォームに自分の名前が表示される' do
+        expect(page).to have_field 'user[name]', with: user.name
+      end
+      it '画像編集フォームが表示される' do
+        expect(page).to have_field 'user[image]'
+      end
+      it '年齢編集フォームに自分の年齢が表示される' do
+        expect(page).to have_field 'user[age]', with: user.age
+      end
+      it '編集に成功する' do
+        click_button '変更する'
+        expect(page).to have_content 'こんにちは'
+      end
+      it '編集に失敗する' do
+        fill_in 'user[name]', with: ''
+        click_button '変更する'
+        expect(page).to have_content 'error'
+        expect(current_path).to eq('/user/users/' + user.id.to_s)
+      end
+    end
+  end
+end
