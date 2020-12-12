@@ -1,45 +1,75 @@
 <div class="container">
-	<%= render "layouts/main_button" %>
-	<%= render "layouts/error_messages", model: @comment %>
-	<%#= render "layouts/error_messages", model: @review %>
-  <% if flash[:error].present? %>
-	  <div class="alert alert-danger">
-	    <ul class="errors">
-	      <% flash[:error].each do |e| %>
-	        <li><%= e %></li>
-	      <% end %>
-	    </ul>
-	  </div>
-  <% end %>
-	<%= @tweet.tweet_text %>
-	(<%= @tweet.user.age %>歳/<%= @tweet.user.skin_type %>)
+	<div class="row">
+		<%= render "layouts/main_button" %>
+		<%= render "layouts/error_messages", model: @comment %>
+	  <% if flash[:error].present? %>
+		  <div class="alert alert-danger">
+		    <ul class="errors">
+		      <% flash[:error].each do |e| %>
+		        <li><%= e %></li>
+		      <% end %>
+		    </ul>
+		  </div>
+	  <% end %>
+	  <div class="tweet-text">
+			<%= @tweet.tweet_text %>
+			(<%= @tweet.user.age %>歳/<%= @tweet.user.skin_type %>)
+		</div>
+	</div>
 
-	<table class="table">
-		<tbody>
-			<% @tweet.comments.each_with_index do |comment, index| %>
-				<tr>
-					<td>
-						<%= index += 1 %>
-					</td>
-					<td>
-						<%= comment.comment_text %>
-					<td>
-						(<%= comment.user.age %>歳/<%= comment.user.skin_type %>)
-					</td>
-					<td>
-						<% if comment.user.id == current_user.id %>
-							<%= link_to "削除", user_tweet_comment_path(@tweet, comment), method: :delete, class: "btn btn-danger btn-sm" %>
-						<% end %>
-					</td>
-				</tr>
+	<div class="row">
+		<div class="col-xs-4">
+			<h4>コメント投稿</h4>
+			<%= form_with model: [@tweet, @comment], url:user_tweet_comments_path(@tweet), method: :post, local: true, class:"form-horizontal" do |f| %>
+				<div class="row">
+					<%= f.text_area :comment_text, class: "col-xs-12" %>
+				</div>
+				<div class="row">
+					<%= f.submit "送信する", class: "col-xs-12 btn btn-primary" %>
+				</div>
 			<% end %>
-		</tbody>
-	</table>
+		</div>
 
-	<%= form_with model: [@tweet, @comment], url:user_tweet_comments_path(@tweet), method: :post, local: true, class:"form-horizontal" do |f| %>
-		<%#= f.hidden_field :tweet_id, value: params[:tweet_id] %>
-		<%= f.text_area :comment_text, size: "90x2" %>
-		<%= f.submit "送信" %>
-	<% end %>
+		<div class="col-xs-8 comment-table">
+			<table class="table table-hover" style="table-layout:fixed;width:100%;">
 
+			    <colgroup>
+			        <col style="width:5%;">
+			        <col style="width:60%;">
+			        <col style="width:20%;">
+			        <col style="width:15%;">
+			    </colgroup>
+
+				<thead>
+					<tr>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<% @tweet.comments.each_with_index do |comment, index| %>
+						<tr>
+							<td>
+								<%= index += 1 %>
+							</td>
+							<td style="word-wrap:break-word;">
+								<%= comment.comment_text %>
+							</td>
+							<td>
+								(<%= comment.user.age %>歳/<%= comment.user.skin_type %>)
+							</td>
+							<td>
+								<% if comment.user.id == current_user.id %>
+									<%= link_to "削除", user_tweet_comment_path(@tweet, comment), method: :delete, class: "btn btn-danger btn-sm" %>
+								<% end %>
+							</td>
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>
