@@ -15,7 +15,7 @@
 
     <div class="row">
       <P class="form-label">アイコン画像</P>
-      <%= attachment_image_tag(@user, :image, size:'100x100', format: 'jpeg', fallback: 'no_image.jpg', size:'100x100') %><br>
+      <%= attachment_image_tag(@user, :image, format: 'jpeg', fallback: 'no_image.jpg', size:'100x100') %><br>
       <%= f.attachment_field :image, class: "col-xs-4" %>
     </div>
 
