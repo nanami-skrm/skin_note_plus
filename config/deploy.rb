@@ -6,6 +6,7 @@ set :repo_url, "git@github.com:nanami-skrm/skin_note.git"
 set :deploy_to, "/home/ec2-user/skin_note"
 set :rbenv_ruby, '2.5.7'
 set :linked_files, %w{config/master.key .env}
+set :bundle_without, %w(development test).join(" ")
 append :linked_dirs, "log", "public", "tmp"
 
 # Default branch is :master
