@@ -47,7 +47,11 @@
 								<% end %>
 							</td>
 
-							<td><%= item.item_name %></td>
+							<td>
+								<%= link_to user_item_path(item) do %>
+									<%= item.item_name %>
+								<% end %>
+							</td>
 
 							<td><%= item.item_genre %></td>
 
