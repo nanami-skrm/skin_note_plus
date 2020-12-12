@@ -3,9 +3,7 @@ require 'rails_helper'
   describe 'アイテムのテスト' do
     let(:admin) { create(:admin) }
     let(:user) { create(:user) }
-    # let!(:user2) { create(:user) }
     let!(:item) { create(:item) }
-    # let!(:tweet2) { create(:tweet, user: user2) }
     before do
       visit new_user_session_path
       fill_in 'user[email]', with: user.email
