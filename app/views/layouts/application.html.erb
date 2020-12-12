@@ -34,7 +34,7 @@
               <% else %>
                 <li class="nav-list-item"><%= link_to "トップページ", root_path %></li>
                 <li class="nav-list-item"><%= link_to "ログイン", new_user_session_path %></li>
-                <li class="nav-list-item"><%= link_to 'ゲストログイン（閲覧用）', user_homes_guest_sign_in_path, method: :post %></li>
+                <li class="nav-list-item"><%= link_to "ゲストログイン", user_homes_guest_sign_in_path, method: :post %></li>
               <% end %>
             </ul>
           </div>
