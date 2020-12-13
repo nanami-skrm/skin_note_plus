@@ -3,14 +3,14 @@ class User::CommentsController < ApplicationController
 	before_action :authenticate_user!
 
 	def create
-		@tweet = Tweet.find(params[:tweet_id])
-		@comment = Comment.new(comment_params)
-		@comment.user_id = current_user.id
-		@comment.tweet_id = @tweet.id
-		if @comment.save
+		tweet = Tweet.find(params[:tweet_id])
+		comment = Comment.new(comment_params)
+		comment.user_id = current_user.id
+		comment.tweet_id = tweet.id
+		if comment.save
 			redirect_to request.referer
 		else
-			redirect_to request.referer, flash: { error: @comment.errors.full_messages }
+			redirect_to request.referer, flash: { error: comment.errors.full_messages }
 		end
 	end
 
