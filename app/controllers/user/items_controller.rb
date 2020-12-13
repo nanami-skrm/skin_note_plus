@@ -3,14 +3,14 @@ class User::ItemsController < ApplicationController
 	before_action :authenticate_user!
 
 	def index
-		@items = Item.all
+		@items = Item.all.includes(:reviews)
 		@item_genres = Item.item_genres.keys
 		if params[:item_genre].present?
-			items = Item.find(Review.group(:item_id).order('avg(score) desc').pluck(:item_id))
+			items = Item.where(id: Review.group(:item_id).order('avg(score) desc').pluck(:item_id)).includes(:reviews)
 			@ranking_items = items.select{ |item| item.item_genre == params[:item_genre] }
 			@title = (params[:item_genre])
 		else
-			@ranking_items = Item.find(Review.group(:item_id).order('avg(score) desc').limit(5).pluck(:item_id))
+			@ranking_items = Item.where(id: Review.group(:item_id).order('avg(score) desc').limit(5).pluck(:item_id)).includes(:reviews)
 			@title = "総合"
 		end
 	end

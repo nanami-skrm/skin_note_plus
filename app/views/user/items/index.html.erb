@@ -61,7 +61,7 @@
 									data-star-on="<%= asset_path('star-on.png') %>"
 									data-star-off="<%= asset_path('star-off.png') %>"
 									data-star-half="<%= asset_path('star-half.png') %>"
-									data-score="<%= Review.where(item_id: item.id).average(:score).to_f.round(1) %>" >
+									data-score="<%= item.reviews_avarage_score %>" >
 
 									<script>
 									//商品ごとの星/////////////////////////////////////////////////////////////////////////////////
@@ -82,7 +82,7 @@
 								</div>
 
 								<div class="average-score">
-									<%= Review.where(item_id: item.id).average(:score).to_f.round(1) %>
+									<%= item.reviews_avarage_score %>
 								</div>
 							</td>
 						</tr>
@@ -92,7 +92,6 @@
 		</table>
 		</div>
 	</div>
-
 
 
 		<h4>アイテム一覧</h4>
@@ -125,7 +124,7 @@
 					data-star-on="<%= asset_path('star-on.png') %>"
 					data-star-off="<%= asset_path('star-off.png') %>"
 					data-star-half="<%= asset_path('star-half.png') %>"
-					data-score="<%= Review.where(item_id: item.id).average(:score).to_f.round(1) %>" >
+					data-score="<%=item.reviews_avarage_score %>" >
 
 					<script>
 					//商品ごとの星/////////////////////////////////////////////////////////////////////////////////
@@ -146,7 +145,7 @@
 				</div>
 
 				<div class="average-score">
-					<%= Review.where(item_id: item.id).average(:score).to_f.round(1) %>
+					<%= item.reviews_avarage_score %>
 				</div>
 
 			</div>
