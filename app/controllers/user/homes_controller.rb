@@ -1,6 +1,9 @@
 class User::HomesController < ApplicationController
 
 	def top
+    @items = Item.all.includes(:reviews)
+    @ranking_items = Item.includes(:reviews).find(Review.group(:item_id).order('avg(score) desc').limit(5).pluck(:item_id))
+    @title = "総合"
 	end
 
 	def about

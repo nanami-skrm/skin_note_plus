@@ -56,8 +56,8 @@
 
 					<%= f.hidden_field :user_id, value: current_user.id %>
 
-					<div>
-						<%= f.text_area :review_text, class: "col-xs-12" %>
+					<div class="review-text-area">
+						<%= f.text_area :review_text, value:"", placeholder:"この商品の口コミを375字以内で入力してください。", class: "col-xs-12" %>
 					</div>
 
 					<div>
