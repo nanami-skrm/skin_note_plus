@@ -16,10 +16,14 @@ class Item < ApplicationRecord
   # end
 
   def reviews_avarage_score
+    if reviews.present?
     review_scores = reviews.pluck(:score)
     (review_scores.sum / review_scores.count.to_f).round(1)
     # reviews.average(:score).to_f.round(1)
     # Review.where(item_id: id).average(:score).to_f.round(1)
+    else
+      0.0
+    end
   end
 
 end
