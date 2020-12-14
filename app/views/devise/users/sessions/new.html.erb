@@ -1,5 +1,8 @@
 <div class="container">
   <h4>ログイン</h4>
+  <% flash.each do |name, msg| %>
+    <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) %>
+  <% end %>
 
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <div class="field">

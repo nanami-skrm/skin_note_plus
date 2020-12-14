@@ -1,0 +1,44 @@
+ja:
+  activerecord:
+    models:
+      admin: 管理者
+      user: ユーザ
+      comment: コメント
+      item: スキンケア商品
+      my_item: マイスキンケア
+      note: 肌ノート
+      review: 口コミ
+      tweet: つぶやき
+    attributes:
+      admin:
+        email: メールアドレス
+        password: パスワード
+      user:
+        name: ユーザ名
+        age: 年齢
+        skin_type: 肌質
+        email: メールアドレス
+        password: パスワード
+
+      comment:
+        comment_text: コメント
+
+      item:
+        item_name: 商品名
+        item_genre: 商品ジャンル
+        maker: メーカー
+
+      my_item:
+        item_name: 商品名
+        maker: メーカー
+
+      note:
+        date: 日付
+        condition: 肌コンディション
+
+      review:
+        score: 評価
+        review_text: 口コミ内容
+
+      tweet:
+        tweet_text: つぶやき
