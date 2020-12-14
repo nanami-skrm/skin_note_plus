@@ -18,134 +18,50 @@
 
 <div class="main-contents">
   <div class="contents-title">skin noteとは</div>
-  <div class="contents-text">自分史上一番の美肌を目指す<br>
-                            あなただけの肌の記録アプリです</div>
+  <div class="border2"></div>
+  <div class="contents-text">自分史上一番の美肌を目指す あなただけの肌の記録アプリです</div>
 
-  <div class="contents-title">skin noteで、できること</div>
-    <div class="section-image"></div>
-    <div class="section-title">１：肌の状態をグラフで確認する</div>
-    <div class="section-text">毎日肌の状態と使ったスキンケア商品を記録すると、<br>
-                              skin notoがあなたの肌の状態を３種のグラフで見える化します</div>
-    <div class="section-subtext">「ドーナツグラフ」　肌の調子が良かった日の割合・悪かった日割合を確認できます<br>
-                                「折れ線グラフ」　　肌の調子の推移を確認できます<br>
-                                「横棒グラフ」　　スキンケア商品を使った期間を確認できます</div>
+  <div class="contents-title">skin noteで できること</div>
+  <div class="border2"></div>
+    <div class="row">
+      <div class="section">
+        <div class="section-image"><img src="/assets/content-image1.png" style="width: 350px; height:350px;"></div>
+          <div class="text-box">
+            <div class="section-title">１：肌の状態をグラフで確認する</div>
+            <div class="section-text">毎日肌の状態と使ったスキンケア商品を記録すると、<br>
+                                      skin notoがあなたの肌の状態を３種のグラフで見える化します</div>
+            <div class="section-subtext">「ドーナツグラフ」　肌の調子が良かった日・悪かった日の割合を確認できます<br>
+                                        「折れ線グラフ」　　肌の調子の推移を確認できます<br>
+                                        「横棒グラフ」　　スキンケア商品を使った期間を確認できます</div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="section">
+        <div class="text-box">
+          <div class="section-title">２：商品の口コミを見る・投稿する</div>
+          <div class="section-text">スキンケア商品の口コミランキングを掲載しています<br>
+                                    口コミランキングを商品ジャンルごとに検索することも可能です<br>
+                                    気になる商品の口コミ内容を閲覧したり、<br>
+                                    使用した商品の口コミを投稿できます</div>
+        </div>
+        <div class="section-image"><img src="/assets/content-image2.png" style="width: 350px; height:350px;"></div>
+      </div>
+    </div>
 
-    <div class="section-title">２：商品の口コミを見る・投稿する</div>
-    <div class="section-text">スキンケア商品の口コミを閲覧・投稿できます<br>
-                              口コミランキングを商品ジャンルごとに検索することもできます</div>
-    <div class="section-image"></div>
-
-    <div class="section-image"></div>
-    <div class="section-title">３：肌の悩みをつぶやく</div>
-    <div class="section-text">肌の悩みをつぶやくと、他のユーザーからコメントで<br>
-                              アドバイスをもらえたり、共感を集めることができます。
-                              また他のユーザーへのアドバイスを書き込むことができます。</div>
+    <div class="row">
+      <div class="section">
+        <div class="section-image"><img src="/assets/content-image3.png" style="width: 350px; height:350px;"></div>
+        <div class="text-box">
+          <div class="section-title">３：肌の悩みをつぶやく</div>
+          <div class="section-text">肌の悩みをつぶやくと、他のユーザーからコメントで<br>
+                                    アドバイスをもらえたり、共感を集めることができます<br>
+                                    また他のユーザーへのアドバイスを書き込むことができます</div>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="lets">
+  <div class="lets-text"><%= link_to "skin note をはじめる", new_user_registration_path %></div>
 </div>
 
-<div class="container" data-turbolinks="false">
-  <div class="row">
-  <h4>口コミランキング(<%= @title %>部門)</h4>
-  <table class="table table-hover" style="table-layout:fixed;width:100%;">
-    <colgroup>
-            <col style="width:5%;">
-            <col style="width:10%;">
-            <col style="width:25%;">
-            <col style="width:20%;">
-            <col style="width:15%;">
-            <col style="width:25%;">
-    </colgroup>
-
-    <thead>
-      <tr>
-        <th></th>
-        <th></th>
-        <th>商品名</th>
-        <th>ジャンル</th>
-        <th>メーカー</th>
-        <th>評価</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @ranking_items.each_with_index do |item, index| %>
-        <% if index < 5 %>
-          <tr>
-
-            <td><%= index + 1 %>位 </td>
-
-            <td>
-              <%= link_to user_item_path(item) do %>
-                <%= attachment_image_tag(item, :image, :fill, 60, 60, fallback: "no_image.jpg") %><br>
-              <% end %>
-            </td>
-
-            <td>
-              <%= link_to user_item_path(item) do %>
-                <%= item.item_name %>
-              <% end %>
-            </td>
-
-            <td><%= item.item_genre %></td>
-
-            <td><%= item.maker %></td>
-            <td>
-              <div class="index-star" id="all-ranking-star<%= item.id %>"
-                data-star-on="<%= asset_path('star-on.png') %>"
-                data-star-off="<%= asset_path('star-off.png') %>"
-                data-star-half="<%= asset_path('star-half.png') %>"
-                data-score="<%= item.reviews_avarage_score %>" >
-
-                <script>
-                //商品ごとの星/////////////////////////////////////////////////////////////////////////////////
-                  var star = document.getElementById(`all-ranking-star<%= item.id %>`)
-                  var starOn = star.dataset.starOn
-                  var starOff = star.dataset.starOff
-                  var starHalf = star.dataset.starHalf
-
-                  $(star).raty({
-                    starOn: starOn,
-                    starOff: starOff,
-                    starHalf: starHalf,
-                    half: true,
-                    readOnly: true // 編集できない星
-                  });
-                </script>
-
-              </div>
-
-              <div class="average-score">
-                <%= item.reviews_avarage_score %>
-              </div>
-            </td>
-          </tr>
-        <% end %>
-      <% end %>
-    </tbody>
-  </table>
-  </div>
-</div>
-
-<!-- <div class="container">
-  <div class="main-text">skin noteでできること</div>
-
-  <div class="contents">
-
-    <div class="content-item">
-      <div class="content-title">肌の状態をグラフで確認する</div>
-      <div class="content-image"></div>
-      <div class="content-text"></div>
-    </div>
-
-    <div class="content-item">
-      <div class="content-title">商品の口コミを書く</div>
-      <div class="content-image"></div>
-      <div class="content-text"></div>
-    </div>
-
-    <div class="content-item">
-    　<div class="content-title">肌の悩みをつぶやく</div>
-      <div class="content-image"></div>
-      <div class="content-text"></div>
-    </div>
-  </div>
-</div> -->
