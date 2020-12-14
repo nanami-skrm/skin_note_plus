@@ -82,6 +82,8 @@ text-decoration:underline;
 
 
 .section-image img {
+  width: 350px;
+  height: 350px;
   border: 4px solid #38C5D1;
   border-radius: 200px;
   float: left;
@@ -100,6 +102,7 @@ text-decoration:underline;
   height: 100px;
   background-color: #FF7B8F;
   text-align: center;
+  border-radius: 20px;
 }
 
 .lets-text a {
