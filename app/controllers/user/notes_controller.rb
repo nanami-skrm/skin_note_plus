@@ -87,7 +87,7 @@ class User::NotesController < ApplicationController
 			@note = Note.new(note_params)
 			if @note.save
 				todays_item_params[:my_item_id].each do |my_item_id|
-					TodaysItem.create(note_id: note.id, my_item_id: my_item_id)
+					TodaysItem.create(note_id: @note.id, my_item_id: my_item_id)
 				end
 				redirect_to user_notes_path(year: Time.now.year, month: Time.now.month)
 			else
