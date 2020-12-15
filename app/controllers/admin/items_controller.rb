@@ -3,6 +3,8 @@ class Admin::ItemsController < ApplicationController
 	before_action :authenticate_admin!
 
 	def top
+		@all_item_count = Item.all.size
+		@all_tweet_count = Tweet.all.size
 	end
 
 	def index
