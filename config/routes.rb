@@ -11,7 +11,6 @@ Rails.application.routes.draw do
   	registrations: 'devise/users/registrations',
   	sessions: 'devise/users/sessions'
   }
-
   namespace :admin do
     get 'items/top'=>"items#top"
     resources :items do

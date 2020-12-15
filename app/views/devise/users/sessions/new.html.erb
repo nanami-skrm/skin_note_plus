@@ -1,10 +1,12 @@
 <div class="container" data-turbolinks="false">
   <h4>ログイン</h4>
 
-  <% flash.each do |name, msg| %>
+  <% if flash[:alert] != nil %>
     <div id="error_explanation" class="alert alert-danger">
-      <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) %>
+      <%= content_tag :div, flash[:alert], :id => "flash_alert" if flash[:alert].is_a?(String) %>
     </div>
+  <% elsif flash[:notice] != nil %>
+    <%# do nothing (flash[:notice] contained ex: logout message. )%>
   <% end %>
 
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
