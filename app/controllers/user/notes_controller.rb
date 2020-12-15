@@ -47,7 +47,7 @@ class User::NotesController < ApplicationController
 	def new
 		@note = Note.new
 		@my_items = MyItem.where(user_id: current_user.id)
-		@note.todays_items.build
+		# @note.todays_items.build
 	end
 
 	def create
