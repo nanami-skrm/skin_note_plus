@@ -13,7 +13,13 @@ Rails.application.routes.draw do
   }
 
   namespace :admin do
-    resources :items
+    get 'items/top'=>"items#top"
+    resources :items do
+      resources :reviews, only: [:destroy]
+    end
+    resources :tweets do
+      resources :comments, only: [:destroy]
+    end
   end
 
   namespace :user do

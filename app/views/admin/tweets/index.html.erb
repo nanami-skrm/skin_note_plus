@@ -1,0 +1,55 @@
+<div class="container">
+<h4>みんなのつぶやき一覧</h4>
+      <table class="table table-hover" style="table-layout:fixed;width:100%;">
+
+          <colgroup>
+              <col style="width:60%;">
+              <col style="width:15%;">
+              <col style="width:8%;">
+              <col style="width:8%;">
+              <col style="width:9%;">
+          </colgroup>
+
+        <thead>
+          <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @tweets.each do |tweet| %>
+            <tr>
+
+              <td style="word-wrap:break-word;"><%= link_to admin_tweet_path(tweet) do %>
+                  <%= tweet.tweet_text %>
+                <% end %>
+              </td>
+
+              <td>
+                (<%= tweet.user.age %>歳/<%= tweet.user.skin_type %>)
+              </td>
+
+              <td>
+                <span class="glyphicon glyphicon-hand-left" aria-hidden="true"> <%= tweet.empathies.size %></span>
+              </td>
+
+              <td>
+                <span class="glyphicon glyphicon-comment" aria-hidden="true"> <%= tweet.comments.size %></span>
+              </td>
+
+              <td>
+                <%= link_to "削除",admin_tweet_path(tweet), method: :delete, class: "btn btn-danger btn-sm" %>
+              </td>
+
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= paginate @tweets %>
+    </div>
+  </div>
+</div>
