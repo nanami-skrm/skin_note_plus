@@ -25,7 +25,7 @@ require 'rails_helper'
         it '投稿に失敗する' do
           fill_in 'comment[comment_text]', with: ''
           click_button '送信する'
-          expect(page).to have_content "Comment text can't be blank"
+          expect(page).to have_content "コメントを入力してください"
         end
         it '自分の投稿の削除リンクが表示される' do
           expect(page).to have_link '削除', href: user_tweet_comment_path(tweet2, comment)

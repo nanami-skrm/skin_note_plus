@@ -28,8 +28,8 @@ require 'rails_helper'
         it '投稿に失敗する' do
           fill_in 'review[review_text]', with: ''
           click_button '投稿する'
-          expect(page).to have_content "Score can't be blank"
-          expect(page).to have_content "Review text can't be blank"
+          expect(page).to have_content "評価を入力してください"
+          expect(page).to have_content "口コミ内容を入力してください"
         end
         it '自分の投稿の削除リンクが表示される' do
           expect(page).to have_link '削除', href: user_item_review_path(item,review)

@@ -31,8 +31,8 @@ require 'rails_helper'
           fill_in 'my_item[item_name]', with: ''
           fill_in 'my_item[maker]', with: ''
           click_button '登録する'
-          expect(page).to have_content "Item name can't be blank"
-          expect(page).to have_content "Maker can't be blank"
+          expect(page).to have_content "商品名を入力してください"
+          expect(page).to have_content "メーカーを入力してください"
         end
         it '削除リンクが表示される' do
           expect(page).to have_link '削除', href: user_my_item_path(my_item)

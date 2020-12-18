@@ -26,7 +26,11 @@ describe 'ユーザー認証のテスト' do
         fill_in 'user[password_confirmation]', with: ''
         click_button '登録する'
 
-        expect(page).to have_content 'error'
+        expect(page).to have_content 'メールアドレスを入力してください'
+        expect(page).to have_content 'パスワードを入力してください'
+        expect(page).to have_content 'ユーザ名を入力してください'
+        expect(page).to have_content 'ユーザ名は2文字以上で入力してください'
+        expect(page).to have_content '年齢を入力してください'
       end
     end
   end
@@ -126,7 +130,8 @@ describe 'ユーザーのテスト' do
       it '編集に失敗する' do
         fill_in 'user[name]', with: ''
         click_button '変更する'
-        expect(page).to have_content 'error'
+        expect(page).to have_content 'ユーザ名を入力してください'
+        expect(page).to have_content 'ユーザ名は2文字以上で入力してください'
         expect(current_path).to eq('/user/users/' + user.id.to_s)
       end
     end
