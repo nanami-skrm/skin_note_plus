@@ -5,6 +5,7 @@
 			<%= f.label "商品名" %>
 			<%= f.text_field :item_name %>
 		</div>
+
 		<div>
 			<%= f.label "商品画像" %>
 			<%= f.attachment_field :image %>
@@ -14,10 +15,12 @@
 			<%= f.label "商品ジャンル" %>
 			<%= f.select :item_genre, Item.item_genres.keys, autofocus: true, autocomplete: "condition" %>
 		</div>
+
 		<div>
 			<%= f.label "メーカー" %>
 			<%= f.text_field :maker %>
 		</div>
+
 		<%= f.submit "登録する" %>
 	<% end %>
 </div>
