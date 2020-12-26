@@ -1,5 +1,13 @@
 class User::UsersController < ApplicationController
 
+  def show
+    @user = User.find(params[:id])
+    if current_user != @user
+      redirect_to edit_user_user_path(current_user)
+    end
+    @your_interested_item = Item.joins(:interests).where(interests: {user_id: current_user.id})
+  end
+
   def edit
     @user = User.find(params[:id])
     if current_user != @user
@@ -10,7 +18,7 @@ class User::UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-      redirect_to user_notes_path(year: Time.now.year, month: Time.now.month)
+      redirect_to user_user_path(@user)
     else
       render "edit"
     end

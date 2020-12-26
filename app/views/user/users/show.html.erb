@@ -1,0 +1,115 @@
+<div class="container">
+  <div class="row">
+    <%= render "layouts/main_button" %>
+    <%= render "layouts/error_messages", model: @user %>
+  </div>
+  <div class="row">
+    <div class="col-xs-3">
+      <h3>登録情報確認</h3>
+      <table class="table">
+        <tr>
+          <th class="table-head warning">ユーザ名</th>
+        </tr>
+        <tr>
+          <td><%= @user.name %></td>
+        </tr>
+        <tr>
+          <th class="table-head warning">アイコン画像</th>
+        </tr>
+        <tr>
+          <td><%= attachment_image_tag(@user, :image, :fill, 70, 70, fallback: "no_image.jpg") %></td>
+        </tr>
+        <tr>
+          <th class="table-head warning">年齢</th>
+        </tr>
+        <tr>
+          <td><%= @user.age %></td>
+        </tr>
+        <tr>
+          <th class="table-head warning">肌質</th>
+        </tr>
+        <tr>
+          <td><%= @user.skin_type %></td>
+        </tr>
+      </table>
+      <%= link_to "登録情報編集", edit_user_user_path(@user), class: "col-xs-12 btn btn-primary" %>
+    </div>
+    <div class="col-xs-8">
+      <h3>気になるスキンケア</h3>
+      <table class="table table-hover" style="table-layout:fixed;width:100%;">
+        <colgroup>
+                <col style="width:15%;">
+                <col style="width:25%;">
+                <col style="width:20%;">
+                <col style="width:15%;">
+                <col style="width:25%;">
+        </colgroup>
+
+        <thead>
+          <tr>
+            <th></th>
+            <th>商品名</th>
+            <th>ジャンル</th>
+            <th>メーカー</th>
+            <th>評価</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        <% @your_interested_item.each do |item| %>
+          <tr>
+            <td>
+              <%= link_to user_item_path(item) do %>
+                <%= attachment_image_tag(item, :image, :fill, 60, 60, fallback: "no_image.jpg") %><br>
+              <% end %>
+            </td>
+
+            <td>
+              <%= link_to user_item_path(item) do %>
+                <%= item.item_name %>
+              <% end %>
+            </td>
+
+            <td><%= item.item_genre %></td>
+
+            <td><%= item.maker %></td>
+
+            <td>
+              <div class="index-star" id="all-ranking-star<%= item.id %>"
+                data-star-on="<%= asset_path('star-on.png') %>"
+                data-star-off="<%= asset_path('star-off.png') %>"
+                data-star-half="<%= asset_path('star-half.png') %>"
+                data-score="<%= item.reviews_avarage_score %>" >
+
+                <script>
+                //商品ごとの星/////////////////////////////////////////////////////////////////////////////////
+                  var star = document.getElementById(`all-ranking-star<%= item.id %>`)
+                  var starOn = star.dataset.starOn
+                  var starOff = star.dataset.starOff
+                  var starHalf = star.dataset.starHalf
+
+                  $(star).raty({
+                    starOn: starOn,
+                    starOff: starOff,
+                    starHalf: starHalf,
+                    half: true,
+                    readOnly: true // 編集できない星
+                  });
+                </script>
+
+              </div>
+
+              <div class="average-score">
+                <%= item.reviews_avarage_score %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+
+
+        </thead>
+      </table>
+    </div>
+  </div>
+</div>
