@@ -34,6 +34,7 @@ Rails.application.routes.draw do
     resources :my_items, only: [:index, :create, :edit, :update, :destroy]
   	resources :items, only: [:index, :show]  do
       resources :reviews, only: [:create, :destroy]
+      resource :interests, only: [:create, :destroy]
     end
   end
 

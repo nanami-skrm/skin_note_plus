@@ -20,6 +20,7 @@ class User::ItemsController < ApplicationController
 		@reviews = Review.includes(:user).where(item_id: params[:id]).page(params[:page]).per(15)
 		@review = Review.new
 		@average_score = Review.where(item_id: params[:id]).average(:score)
+		@your_interested_item_ids = Item.joins(:interests).where(interests: {user_id: current_user.id}).pluck(:id)
 	end
 
 end
