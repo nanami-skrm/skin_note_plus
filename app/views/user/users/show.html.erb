@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" data-turbolinks="false">
   <div class="row">
     <%= render "layouts/main_button" %>
     <%= render "layouts/error_messages", model: @user %>
@@ -10,24 +10,31 @@
         <tr>
           <th class="table-head warning">ユーザ名</th>
         </tr>
+
         <tr>
           <td><%= @user.name %></td>
         </tr>
+
         <tr>
           <th class="table-head warning">アイコン画像</th>
         </tr>
+
         <tr>
           <td><%= attachment_image_tag(@user, :image, :fill, 70, 70, fallback: "no_image.jpg") %></td>
         </tr>
+
         <tr>
           <th class="table-head warning">年齢</th>
         </tr>
+
         <tr>
           <td><%= @user.age %></td>
         </tr>
+
         <tr>
           <th class="table-head warning">肌質</th>
         </tr>
+
         <tr>
           <td><%= @user.skin_type %></td>
         </tr>
@@ -105,10 +112,7 @@
             </td>
           </tr>
         <% end %>
-      </tbody>
-
-
-        </thead>
+        </tbody>
       </table>
     </div>
   </div>

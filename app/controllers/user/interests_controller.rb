@@ -2,7 +2,7 @@ class User::InterestsController < ApplicationController
 
   before_action :authenticate_user!
 
-	def create
+  def create
     item = Item.find(params[:item_id])
     interest = Interest.new
     interest.user_id = current_user.id
