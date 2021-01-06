@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   }
   namespace :admin do
     get 'items/top'=>"items#top"
+    resources :users, only: [:index]
     resources :items do
       resources :reviews, only: [:destroy]
     end

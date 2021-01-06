@@ -1,0 +1,23 @@
+<div class="container">
+  <h4>ユーザー一覧</h4>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>登録日時</th>
+        <th>ユーザー名</th>
+        <th>年齢</th>
+        <th>肌質</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+      <tr>
+        <td><%= user.created_at %></td>
+        <td><%= user.name %></td>
+        <td><%= user.age %></td>
+        <td><%= user.skin_type %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
