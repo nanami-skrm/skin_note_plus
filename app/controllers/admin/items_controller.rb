@@ -5,6 +5,7 @@ class Admin::ItemsController < ApplicationController
 	def top
 		@all_item_count = Item.all.size
 		@all_tweet_count = Tweet.all.size
+		@all_user_count = User.all.size
 	end
 
 	def index
