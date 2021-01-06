@@ -28,6 +28,7 @@
                 <li class="nav-list-item"><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
 
               <% elsif admin_signed_in? %>
+                <li class="nav-list-item"><%= link_to "管理者トップページ", admin_items_top_path, class: "link" %></li>
                 <li class="nav-list-item"><%= link_to "ユーザー一覧", admin_users_path, class: "link" %></li>
                 <li class="nav-list-item"><%= link_to "アイテム一覧", admin_items_path, class: "link" %></li>
                 <li class="nav-list-item"><%= link_to "つぶやき一覧", admin_tweets_path, class: "link" %></li>
